@@ -182,8 +182,8 @@ class EventsProcessor
 				$carbonEvent['until'] = Carbon::parse( $event['until'] );
 			}
 			elseif ( isset( $event['freq'] ) && ! isset( $event['until'] ) ) {
-				$carbonEvent['until'] = Carbon::parse( $event['start'] )->addMonths( 6 );
-				$header->event['until'] = Carbon::parse( $event['start'] )->addMonths( 6 )->format('m/d/Y g:ia');
+				$carbonEvent['until'] = Carbon::parse( $event['start'] )->addMonths( $grav['config']->get('plugins.events.display_months_out') );
+				$header->event['until'] = Carbon::parse( $event['start'] )->addMonths( $grav['config']->get('plugins.events.display_months_out') )->format('m/d/Y g:ia');
 			}
 
 			// setup grav date
