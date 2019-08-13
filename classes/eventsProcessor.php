@@ -175,7 +175,9 @@ class EventsProcessor
 			// build a carbon events object to insert into header frontmatter
 			$carbonEvent = [];
 			$carbonEvent['start'] = Carbon::parse( $event['start'] );
-			$carbonEvent['end'] = Carbon::parse( $event['end'] );
+			if ( isset( $event['end'] ) ) {
+				$carbonEvent['end'] = Carbon::parse( $event['end'] );
+			}
 
 			// build an until date if needed
 			if ( isset( $event['until'] ) ) {
