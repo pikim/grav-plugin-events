@@ -15,7 +15,10 @@
           <span class="day">{{ page.header.event.start|date(config.plugins.events.event_item.day) }}</span>
           <span class="month">{{ page.header.event.start|date(config.plugins.events.event_item.month) }}</span>
           <span class="time">
-              {{ page.header.event.start|date(config.plugins.events.event_item.start_time) }}&ndash;{{ page.header.event.end|date(config.plugins.events.event_item.end_time) }}
+            {{ page.header.event.start|date(config.plugins.events.event_item.start_time) }}
+            {% if page.header.event.end %}
+              &ndash;{{ page.header.event.end|date(config.plugins.events.event_item.end_time) }}
+            {% endif %}
           </span>
           <span class="year">{{ page.header.event.start|date("Y") }}</span>
         </time>
