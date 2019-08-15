@@ -11,15 +11,35 @@
 
 namespace Symfony\Component\Translation\Tests\Dumper;
 
-use Symfony\Component\Translation\MessageCatalogue;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Translation\Dumper\PoFileDumper;
+use Symfony\Component\Translation\MessageCatalogue;
 
-class PoFileDumperTest extends \PHPUnit_Framework_TestCase
+class PoFileDumperTest extends TestCase
 {
     public function testFormatCatalogue()
     {
         $catalogue = new MessageCatalogue('en');
-        $catalogue->add(array('foo' => 'bar'));
+        $catalogue->add(['foo' => 'bar', 'bar' => 'foo', 'foo_bar' => 'foobar', 'bar_foo' => 'barfoo']);
+        $catalogue->setMetadata('foo_bar', [
+            'comments' => [
+                'Comment 1',
+                'Comment 2',
+            ],
+            'flags' => [
+                'fuzzy',
+                'another',
+            ],
+            'sources' => [
+                'src/file_1',
+                'src/file_2:50',
+            ],
+        ]);
+        $catalogue->setMetadata('bar_foo', [
+            'comments' => 'Comment',
+            'flags' => 'fuzzy',
+            'sources' => 'src/file_1',
+        ]);
 
         $dumper = new PoFileDumper();
 

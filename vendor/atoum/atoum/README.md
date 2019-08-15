@@ -22,7 +22,7 @@ Finally, even though it is developed mainly on UNIX, it can also work on Windows
 
 ## Why atoum?
 
-* *atoum* is really [easy to install](http://docs.atoum.org/en/latest/getting_started.html#installation): clone it [from github](https://github.com/atoum/atoum), download [its PHAR](https://github.com/atoum/atoum/releases/download/2.6.0/atoum.phar) or simply [use composer](https://packagist.org/packages/atoum/atoum),
+* *atoum* is really [easy to install](http://docs.atoum.org/en/latest/installation.html): clone it [from github](https://github.com/atoum/atoum), download [its PHAR](https://github.com/atoum/atoum/releases/download/2.6.0/atoum.phar) or simply [use composer](https://packagist.org/packages/atoum/atoum),
 * *atoum* provides a high level of security during test execution by isolating each test method in its own PHP process. Of course, this feature is available out of the box, no need to install any additional extension,
 * *atoum* runs tests in a parallelized environment making the suite run as fast as possible by taking advantage of today's multi-core CPUs,
 * *atoum* provides a [full-featured set of natural and expressive assertions](http://docs.atoum.org/en/latest/asserters.html) making tests as readable as possible. Here is an example:
@@ -339,3 +339,25 @@ Looking for a roadmap?
 
 - [Here is](https://github.com/atoum/atoum/labels/In%20progress) the work in progress,
 - [And there](https://github.com/atoum/atoum/milestones/*) what will come in next releases.
+
+## Credits
+
+atoum has been created by [Frédéric Hardy]. It is now led by a strong community of contributors. You can find them 
+in the [committer list](https://github.com/atoum/atoum/graphs/contributors) or in the 
+[Contributors team](https://github.com/orgs/atoum/teams/contributors).
+
+We also would like to thank people who participated in the project in any way:
+
+* Mathieu Robin ([@MathRobin])
+* Geoffrey Bachelet ([@ubermuda])
+* Nathanaël Louison
+* Simon Jodet ([@simonjodet])
+
+## License
+
+atoum is released under the BSD-3-Clause License. See the bundled [LICENSE](LICENSE) file for details.
+
+[Frédéric Hardy]: https://github.com/mageekguy
+[@MathRobin]: https://github.com/MathRobin
+[@ubermuda]: https://github.com/ubermuda
+[@simonjodet]: https://github.com/simonjodet

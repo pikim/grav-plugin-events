@@ -68,6 +68,7 @@ return array(
     'mageekguy\\atoum\\exceptions\\runtime\\file' => $vendorDir . '/atoum/atoum/classes/exceptions/runtime/file.php',
     'mageekguy\\atoum\\exceptions\\runtime\\unexpectedValue' => $vendorDir . '/atoum/atoum/classes/exceptions/runtime/unexpectedValue.php',
     'mageekguy\\atoum\\extension' => $vendorDir . '/atoum/atoum/classes/extension.php',
+    'mageekguy\\atoum\\extension\\aggregator' => $vendorDir . '/atoum/atoum/classes/extension/aggregator.php',
     'mageekguy\\atoum\\extension\\configuration' => $vendorDir . '/atoum/atoum/classes/extension/configuration.php',
     'mageekguy\\atoum\\factory\\builder' => $vendorDir . '/atoum/atoum/classes/factory/builder.php',
     'mageekguy\\atoum\\factory\\builder\\closure' => $vendorDir . '/atoum/atoum/classes/factory/builder/closure.php',

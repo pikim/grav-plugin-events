@@ -267,14 +267,14 @@ class generator extends atoum\test
 					}
 				)
 					->isInstanceOf('mageekguy\atoum\exceptions\runtime')
-					->hasMessage('COPYING file is missing in \'' . $generator->getOriginDirectory() . '\'')
+					->hasMessage('LICENSE file is missing in \'' . $generator->getOriginDirectory() . '\'')
 			->if($adapter->file_get_contents = function($file) use ($generator, & $description, & $licence, & $stub) {
 					switch ($file)
 					{
 						case $generator->getOriginDirectory() . DIRECTORY_SEPARATOR . 'ABOUT':
 							return ($description = uniqid());
 
-						case $generator->getOriginDirectory() . DIRECTORY_SEPARATOR . 'COPYING':
+						case $generator->getOriginDirectory() . DIRECTORY_SEPARATOR . 'LICENSE':
 							return ($licence = uniqid());
 
 						case $generator->getStubFile():
@@ -288,7 +288,7 @@ class generator extends atoum\test
 			->then
 				->object($generator->run())->isIdenticalTo($generator)
 				->mock($phar)
-					->call('__construct')->withArguments($generator->getDestinationDirectory() . DIRECTORY_SEPARATOR . atoum\scripts\phar\generator::phar, null, null, null)->once()
+					->call('__construct')->withArguments($generator->getDestinationDirectory() . DIRECTORY_SEPARATOR . atoum\scripts\phar\generator::phar, null, null)->once()
 					->call('setMetadata')
 						->withArguments(array(
 								'version' => atoum\version,
@@ -342,7 +342,7 @@ class generator extends atoum\test
 				->string($generator->getDestinationDirectory())->isEqualTo($directory)
 				->mock($phar)
 					->call('__construct')
-						->withArguments($generator->getDestinationDirectory() . DIRECTORY_SEPARATOR . atoum\scripts\phar\generator::phar, null, null, null)
+						->withArguments($generator->getDestinationDirectory() . DIRECTORY_SEPARATOR . atoum\scripts\phar\generator::phar, null, null)
 						->once()
 					->call('setMetadata')
 						->withArguments(

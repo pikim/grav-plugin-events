@@ -11,24 +11,28 @@
 
 namespace Symfony\Component\Translation\Tests\Writer;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Translation\Dumper\DumperInterface;
 use Symfony\Component\Translation\MessageCatalogue;
 use Symfony\Component\Translation\Writer\TranslationWriter;
 
-class TranslationWriterTest extends \PHPUnit_Framework_TestCase
+class TranslationWriterTest extends TestCase
 {
-    public function testWriteTranslations()
+    public function testWrite()
     {
-        $dumper = $this->getMock('Symfony\Component\Translation\Dumper\DumperInterface');
+        $dumper = $this->getMockBuilder('Symfony\Component\Translation\Dumper\DumperInterface')->getMock();
         $dumper
             ->expects($this->once())
             ->method('dump');
 
         $writer = new TranslationWriter();
         $writer->addDumper('test', $dumper);
-        $writer->writeTranslations(new MessageCatalogue(array()), 'test');
+        $writer->write(new MessageCatalogue('en'), 'test');
     }
 
+    /**
+     * @group legacy
+     */
     public function testDisableBackup()
     {
         $nonBackupDumper = new NonBackupDumper();
@@ -45,7 +49,7 @@ class TranslationWriterTest extends \PHPUnit_Framework_TestCase
 
 class NonBackupDumper implements DumperInterface
 {
-    public function dump(MessageCatalogue $messages, $options = array())
+    public function dump(MessageCatalogue $messages, $options = [])
     {
     }
 }
@@ -54,7 +58,7 @@ class BackupDumper implements DumperInterface
 {
     public $backup = true;
 
-    public function dump(MessageCatalogue $messages, $options = array())
+    public function dump(MessageCatalogue $messages, $options = [])
     {
     }
 
