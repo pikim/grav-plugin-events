@@ -1,0 +1,330 @@
+<?php
+/**
+ *                  __ _           _ _           _    _
+ *                 / _| |         | | |         | |  | |
+ *   ___ _ __ __ _| |_| |_ ___  __| | |__  _   _| | _| |__
+ *  / __| '__/ _` |  _| __/ _ \/ _` | '_ \| | | | |/ / '_ \
+ * | (__| | | (_| | | | ||  __/ (_| | |_) | |_| |   <| | | |
+ *  \___|_|  \__,_|_|  \__\___|\__,_|_.__/ \__, |_|\_\_| |_|
+ *                                          __/ |
+ * Designed + Developed by Kaleb Heitzman  |___/
+ * (c) 2016
+ */
+
+namespace Events;
+
+require_once __DIR__.'/../vendor/autoload.php';
+
+use Carbon\Carbon;
+use ICal\ICal;
+
+/**
+ * Events Plugin Calendar Class
+ *
+ * The Events Calendar Class provides variables for Twig to create a dynamic
+ * calendar with previous and next links that relate to month and year. This
+ * class is also used to display a traditional calendar and form the rows
+ * and columns that make up the calendar. It does not calculate dates or
+ * manipulate any information. It's simply for displaying a nice **calendar
+ * page** on your Grav website. It is referenced under the
+ * `onTwigSiteVariables` hook in the root events plugin file.
+ *
+ * @package    Events
+ * @author     Kaleb Heitzman <kalebheitzman@gmail.com>
+ * @copyright  2016 Kaleb Heitzman
+ * @license    https://opensource.org/licenses/MIT MIT
+ * @version    1.0.15
+ * @link       https://github.com/kalebheitzman/grav-plugin-events
+ * @since      1.0.0 Initial Release
+ */
+class iCalendarProcessor
+{
+    /**
+     * @var  plugin config
+     * @since  1.0.0 	Initial Release
+     */
+    protected $config;
+
+    /**
+     * @var  Grav locator
+     * @since  1.0.0 	Initial Release
+     */
+    protected $loc;
+
+    /**
+     * iCalendar Class Construct
+     *
+     * Setup a pointer to plugin config and Grav locator.
+     *
+     * @since  1.0.0 Initial Release
+     * @return void
+     */
+    public function __construct()
+    {
+        // get a grav instance
+        $grav = \Grav\Common\Grav::instance();
+
+        $this->config = $grav['config']->get('plugins.events');
+        $this->loc = $grav['locator']->base;
+    }
+
+    /**
+     * Process iCalendar file(s)
+     *
+     * Process
+     *
+     * @since  1.0.15 Major Refactor
+     * @return void
+     */
+    public function process()
+    {
+        // generate path
+        $ical_path = $this->loc . '/user/pages' . $this->config['icalendar_folder'];
+
+        // clear/delete folder first
+        $this->rmdir_recursive($ical_path);
+
+        // recreate desired folder
+        if( ! is_dir($ical_path) ) {
+            mkdir($ical_path, 0755, true);
+        }
+
+        // get the single iCalendar files as array
+        $ical_files = explode("\r\n", $this->config['icalendars']);
+
+        // open and parse iCalendar files
+        $ical = new ICal(
+            $ical_files,
+            array(
+                'defaultSpan'                 => 2,     // Default value
+                'defaultTimeZone'             => 'UTC',
+                'defaultWeekStart'            => 'MO',  // Default value
+                'disableCharacterReplacement' => false, // Default value
+                'filterDaysAfter'             => null,  // Default value
+                'filterDaysBefore'            => null,  // Default value
+                'replaceWindowsTimeZoneIds'   => false, // Default value
+                'skipRecurrence'              => false, // Default value
+                'useTimeZoneWithRRules'       => false, // Default value
+            )
+        );
+
+        // get events sorted by date
+        $events = $ical->sortEventsWithOrder($ical->events());
+dump($events);
+        // create an array to hold the filepaths
+        // this helps to handle recurrences while creating the pages
+        $files = array();
+
+        // create a page from each event
+        foreach ( $events as $event ) {
+            $this->create_page($ical_path, $event, $files);
+        }
+    }
+
+
+    private function create_page( $ical_path, $event, &$files )
+    {
+        $file_name = '/event.md';
+
+        // get the event information
+        $uid = $event->uid;
+        $summary = $event->summary;
+        $location = $event->location;
+        $description = $event->description;
+        $last_modified = strtotime($event->last_modified);
+        $recurrence_id = strtotime($event->recurrence_id);
+        $start = strtotime($event->dtstart);
+        $end = strtotime($event->dtend);
+
+        // split if element exists
+        if( isset($event->categories) ) {
+            $categories = explode(',', $event->categories);
+        }
+
+        // split if element exists
+        if( isset($event->rrule) ) {
+            $rrule = explode(';', $event->rrule);
+        }
+
+        // create path to destination folder
+        $year = date('Y', $start);
+        $moda = date('md', $start); // recurrences don't work atm, prefix the path with month & day
+        $slug = strtolower($summary);
+
+        // remove special characters from slug
+        $search = array(" ", "&amp;", "ä", "ö", "ü", "ß");
+        $replace = array("-", "-", "ae", "oe", "ue", "ss");
+        $slug = str_replace($search, $replace, $slug);
+        $slug = preg_replace('/[^\da-z\-]/i', '-', $slug);
+        $slug = preg_replace('/-+/', '-', $slug);
+        $slug = rtrim(ltrim($slug, '-'), '-');
+
+        // create path
+//        $path = $ical_path . '/' . $year . '/' . $slug;
+        $path = $ical_path . '/' . $year . '/' . $moda . '_' . $slug;
+
+        // create desired folders
+        if( ! is_dir($path) ) {
+            mkdir($path, 0755, true);
+        }
+
+        // append file name to path
+        $file = $path . $file_name;
+
+        // if a file with this name already exists
+        if( is_file($file) ) {
+            $file_time = filemtime($file);
+
+            // get uid of existing file
+            $lines = file($file);
+            $file_uid = $lines[1];
+            $file_uid = str_replace("uid: '", "", $file_uid);
+            $file_uid = rtrim($file_uid, "'".PHP_EOL);
+
+            if( $file_time === $last_modified
+             && $file_uid === $uid ) {
+                // leave if file exists and hasn't changed
+                return;
+            }
+
+            // handle events with the same slug => two events have the same title
+//             if( $file_uid !== $uid ) {
+                // create token and append it to the slug
+                $token = substr(md5($uid . date('d-m-Y H:i', $start)), 0, 6);
+                $path = str_replace($slug, $slug . '-' . $token, $path);
+
+                // create folder and new filename
+                if( ! is_dir($path) ) {
+                    mkdir($path, 0755, true);
+                }
+
+                $file = $path . $file_name;
+//             }
+        }
+
+        // append file to the list of files
+        $files[$start . '__' . $uid] = $file;
+
+        // handle recurrences
+//        if( isset($recurrence_id) ) {
+//        }
+
+        // double ' to make it work as title
+        $title = str_replace("'", "''", $summary);
+
+        // prepare file content
+        $content  = "---".PHP_EOL;
+        $content .= "uid: '{$uid}'".PHP_EOL;
+        $content .= "title: '{$title}'".PHP_EOL;
+
+        if( is_array($categories) ) {
+            $content .= "taxonomy:".PHP_EOL;
+            $content .= "    category:".PHP_EOL;
+            foreach ( $categories as $category ) {
+                $content .= "        - {$category}".PHP_EOL;
+            }
+        }
+
+        $content .= "event:".PHP_EOL;
+        $content .= "    start: '" . date('d-m-Y H:i', $start) . "'".PHP_EOL;
+        $content .= "    end: '" . date('d-m-Y H:i', $end) . "'".PHP_EOL;
+
+/*        if( is_array($rrule) ) {
+            foreach ( $rrule as $rule ) {
+                $rule = explode('=', $rule);
+
+                switch( $rule[0] ) {
+                    case "FREQ":
+                        $freq = "    freq: " . strtolower($rule[1]) .PHP_EOL;
+                        break;
+
+                    case "BYDAY":
+                        // replace iCal days with plugin days
+                        $search = array("MO", "TU", "WE", "TH", "FR", "SA", "SU");
+                        $replace = array("M", "T", "W", "R", "F", "S", "U");
+                        $days = str_replace($search, $replace, $rule[1]);
+
+                        // remove commas
+                        $days = str_replace(',', '', $days);
+                        $repeat = "    repeat: {$days}".PHP_EOL;
+
+                        // daily does not work with repeat so delete it
+                        if( strpos($freq, "daily") !== false ) {
+                            $freq = "";
+                        }
+                        break;
+/*
+                    // currently unsupported iCal rrules
+                    case "BYWEEKNO":
+                        break;
+
+                    case "BYMONTH":
+                        break;
+
+                    case "BYMONTHDAY":
+                        break;
+
+                    case "BYYEARDAY":
+                        break;
+
+                    case "BYSETPOS":
+                        break;
+
+                    case "COUNT":
+                        break;
+
+                    case "INTERVAL":
+                        break;
+
+                    case "WKST":
+                        break;
+* /
+                    case "UNTIL":
+                        $time = strtotime($rule[1]);
+                        $until = "    until: '" . date('d-m-Y', $time) . "'".PHP_EOL;
+                        break;
+                }
+            }
+
+            $content .= $repeat;
+            $content .= $freq;
+            $content .= $until;
+        }*/
+
+        if( isset($location) && $location !== "" ) {
+            $content .= "    location: '{$location}'".PHP_EOL;
+        }
+
+        $content .= "---".PHP_EOL;
+        $content .= "".PHP_EOL;
+        $content .= "{$description}".PHP_EOL;
+
+        // write content to file
+        $fp = fopen($file, 'w');
+        fwrite($fp, $content);
+        fclose($fp);
+
+        // set modification time
+        touch($file, $last_modified);
+    }
+
+
+    private function rmdir_recursive( $dir )
+    {
+        if (is_dir("$dir")) {
+            foreach(scandir($dir) as $file) {
+                if ('.' === $file || '..' === $file)
+                    continue;
+
+                if (is_dir("$dir/$file")) {
+                    $this->rmdir_recursive("$dir/$file");
+                }
+                else {
+                    unlink("$dir/$file");
+                }
+            }
+
+            rmdir($dir);
+        }
+    }
+}

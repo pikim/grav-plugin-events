@@ -1,11 +1,11 @@
 <?php
-/**                          
- *     __                         __              
- *    / /_  _________ _____  ____/ /_____________ 
+/**
+ *     __                         __
+ *    / /_  _________ _____  ____/ /_____________
  *   / __ \/ ___/ __ `/ __ \/ __  / ___/ ___/ __ \
  *  / /_/ / /  / /_/ / / / / /_/ / /  / /__/ /_/ /
- * /_.___/_/   \__,_/_/ /_/\__,_/_/   \___/\____/ 
- *                                                              
+ * /_.___/_/   \__,_/_/ /_/\__,_/_/   \___/\____/
+ *
  * Designed + Developed 
  * by Kaleb Heitzman
  * https://brandr.co
@@ -16,6 +16,7 @@ namespace Grav\Plugin;
 
 // import classes
 require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__.'/classes/iCalendarProcessor.php';
 require_once __DIR__.'/classes/calendarProcessor.php';
 require_once __DIR__.'/classes/eventsProcessor.php';
 
@@ -49,13 +50,13 @@ use Events\EventsProcessor;
  *
  * ```
  * event:
- *  	start: 01/01/2015 6:00pm
- *   	end: 01/01/2015 7:00pm
- *    	repeat: MTWRFSU
- *    	freq: weekly
- *    	until: 01/01/2020
- *    	location: Raleigh, NC
- *    	coordinates: 35.7795897, -78.6381787
+ *     start: 01/01/2015 6:00pm
+ *     end: 01/01/2015 7:00pm
+ *     repeat: MTWRFSU
+ *     freq: weekly
+ *     until: 01/01/2020
+ *     location: Raleigh, NC
+ *     coordinates: 35.7795897, -78.6381787
  * ```
  *
  * If you use the Admin pluin, the events plugin will automatically geo-decode
@@ -135,6 +136,7 @@ class EventsPlugin extends Plugin
 
 			$this->enable([
 				'onAdminSave' => ['onAdminSave', 0],
+				'onAdminAfterSave' => ['onAdminAfterSave', 0],
 			]);
 
 			return;
@@ -209,16 +211,16 @@ class EventsPlugin extends Plugin
 	{
 		$types = $event->types;
 
-	    /* @var Locator $locator */
-	    $locator = Grav::instance()['locator'];
+		/* @var Locator $locator */
+		$locator = Grav::instance()['locator'];
 
-	    // Set blueprints & templates.
-	    $types->scanBlueprints($locator->findResource('plugin://events/blueprints'));
-	    $types->scanTemplates($locator->findResource('plugin://events/templates'));
+		// Set blueprints & templates.
+		$types->scanBlueprints($locator->findResource('plugin://events/blueprints'));
+		$types->scanTemplates($locator->findResource('plugin://events/templates'));
 
-	    // reverse the FUBARd order of blueprints
-	    $event = array_reverse($types['event']);
-	    $types['event'] = $event;
+		// reverse the FUBARd order of blueprints
+		$event = array_reverse($types['event']);
+		$types['event'] = $event;
 	}
 
 	/**
@@ -241,8 +243,8 @@ class EventsPlugin extends Plugin
 		$assets = 			$this->grav['assets'];
 
 		/** @var Uri $uri */
-    	$uri = 				$this->grav['uri'];
-    	$type = 			$uri->extension();
+		$uri = 				$this->grav['uri'];
+		$type = 			$uri->extension();
 
 		// only load the vars if calendar page
 		if ($page->template() == 'calendar')
@@ -304,38 +306,55 @@ class EventsPlugin extends Plugin
 	 * @return void
 	 */
 	public function onAdminSave(Event $event)
-  {
+	{
 		// get the ojbect being saved
-  	$obj = $event['object'];
+	$obj = $event['object'];
 
-		// check to see if the object is a `Page` with template `event`
-    if ($obj instanceof Page &&  $obj->template() == 'event' ) {
+	// check to see if the object is a `Page` with template `event`
+	if ($obj instanceof Page &&  $obj->template() == 'event' ) {
 
-			// get the header
-			$header = $obj->header();
+		// get the header
+		$header = $obj->header();
 
-			// check for location information
-    	if ( isset( $header->event['location'] ) && ! isset( $header->event['coordinates'] ) ) {
-	    	$location = $header->event['location'];
+		// check for location information
+		if ( isset( $header->event['location'] ) && ! isset( $header->event['coordinates'] ) ) {
+			$location = $header->event['location'];
 
-	    	// build a url
-	    	$url = "http://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($location);
+			// build a url
+			$url = "http://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($location);
 
-	    	// fetch the results
-				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, $url);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-				$geoloc = json_decode(curl_exec($ch), true);
+			// fetch the results
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			$geoloc = json_decode(curl_exec($ch), true);
 
-				// build the coord string
-				$lat = $geoloc['results'][0]['geometry']['location']['lat'];
-				$lng = $geoloc['results'][0]['geometry']['location']['lng'];
-				$coords = $lat . ", " . $lng;
+			// build the coord string
+			$lat = $geoloc['results'][0]['geometry']['location']['lat'];
+			$lng = $geoloc['results'][0]['geometry']['location']['lng'];
+			$coords = $lat . ", " . $lng;
 
-				// set the header info
-				$header->event['coordinates'] = $coords;
-				$obj->header($header);
-    	}
-    }
+			// set the header info
+			$header->event['coordinates'] = $coords;
+			$obj->header($header);
+		}
+	}
   }
+
+	/**
+	 * Process iCalendar Files
+	 *
+	 * This hook fires the processing of the iCalendar file(s).
+	 *
+	 * @param  Event  $event
+	 * @since  1.0.15 Location Field Update
+	 * @return void
+	 */
+	public function onAdminAfterSave(Event $event)
+	{
+		$icalendar = new \Events\iCalendarProcessor();
+
+		// process iCalendar file(s)
+		$icalendar->process();
+	}
 }

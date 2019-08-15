@@ -64,6 +64,24 @@ form:
               type: text
               label: Events Collection
               default: "'@page': '/events'"
+            icalendar_section:
+              type: section
+              title: iCalendars
+              underline: true
+            icalendar_folder:
+              type: text
+              label: Virtual folder for iCalendar events
+              help: Folder where the events are being stored. Will be completely deleted and recreated when settings are saved.
+              default: "/ical"
+            icalendars:
+              type: editor
+              label: iCalendar files
+              help: The files that will be parsed for event creation. Must only be one file per line.
+              codemirror:
+                mode: 'text/plain'
+                indentUnit: 0
+                lineNumbers: true
+                styleActiveLine: true
 
         formatting:
           type: tab
