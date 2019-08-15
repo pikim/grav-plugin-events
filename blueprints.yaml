@@ -27,43 +27,52 @@ form:
           type: tab
           title: Processing
           fields:
-            processing:
+#            processing_section:
+#              type: section
+#              title: Processing
+#              underline: true
+#            event_template_types:
+#              type: text
+#              label: Event Template Types
+#              help: What templates should be checked for event related content?
+#              default: event
+#            display_months_out:
+#              type: text
+#              label: Months Out to Display Events
+#              help: In integer form, how many months out should repeating dates display?
+#              default: 3
+#              placeholder: 3
+#            enable_single_event_filter:
+#              type: toggle
+#              label: Enable Single Event Filter
+#              highlight: 1
+#              default: 1
+#              options:
+#                1: Enabled
+#                0: Disabled
+#              validate:
+#                type: bool
+#            collections_section:
+#              type: section
+#              title: Collections
+#              underline: true
+#            filter_combinator:
+#              type: text
+#              label: Filter Combinator
+#              default: and
+#            events_collection:
+#              type: text
+#              label: Events Collection
+#              default: "'@page': '/events'"
+            events_section:
               type: section
-              title: Processing
+              title: Events
               underline: true
-            event_template_types:
+            events_subpage:
               type: text
-              label: Event Template Types
-              help: What templates should be checked for event related content?
-              default: event
-            display_months_out:
-              type: text
-              label: Months Out to Display Events
-              help: In integer form, how many months out should repeating dates display?
-              default: 3
-              placeholder: 3
-            enable_single_event_filter:
-              type: toggle
-              label: Enable Single Event Filter
-              highlight: 1
-              default: 1
-              options:
-                1: Enabled
-                0: Disabled
-              validate:
-                type: bool
-            collections:
-              type: section
-              title: Collections
-              underline: true
-            filter_combinator:
-              type: text
-              label: Filter Combinator
-              default: and
-            events_collection:
-              type: text
-              label: Events Collection
-              default: "'@page': '/events'"
+              label: Events subpage
+              help: Subpage under which the events listing is available.
+              default: "/events"
             icalendar_section:
               type: section
               title: iCalendars
@@ -92,6 +101,22 @@ form:
               type: section
               title: Calendar
               underline: true
+            calendar.first_dow:
+              type: radio
+              label: First day of the week
+              default: 0
+              options:
+                5: Saturday
+                6: Sunday
+                0: Monday
+            calendar.day_char:
+              type: number
+              label: Day name length
+              help: Show only the first n characters of the day name (0 to show full name).
+              default: 0
+              validate:
+                min: 0
+                max: 20
             calendar.month:
               type: text
               label: Month Display
@@ -112,6 +137,21 @@ form:
               type: text
               label: Details Time of Day
               default: g:ia
+
+            events:
+              type: section
+              title: Events
+              underline: true
+            events.enable_categories:
+              type: toggle
+              label: Enable Event Categories
+              highlight: 1
+              default: 0
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool
 
             event_item:
               type: section
