@@ -1,12 +1,15 @@
 # v1.1.0
 ## 08/15/2019
-* added ics file parsing
-* added German translation
-* fixed translation of weekdays
-* merged some code from several pull requests and known issues
-* removed unused elements from admin site
-* updated dependencies
-* some minor changes
+1. [](#new)
+    * added ics file parsing
+    * added German translation
+    * merged some code from several pull requests and known issues
+2. [](#improved)
+    * removed unused elements from admin site
+    * updated dependencies
+    * some minor changes
+3. [](#bugfix)
+    * fixed translation of weekdays
 
 # v1.0.16
 ## 12/25/2016
