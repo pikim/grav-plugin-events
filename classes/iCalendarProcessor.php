@@ -1,15 +1,4 @@
 <?php
-/**
- *                  __ _           _ _           _    _
- *                 / _| |         | | |         | |  | |
- *   ___ _ __ __ _| |_| |_ ___  __| | |__  _   _| | _| |__
- *  / __| '__/ _` |  _| __/ _ \/ _` | '_ \| | | | |/ / '_ \
- * | (__| | | (_| | | | ||  __/ (_| | |_) | |_| |   <| | | |
- *  \___|_|  \__,_|_|  \__\___|\__,_|_.__/ \__, |_|\_\_| |_|
- *                                          __/ |
- * Designed + Developed by Kaleb Heitzman  |___/
- * (c) 2016
- */
 
 namespace Events;
 
@@ -19,35 +8,33 @@ use Carbon\Carbon;
 use ICal\ICal;
 
 /**
- * Events Plugin Calendar Class
+ * Events Plugin iCalendar Class
  *
- * The Events Calendar Class provides variables for Twig to create a dynamic
- * calendar with previous and next links that relate to month and year. This
- * class is also used to display a traditional calendar and form the rows
- * and columns that make up the calendar. It does not calculate dates or
- * manipulate any information. It's simply for displaying a nice **calendar
- * page** on your Grav website. It is referenced under the
- * `onTwigSiteVariables` hook in the root events plugin file.
+ * The Events iCalendar Class provides variables and functions to read one or
+ * more ics file(s) and creates a page for each event found. The created
+ * events are parsed by the plugin in the usual way.
+ *
+ * Based on the already existing calendarProcessor.php by Kaleb Heitzman.
  *
  * @package    Events
- * @author     Kaleb Heitzman <kalebheitzman@gmail.com>
- * @copyright  2016 Kaleb Heitzman
+ * @author     Michael <pikim@web.de>
+ * @copyright  2019 Michael
  * @license    https://opensource.org/licenses/MIT MIT
- * @version    1.0.15
- * @link       https://github.com/kalebheitzman/grav-plugin-events
- * @since      1.0.0 Initial Release
+ * @version    1.1.0
+ * @link       https://github.com/pikim/grav-plugin-events
+ * @since      1.1.0 Initial Release
  */
 class iCalendarProcessor
 {
     /**
      * @var  plugin config
-     * @since  1.0.0 	Initial Release
+     * @since  1.1.0  Initial Release
      */
     protected $config;
 
     /**
      * @var  Grav locator
-     * @since  1.0.0 	Initial Release
+     * @since  1.1.0  Initial Release
      */
     protected $loc;
 
@@ -56,7 +43,7 @@ class iCalendarProcessor
      *
      * Setup a pointer to plugin config and Grav locator.
      *
-     * @since  1.0.0 Initial Release
+     * @since  1.1.0  Initial Release
      * @return void
      */
     public function __construct()
@@ -71,9 +58,11 @@ class iCalendarProcessor
     /**
      * Process iCalendar file(s)
      *
-     * Process
+     * Deletes the output folder if it already exists, parses the given ics
+     * file(s), sorts them and creates the output folder with the parsed
+     * event(s).
      *
-     * @since  1.0.15 Major Refactor
+     * @since  1.1.0  Initial Release
      * @return void
      */
     public function process()
@@ -110,7 +99,7 @@ class iCalendarProcessor
 
         // get events sorted by date
         $events = $ical->sortEventsWithOrder($ical->events());
-dump($events);
+
         // create an array to hold the filepaths
         // this helps to handle recurrences while creating the pages
         $files = array();
@@ -121,7 +110,45 @@ dump($events);
         }
     }
 
+    /**
+     * Delete folder(s) and file(s)
+     *
+     * Recursively deletes a folder with all subfolder(s) and file(s).
+     *
+     * @since  1.1.0  Initial Release
+     * @return void
+     */
+    private function rmdir_recursive( $dir )
+    {
+        if (is_dir("$dir")) {
+            foreach(scandir($dir) as $file) {
+                if ('.' === $file || '..' === $file)
+                    continue;
 
+                if (is_dir("$dir/$file")) {
+                    $this->rmdir_recursive("$dir/$file");
+                }
+                else {
+                    unlink("$dir/$file");
+                }
+            }
+
+            rmdir($dir);
+        }
+    }
+
+    /**
+     * Creates a new page for a given event.
+     *
+     * Parses a given event and creates the accoring folder and event.md file.
+     *
+     * Currently ignores rrules as the used ics-parser doesn't support them
+     * correctly. Instead, it prefixes each event folder with the month and day
+     * of the according event.
+     *
+     * @since  1.1.0  Initial Release
+     * @return void
+     */
     private function create_page( $ical_path, $event, &$files )
     {
         $file_name = '/event.md';
@@ -306,25 +333,5 @@ dump($events);
 
         // set modification time
         touch($file, $last_modified);
-    }
-
-
-    private function rmdir_recursive( $dir )
-    {
-        if (is_dir("$dir")) {
-            foreach(scandir($dir) as $file) {
-                if ('.' === $file || '..' === $file)
-                    continue;
-
-                if (is_dir("$dir/$file")) {
-                    $this->rmdir_recursive("$dir/$file");
-                }
-                else {
-                    unlink("$dir/$file");
-                }
-            }
-
-            rmdir($dir);
-        }
     }
 }

@@ -1,15 +1,15 @@
 name: Events
-version: 1.0.15
+version: 1.1.0
 description: "The **Events** plugin provides events for a Grav site using event frontmatter."
 icon: calendar
 author:
-  name: Kaleb Heitzman
-  email: kalebheitzman@gmail.com
-  url: http://kheitzman.com
-homepage: http://github.com/kalebheitzman/grav-plugin-events
-demo: http://grav.brandr.co/calendar
-keywords: events, calendar, plugin
-bugs: https://github.com/kalebheitzman/grav-plugin-events/issues
+  name: Michael
+  email: pikim@web.de
+  url: none
+homepage: https://github.com/pikim/grav-plugin-events
+demo: none
+keywords: events, calendar, ics, plugin
+bugs: https://github.com/pikim/grav-plugin-events/issues
 license: MIT
 
 dependencies:
