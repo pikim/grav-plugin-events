@@ -150,4 +150,4 @@ Be sure to checkout the [DateTools Plugin](https://github.com/kalebheitzman/grav
 ### Todo/Issues
 
 - properly implement recurring events. Currently the ics-parser has an issue with recurring events ([#196](https://github.com/u01jmg3/ics-parser/issues/196) & [#231](https://github.com/u01jmg3/ics-parser/issues/231)). As a workaround a folder for each occurence of an event is created and the folders are prefixed with month and day.
-- the last recurring event may be missing due to an issue in the ics-parser ([#196](https://github.com/u01jmg3/ics-parser/issues/238)). To work around this the according event in the ics file should last one recurrence longer.
+- the last recurring event may be missing due to an issue in the ics-parser ([#238](https://github.com/u01jmg3/ics-parser/issues/238)). To work around this the according event in the ics file should last one recurrence longer.
