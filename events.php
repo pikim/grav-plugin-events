@@ -6,10 +6,10 @@
  *  / /_/ / /  / /_/ / / / / /_/ / /  / /__/ /_/ /
  * /_.___/_/   \__,_/_/ /_/\__,_/_/   \___/\____/
  *
- * Designed + Developed 
+ * Designed + Developed
  * by Kaleb Heitzman
  * https://brandr.co
- * 
+ *
  * (c) 2016
  */
 namespace Grav\Plugin;
