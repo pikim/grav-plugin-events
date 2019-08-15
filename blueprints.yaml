@@ -5,9 +5,9 @@ icon: calendar
 author:
   name: Michael
   email: pikim@web.de
-  url: none
+  url:
 homepage: https://github.com/pikim/grav-plugin-events
-demo: none
+demo:
 keywords: events, calendar, ics, plugin
 bugs: https://github.com/pikim/grav-plugin-events/issues
 license: MIT
