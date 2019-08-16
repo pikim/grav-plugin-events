@@ -1,55 +1,35 @@
-{% embed 'partials/base.html.twig' %}
-
-{# get events by taxonomy #}
-{% set events =
-    page.collection({
-      'items': {
-        '@taxonomy': {
-          'type': 'event',
-        }
-      },
-      'dateRange': {
-        'start': datetools.today|date('m/d/Y'),
-      },
-      'order': {
-        'by': 'date',
-        'dir': 'asc'
-      },
-      'limit': 10,
-      'pagination': true
-    })
-%}
+{% extends 'partials/base.html.twig' %}
+{% set collection = page.collection() %}
+{% set show_breadcrumbs = header_var('show_breadcrumbs', [page, events])|defined(true) %}
+{% set show_pagination = header_var('show_pagination', [page, events])|defined(true) %}
+{% set show_sidebar = header_var('show_sidebar', [page, events])|defined(true)  %}
 
 {% block content %}
+	{% if show_breadcrumbs and config.plugins.breadcrumbs.enabled %}
+		{% include 'partials/breadcrumbs.html.twig' %}
+	{% endif %}
 
-  <div class="event-container">
+	{{ page.content|raw }}
 
-    <section class="event-listing">
+<div class="events-container">
+	<section class="events-listing">
+	{% if collection|length != 0 %}
+		{% for event in collection %}
+			{% include 'partials/event_item.html.twig' with { 'page': event, 'truncate': true, 'single': false } %}
+		{% endfor %}
+	{% else %}
+		<h3>{{ "PLUGIN_EVENTS.EVENTS.NO_EVENTS_TITLE"|t }}</h3>
+		<p>{{ ("PLUGIN_EVENTS.EVENTS.NO_EVENTS_CONTENT"|t(uri.param('category')))|markdown }}</p>
+	{% endif %}
+	</section>
+{#{% include 'partials/events_sidebar.html.twig' with { 'page': page.parent } %}#}
+</div>
 
-      {% if config.plugins.breadcrumbs.enabled %}
-        {% include 'partials/breadcrumbs.html.twig' %}
-      {% endif %}
-
-      {% if events|length != 0 %}
-        {% for event in events %}
-          {% include 'partials/event_item.html.twig' with { 'page': event , 'truncate': true, 'single': false } %}      
-        {% endfor %}
-      {% else %}
-        <h3>{{ "PLUGIN_EVENTS.EVENTS.NO_EVENTS_TITLE"|t }}</h3>
-        <p>{{ ("PLUGIN_EVENTS.EVENTS.NO_EVENTS_CONTENT"|t(uri.param('category')))|markdown }}</p>
-      {% endif %}
-
-    </section>
-
-    {% include 'partials/events_sidebar.html.twig' with {'page':page.parent} %}
-
-  </div>
-
-  {# Render the pagination list #}
-  {% if config.plugins.pagination.enabled and events.params.pagination %}
-      {% include 'partials/pagination.html.twig' with {'base_url':page.url, 'pagination':collection.params.pagination} %}
-  {% endif %}
+{# Render the pagination list #}
+{% if show_pagination and config.plugins.pagination.enabled and collection.params.pagination %}
+<div id="listing-footer">
+    {% include 'partials/pagination.html.twig' with { base_url: page.url, pagination: collection.params.pagination } %}
+</div>
+{% endif %}
 
 {% endblock %}
-
-{% endembed %}

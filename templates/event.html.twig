@@ -1,23 +1,19 @@
-{% embed 'partials/base.html.twig' %}
+{% extends 'partials/base.html.twig' %}
+{% set show_breadcrumbs = header_var('show_breadcrumbs', [page, blog])|defined(true) %}
+{% set show_sidebar = header_var('show_sidebar', [page, blog])|defined(true)  %}
 
 {% block content %}
+	{% if show_breadcrumbs and config.plugins.breadcrumbs.enabled %}
+		{% include 'partials/breadcrumbs.html.twig' %}
+	{% endif %}
+
+	{{ page.content|raw }}
 
 <div class="event-container">
-
 	<section class="event-listing">
-
-		{% if config.plugins.breadcrumbs.enabled %}
-			{% include 'partials/breadcrumbs.html.twig' %}
-		{% endif %}
-
-		{% include 'partials/event_item.html.twig' with {'event':page.parent, 'truncate':false, 'single':true} %}
-
+	{% include 'partials/event_item.html.twig' with { 'event': page.parent, 'truncate': false, 'single': true } %}
 	</section>
-
-	{% include 'partials/events_sidebar.html.twig' with {'page':page.parent} %}
-
+	{% include 'partials/events_sidebar.html.twig' with { 'page': page.parent } %}
 </div>
 
 {% endblock %}
-
-{% endembed %}

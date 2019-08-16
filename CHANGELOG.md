@@ -13,9 +13,9 @@
 
 # v1.0.16
 ## 12/25/2016
-1 [](#new)
+1. [](#new)
 	* Added the ability to add date exceptions to events
-1 [](#improved)
+1. [](#improved)
 	* More intuitive calendar navigation
 
 # v1.0.15

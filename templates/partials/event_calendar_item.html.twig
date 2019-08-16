@@ -1,11 +1,11 @@
-<div class="left-column">
-	<a href="{{ event.url }}" class="image-box" style="background-image: url({{ event.media.images|first.cropResize(400,400).url() }})">
-    	<time class="event-time dt-start" datetime="{{ event.header.event.start|date("c") }}">{{ event.header.event.start|date(config.plugins.events.calendar.details.time) }}</time>
-    </a>
+<div class="event-item-left-column">
+	<a href="{{ event.url }}" class="event-item-image-box" style="background-image: url({{ event.media.images|first.cropResize(400,400).url() }})">
+		<time class="event-item-time dt-start" datetime="{{ event.header.event.start|date("c") }}">{{ event.header.event.start|date(config.plugins.events.calendar.details.time) }}</time>
+	</a>
 </div>
-<div class="right-column">	
-    <p class="event-title">
-    	<a href="{{ event.url }}" class="p-name u-url">{{ event.title }}</a>
-    </p>
-    <div class="event-summary">{{ event.summary(50) }}</div>
+<div class="event-item-right-column">
+	<p class="event-item-title">
+		<a href="{{ event.url }}" class="p-name u-url">{{ event.title }}</a>
+	</p>
+	<div class="event-item-summary">{{ event.summary(50) }}</div>
 </div>

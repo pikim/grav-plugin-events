@@ -1,51 +1,59 @@
 <article class="event-article">
-
     <header class="event-header">
-      
-      {% set image = page.media.images|first %}
-      {% if image != null %}
-          {{ image.cropZoom(960,280).html }}
-      {% endif %}
-
+    {% set image = page.media.images|first %}
+    {% if image != null %}
+        {{ image.cropZoom(960,280).html }}
+    {% endif %}
     </header>
 
-    <section class="event-content">
-      <div class="left-column">
-        <time class="event-date" datetime="{{ page.date|date("c") }}">
-          <span class="day">{{ page.header.event.start|date(config.plugins.events.event_item.day) }}</span>
-          <span class="month">{{ page.header.event.start|date(config.plugins.events.event_item.month) }}</span>
-          <span class="time">
-            {{ page.header.event.start|date(config.plugins.events.event_item.start_time) }}
-            {% if page.header.event.end %}
-              &ndash;{{ page.header.event.end|date(config.plugins.events.event_item.end_time) }}
-            {% endif %}
-          </span>
-          <span class="year">{{ page.header.event.start|date("Y") }}</span>
-        </time>
-
-        {% if page.taxonomy.category %}
-        <div class="categories">
-          <span class="event-tags">
-              {% for category in page.taxonomy.category %}
-              <a href="{{ event.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>
-              {% endfor %}
-          </span>
-        </div>
-        {% endif %}
-      </div>
-      <div class="right-column">
-
+    <section class="event">
+        <div class="event-left-column">
+            <time class="event-date" datetime="{{ page.date|date("c") }}">
         {% if single == true %}{# individual content page #}
-          <h2 class="event-title">{{ page.title }}</h2>
-          <div class="event-content">{{ page.content }}</div>
-           {% include 'partials/event_meta.html.twig' with { 'page': page } %}
+            <span class="event-day">{{ page.header.event.start|date(config.plugins.events.event_item.day) }}.</span>
+            <span class="event-month">{{ 'GRAV.MONTHS_OF_THE_YEAR'|ta(page.header.event.start|date('m')-1) }}</span>
+            <span class="event-year">{{ page.header.event.start|date("Y") }},</span>
+            <span class="event-time">
+                {{ page.header.event.start|date(config.plugins.events.event_item.start_time) }}
+                {% if page.header.event.end %}
+                    &ndash;{{ page.header.event.end|date(config.plugins.events.event_item.end_time) }}
+                {% endif %}
+            </span>
 
-        {% else %}{# main listing page #}          
-          <h2 class="event-title"><a href="{{ page.url }}">{{ page.title }}</a></h2>
-          <div class="event-summary">{{ page.summary(300) }} <span class="read-more"><a href="{{ page.url }}">{{ "PLUGIN_EVENTS.EVENTS.READ_MORE"|t }}</a></span></div>
+        {% else %}{# main listing page #}
+            <span class="event-day">{{ page.header.event.start|date(config.plugins.events.event_item.day) }}</span>
+            <span class="event-month">{{ 'GRAV.MONTHS_OF_THE_YEAR'|ta(page.header.event.start|date('m')-1)|slice(0,3) }}</span>
+            <!--<span class="event-month">{{ page.header.event.start|date(config.plugins.events.event_item.month) }}</span>-->
+            <span class="event-time">
+                {{ page.header.event.start|date(config.plugins.events.event_item.start_time) }}&ndash;{{ page.header.event.end|date(config.plugins.events.event_item.end_time) }}
+            </span>
+            <span class="event-year">{{ page.header.event.start|date("Y") }}</span>
         {% endif %}
-      </div>
-        
-    </section>
+            </time>
+        </div>
 
+        <div class="event-right-column">
+        {% if single == true %} {# individual content page #}
+            <h2 class="event-title">{{ page.title }}</h2>
+            <div class="event-content">{{ page.content }}</div>
+            {% include 'partials/event_meta.html.twig' with { 'page': page } %}
+
+        {% else %} {# main listing page #}
+            <h2 class="event-title"><a href="{{ page.url }}">{{ page.title }}</a></h2>
+            <div class="event-summary">{{ page.summary(300) }}
+                <span class="read-more"><a href="{{ page.url }}">{{ "PLUGIN_EVENTS.EVENTS.READ_MORE"|t }}</a></span>
+            </div>
+        {% endif %}
+
+        {% if page.taxonomy.category and config.plugins.events.events.enable_categories %}
+            <div class="event-categories">
+                <span class="event-tags">
+                {% for category in page.taxonomy.category %}
+                    <a href="{{ event.url|rtrim('/') }}/category{{ config.system.param_sep }}{{ category }}">{{ category }}</a>
+                {% endfor %}
+                </span>
+            </div>
+        {% endif %}
+        </div>
+    </section>
 </article>
