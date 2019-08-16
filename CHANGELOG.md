@@ -5,7 +5,8 @@
     * added German translation
     * merged some code from several pull requests and known issues
 2. [](#improved)
-    * removed unused elements from admin site
+    * removed unused elements from admin site and added some new
+    * revised templates and CSS
     * updated dependencies
     * some minor changes
 3. [](#bugfix)
