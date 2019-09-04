@@ -6,8 +6,10 @@ use PHPUnit\Framework\TestCase;
 class RecurrencesTest extends TestCase
 {
     // phpcs:disable Generic.Arrays.DisallowLongArraySyntax
+    // phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
+    // phpcs:disable Squiz.Commenting.FunctionComment
+    // phpcs:disable Squiz.Commenting.VariableComment
 
-    private $useTimeZoneWithRRules = false;
     private $originalTimeZone = null;
 
     public function setUp()
@@ -99,7 +101,7 @@ class RecurrencesTest extends TestCase
         $this->assertEventFile(
             'UTC',
             './tests/ical/issue-196.ics',
-            6,
+            7,
             $checks
         );
     }
@@ -212,7 +214,7 @@ class RecurrencesTest extends TestCase
         );
     }
 
-    function assertVEVENT($defaultTimezone, $dtstart, $dtend, $rrule, $count, $checks)
+    public function assertVEVENT($defaultTimezone, $dtstart, $dtend, $rrule, $count, $checks)
     {
         $options = $this->getOptions($defaultTimezone);
 
@@ -234,7 +236,7 @@ class RecurrencesTest extends TestCase
         }
     }
 
-    function assertEventFile($defaultTimezone, $file, $count, $checks)
+    public function assertEventFile($defaultTimezone, $file, $count, $checks)
     {
         $options = $this->getOptions($defaultTimezone);
 
@@ -251,10 +253,10 @@ class RecurrencesTest extends TestCase
         }
     }
 
-    function assertEvent($event, $expectedDateString, $message, $timezone = null)
+    public function assertEvent($event, $expectedDateString, $message, $timeZone = null)
     {
-        if ($timezone !== null) {
-            date_default_timezone_set($timezone);
+        if (!is_null($timeZone)) {
+            date_default_timezone_set($timeZone);
         }
 
         $expectedTimeStamp = strtotime($expectedDateString);
@@ -263,7 +265,7 @@ class RecurrencesTest extends TestCase
         $this->assertAttributeEquals($expectedDateString, 'dtstart', $event, $message . 'dtstart mismatch (timestamp is okay)');
     }
 
-    function getOptions($defaultTimezone)
+    public function getOptions($defaultTimezone)
     {
         $options = array(
             'defaultSpan'                 => 2,                            // Default value
@@ -273,12 +275,12 @@ class RecurrencesTest extends TestCase
             'filterDaysAfter'             => null,                         // Default value
             'filterDaysBefore'            => null,                         // Default value
             'skipRecurrence'              => false,                        // Default value
-            'useTimeZoneWithRRules'       => $this->useTimeZoneWithRRules, // Default value: false
         );
+
         return $options;
     }
 
-    function formatIcalEvent($dtstart, $dtend, $rrule)
+    public function formatIcalEvent($dtstart, $dtend, $rrule)
     {
         return array(
             'BEGIN:VEVENT',
@@ -295,7 +297,7 @@ class RecurrencesTest extends TestCase
         );
     }
 
-    function getIcalHeader()
+    public function getIcalHeader()
     {
         return array(
             'BEGIN:VCALENDAR',
@@ -307,7 +309,7 @@ class RecurrencesTest extends TestCase
         );
     }
 
-    function getIcalFooter()
+    public function getIcalFooter()
     {
         return array('END:VCALENDAR');
     }
