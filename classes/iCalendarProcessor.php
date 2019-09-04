@@ -71,17 +71,19 @@ class iCalendarProcessor
         $ical_path = $this->loc . '/user/pages' . $this->config['icalendar_folder'];
 
         // clear/delete folder first
-        $this->rmdir_recursive($ical_path);
+        if( is_dir($ical_path) ) {
+            $this->rmdir_recursive($ical_path);
+        }
 
         // recreate desired folder
         if( ! is_dir($ical_path) ) {
             mkdir($ical_path, 0755, true);
         }
 
-        // get the single iCalendar files as array
+        // get the single iCalendar file(s) as array
         $ical_files = explode("\r\n", $this->config['icalendars']);
 
-        // open and parse iCalendar files
+        // open and parse iCalendar file(s)
         $ical = new ICal(
             $ical_files,
             array(
@@ -91,15 +93,13 @@ class iCalendarProcessor
                 'disableCharacterReplacement' => false, // Default value
                 'filterDaysAfter'             => null,  // Default value
                 'filterDaysBefore'            => null,  // Default value
-                'replaceWindowsTimeZoneIds'   => false, // Default value
                 'skipRecurrence'              => false, // Default value
-                'useTimeZoneWithRRules'       => false, // Default value
             )
         );
 
         // get events sorted by date
         $events = $ical->sortEventsWithOrder($ical->events());
-
+//dump($events);
         // create an array to hold the filepaths
         // this helps to handle recurrences while creating the pages
         $files = array();
@@ -120,21 +120,19 @@ class iCalendarProcessor
      */
     private function rmdir_recursive( $dir )
     {
-        if (is_dir("$dir")) {
-            foreach(scandir($dir) as $file) {
-                if ('.' === $file || '..' === $file)
-                    continue;
+        foreach(scandir($dir) as $file) {
+            if ('.' === $file || '..' === $file)
+                continue;
 
-                if (is_dir("$dir/$file")) {
-                    $this->rmdir_recursive("$dir/$file");
-                }
-                else {
-                    unlink("$dir/$file");
-                }
+            if (is_dir("$dir/$file")) {
+                $this->rmdir_recursive("$dir/$file");
             }
-
-            rmdir($dir);
+            else {
+                unlink("$dir/$file");
+            }
         }
+
+        rmdir($dir);
     }
 
     /**
