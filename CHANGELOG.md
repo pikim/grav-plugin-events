@@ -1,3 +1,10 @@
+# v1.1.1
+## 10/05/2019
+1. [](#improved)
+    * updated dependencies
+3. [](#bugfix)
+    * merged fix from https://github.com/u01jmg3/ics-parser/issues/238#issuecomment-527717558
+
 # v1.1.0
 ## 08/15/2019
 1. [](#new)

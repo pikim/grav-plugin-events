@@ -157,16 +157,20 @@ class iCalendarProcessor
         $location = $event->location;
         $description = $event->description;
         $last_modified = strtotime($event->last_modified);
-        $recurrence_id = strtotime($event->recurrence_id);
+        if (isset($event->recurrence_id)) {
+            $recurrence_id = strtotime($event->recurrence_id);
+        }
         $start = strtotime($event->dtstart);
         $end = strtotime($event->dtend);
 
         // split if element exists
+        $categories = array();
         if( isset($event->categories) ) {
             $categories = explode(',', $event->categories);
         }
 
         // split if element exists
+        $rrule = array();
         if( isset($event->rrule) ) {
             $rrule = explode(';', $event->rrule);
         }
