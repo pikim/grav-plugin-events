@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "johngrogg/ics-parser",
-            "version": "v2.1.14",
+            "version": "v2.1.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/u01jmg3/ics-parser.git",
-                "reference": "183c649b0a47e4342bb51a7618440139951d5867"
+                "reference": "7c6b7056b2ebc4023666c13c60fa1af4f744afe2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/u01jmg3/ics-parser/zipball/183c649b0a47e4342bb51a7618440139951d5867",
-                "reference": "183c649b0a47e4342bb51a7618440139951d5867",
+                "url": "https://api.github.com/repos/u01jmg3/ics-parser/zipball/7c6b7056b2ebc4023666c13c60fa1af4f744afe2",
+                "reference": "7c6b7056b2ebc4023666c13c60fa1af4f744afe2",
                 "shasum": ""
             },
             "require": {
@@ -60,20 +60,20 @@
                 "ics-parser",
                 "ifb"
             ],
-            "time": "2019-08-15T16:42:42+00:00"
+            "time": "2019-09-10T09:48:10+00:00"
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.24.0",
+            "version": "2.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "934459c5ac0658bc765ad1e53512c7c77adcac29"
+                "reference": "b70da677101cca7b584c7489770d2677c2733593"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/934459c5ac0658bc765ad1e53512c7c77adcac29",
-                "reference": "934459c5ac0658bc765ad1e53512c7c77adcac29",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/b70da677101cca7b584c7489770d2677c2733593",
+                "reference": "b70da677101cca7b584c7489770d2677c2733593",
                 "shasum": ""
             },
             "require": {
@@ -120,14 +120,14 @@
                     "homepage": "http://github.com/kylekatarnls"
                 }
             ],
-            "description": "A API extension for DateTime that supports 281 different languages.",
+            "description": "An API extension for DateTime that supports 281 different languages.",
             "homepage": "http://carbon.nesbot.com",
             "keywords": [
                 "date",
                 "datetime",
                 "time"
             ],
-            "time": "2019-08-31T16:37:55+00:00"
+            "time": "2019-09-30T16:22:22+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
