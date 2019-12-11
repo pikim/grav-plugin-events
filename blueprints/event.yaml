@@ -60,6 +60,10 @@ form:
                 .date:
                   type: date
                   label: Date
+            header.event.facebook_link:
+              type: text
+              label: Facebook Link
+              help: Paste link to Facebook event here
             header.event.lct:
               type: section
               title: Location
