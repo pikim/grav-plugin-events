@@ -85,6 +85,11 @@ class iCalendarProcessor
             mkdir($ical_path, 0755, true);
         }
 
+        // if icalendars isn't set, set it to a default
+        if( ! key_exists('icalendars', $this->config) ) {
+            $this->config['icalendars'] = "";
+        }
+
         // get the single iCalendar file(s) as array
         $ical_files = explode("\r\n", $this->config['icalendars']);
 
