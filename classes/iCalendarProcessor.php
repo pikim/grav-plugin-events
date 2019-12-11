@@ -67,10 +67,15 @@ class iCalendarProcessor
      */
     public function process()
     {
+        // if path to icalendar folder isn't set, set it to a default
+        if( ! key_exists('icalendar_folder', $this->config) ) {
+            $this->config['icalendar_folder'] = "/ical";
+        }
+
         // generate path
         $ical_path = $this->loc . '/user/pages' . $this->config['icalendar_folder'];
 
-        // clear/delete folder first
+        // clear/delete folder first if it exists
         if( is_dir($ical_path) ) {
             $this->rmdir_recursive($ical_path);
         }
