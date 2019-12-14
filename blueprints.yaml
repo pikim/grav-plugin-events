@@ -79,7 +79,7 @@ form:
               underline: true
             icalendar_folder:
               type: text
-              label: Virtual folder for iCalendar events
+              label: Virtual folder for iCalendar events (DO NOT USE FOR OWN CONTENT!)
               help: Folder where the events are being stored. Will be completely deleted and recreated when settings are saved.
               default: "/ical"
             icalendars:
@@ -87,10 +87,11 @@ form:
               label: iCalendar files
               help: The files that will be parsed for event creation. Must only be one file per line.
               codemirror:
-                mode: 'text/plain'
+                mode: "text/plain"
                 indentUnit: 0
                 lineNumbers: true
                 styleActiveLine: true
+              default: ""
 
         formatting:
           type: tab
