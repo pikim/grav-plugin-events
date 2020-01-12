@@ -16,10 +16,10 @@
 {% set nextMonthUrl = page.url ~ '/year:' ~ calendar.next.date|date('Y') ~ '/month:' ~ calendar.next.date|date('m') %}
 {% set currMonthUrl = page.url ~ '/year:' ~ now|date('Y') ~ '/month:' ~ now|date('m') %}
 
-{% set prevYearTitle = 'GRAV.MONTHS_OF_THE_YEAR'|ta(calendar.prevYear|date('n') - 1) ~ calendar.prevYear|date(' Y') %}
-{% set nextYearTitle = 'GRAV.MONTHS_OF_THE_YEAR'|ta(calendar.nextYear|date('n') - 1) ~ calendar.nextYear|date(' Y') %}
-{% set prevMonthTitle = 'GRAV.MONTHS_OF_THE_YEAR'|ta(calendar.prev.date|date('n') - 1) ~ calendar.prev.date|date(' Y') %}
-{% set nextMonthTitle = 'GRAV.MONTHS_OF_THE_YEAR'|ta(calendar.next.date|date('n') - 1) ~ calendar.next.date|date(' Y') %}
+{% set prevYearTitle = calendar.prevYear|dateTranslate('F') ~ calendar.prevYear|date(' Y') %}
+{% set nextYearTitle = calendar.nextYear|dateTranslate('F') ~ calendar.nextYear|date(' Y') %}
+{% set prevMonthTitle = calendar.prev.date|dateTranslate('F') ~ calendar.prev.date|date(' Y') %}
+{% set nextMonthTitle = calendar.next.date|dateTranslate('F') ~ calendar.next.date|date(' Y') %}
 
 	<section class="calendar-table">
 		<table class="calendar">
@@ -33,7 +33,7 @@
 					</th>
 					<th colspan="3" class="calendar-title">
 						<a href="{{ currMonthUrl }}" title="{{ 'PLUGIN_EVENTS.CALENDAR.TODAY'|t }}">
-						{{ 'GRAV.MONTHS_OF_THE_YEAR'|ta(calendar.date|date('n') - 1) ~ calendar.date|date(' Y') }}
+						{{ calendar.date|dateTranslate('F') ~ calendar.date|date(' Y') }}
 						</a>
 					</th>
 					<th class="calendar-buttons">
@@ -46,7 +46,7 @@
 <!--				<tr class="calendar-controls">
 					<th class="calendar-buttons" colspan="4">
 						<a href="{{ prevMonthUrl }}" class="calendar-button" title="{{ prevMonthTitle }}">&lsaquo;</a>
-						{{ 'GRAV.MONTHS_OF_THE_YEAR'|ta(calendar.date|date('n') - 1) }}
+						{{ calendar.date|dateTranslate('F') }}
 						<a href="{{ nextMonthUrl }}" class="calendar-button" title="{{ nextMonthTitle }}">&rsaquo;</a>
 					</th>
 					<th class="calendar-buttons" colspan="3">
@@ -94,7 +94,7 @@
 
 							<div class="calendar-day-details">
 							{% set title_date = calendar.month ~ '/' ~ day ~ '/' ~ calendar.year %}
-								<h4 class="calendar-day">{{ title_date|date(config.plugins.events.calendar.details.title) }}</h4>
+								<h4 class="calendar-day">{{ title_date|dateTranslate(config.plugins.events.calendar.details.title) }}</h4>
 								<ul class="calendar-day-events">
 								{% for event in calendar.events[calendar.year][calendar.month][day] %}
 									{% if event.title %}
@@ -128,7 +128,7 @@
 		{% set day = "now"|date("d") %}
 		{% set month = "now"|date("m") %}
 		{% set year = "now"|date("Y") %}
-			<h4 class="calendar-day">{{ "now"|date(config.plugins.events.calendar.details.title) }}</h4>
+			<h4 class="calendar-day">{{ "now"|dateTranslate(config.plugins.events.calendar.details.title) }}</h4>
 			<ul>
 			{% if calendar.events[year][month][day] == null %}
 				<li>{{ "PLUGIN_EVENTS.CALENDAR.NO_EVENTS"|t }}</li>
