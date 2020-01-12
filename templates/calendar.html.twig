@@ -71,7 +71,8 @@
 				<tr class="calendar-line">
 				{% set startDow = (calendar.date|date('w') +6-fdowOffset) % 7 %}
 				{% set dow = startDow %}
-				{% set month = "now"|date("F") %}
+                                {% set month = "now"|date("F") %}
+                                {% set year = "now"|date("Y") %}
 				{% for day in range(1,calendar.daysInMonth) %}
 					{% if loop.first and startDow != 0 %}
 						<td colspan="{{ startDow }}"></td>
@@ -81,13 +82,13 @@
 						{% if calendar.events[calendar.year][calendar.month][day] != null %}
 							{% set title_date = calendar.month ~ '/' ~ day ~ '/' ~ calendar.year %}
 							<div class="calendar-day">
-								<a class="calendar-day-link{% if (day == calendar.currentDay) and (month == calendar.date|date("F")) %} calendar-active{% endif %}"
+								<a class="calendar-day-link{% if (day == calendar.currentDay) and (month == calendar.date|date("F")) and (year == calendar.date|date("Y")) %} calendar-active{% endif %}"
 									href="#!" title="{{ title_date|date(config.plugins.events.calendar.anchor_title) }}">
 									{{ day }}
 								</a>
 							</div>
 						{% else %}
-							<div class="calendar-day{% if (day == calendar.currentDay) and (month == calendar.date|date("F")) %} calendar-active{% endif %}">
+							<div class="calendar-day{% if (day == calendar.currentDay) and (month == calendar.date|date("F")) and (year == calendar.date|date("Y")) %} calendar-active{% endif %}">
 								<span>{{ day }}</span>
 							</div>
 						{% endif %}
