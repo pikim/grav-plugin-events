@@ -125,8 +125,8 @@
 
 	<section class="calendar-details">
 		<div class="calendar-day-details">
-		{% set day = "now"|date("d") %}
-		{% set month = "now"|date("m") %}
+		{% set day = "now"|date("j") %}
+		{% set month = "now"|date("n") %}
 		{% set year = "now"|date("Y") %}
 			<h4 class="calendar-day">{{ "now"|date(config.plugins.events.calendar.details.title) }}</h4>
 			<ul>
