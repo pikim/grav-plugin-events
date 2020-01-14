@@ -27,6 +27,7 @@ form:
           type: tab
           title: Processing
           fields:
+
 #            processing_section:
 #              type: section
 #              title: Processing
@@ -52,6 +53,7 @@ form:
 #                0: Disabled
 #              validate:
 #                type: bool
+#
 #            collections_section:
 #              type: section
 #              title: Collections
@@ -64,6 +66,7 @@ form:
 #              type: text
 #              label: Events Collection
 #              default: "'@page': '/events'"
+#
             events_section:
               type: section
               title: Events
@@ -73,6 +76,7 @@ form:
               label: Events subpage
               help: Subpage under which the events listing is available.
               default: "/events"
+
             icalendar_section:
               type: section
               title: iCalendars
@@ -174,6 +178,15 @@ form:
               type: text
               label: Date Box End Time
               default: g:ia
+
+            event_meta:
+              type: section
+              title: Event Meta
+              underline: true
+            event_meta.until:
+              type: text
+              label: Until
+              default: F j, Y
 
             event_sidebar:
               type: section
