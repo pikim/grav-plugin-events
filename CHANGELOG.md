@@ -1,5 +1,5 @@
 # v1.1.2
-## 12/09/2019
+## 01/14/2019
 1. [](#improved)
     * merged code from https://github.com/ChrisGitIt/grav-plugin-events/commit/b1296cfd066b40b55a7fe18d831732526946b0bc and https://github.com/ChrisGitIt/grav-plugin-events/commit/63cef2dc3690229651c8cf458dcc6a2af6320357
     * merged code from https://github.com/bmrankin/grav-plugin-events/commit/ea778ebaf9dc5b81dedcbcd4fa65bc32d2adcd17
