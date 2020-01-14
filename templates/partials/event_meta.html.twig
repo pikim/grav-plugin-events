@@ -8,6 +8,6 @@
 {% endif %}
 
 {% if page.header.event.until is defined %}
-    <span>until {{ page.header.event.until|date('F j, Y') }}</span>
+    <span>until {{ page.header.event.until|dateTranslate('F j, Y') }}</span>
 {% endif %}
 </p>
