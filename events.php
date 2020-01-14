@@ -114,6 +114,7 @@ class EventsPlugin extends Plugin
 		return [
 			'onPluginsInitialized' => ['onPluginsInitialized', 0],
 			'onGetPageTemplates'   => ['onGetPageTemplates', 0],
+			'onTwigExtensions'     => ['onTwigExtensions', 0],
 		];
 	}
 
@@ -356,5 +357,17 @@ class EventsPlugin extends Plugin
 
 		// process iCalendar file(s)
 		$icalendar->process();
+	}
+
+	/**
+	 * Association with twig extensions
+	 *
+	 * @since  1.1
+	 * @return void
+	 */
+	public function onTwigExtensions()
+	{
+		require_once(__DIR__ . '/twig/DateTranslationExtension.php');
+		$this->grav['twig']->twig->addExtension(new DateTranslationExtension($this->grav));
 	}
 }
