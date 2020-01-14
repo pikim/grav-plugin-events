@@ -1,3 +1,17 @@
+# v1.1.2
+## 12/09/2019
+1. [](#improved)
+    * merged code from https://github.com/ChrisGitIt/grav-plugin-events/commit/b1296cfd066b40b55a7fe18d831732526946b0bc and https://github.com/ChrisGitIt/grav-plugin-events/commit/63cef2dc3690229651c8cf458dcc6a2af6320357
+    * merged code from https://github.com/bmrankin/grav-plugin-events/commit/ea778ebaf9dc5b81dedcbcd4fa65bc32d2adcd17
+    * added message for virtual folder usage
+    * merged fix from https://github.com/pikim/grav-plugin-events/pull/2
+3. [](#bugfix)
+    * fixed code from https://github.com/kalebheitzman/grav-plugin-events/pull/48/commits/8455f71826f74bda299486772d269468c6ed4347
+    * merged fix from https://github.com/maelanleborgne/grav-plugin-events/commit/8005044f5db0b760fbf74cbff6e4e175f09d5675
+    * fixed issue from https://discourse.getgrav.org/t/there-is-no-direct-support-at-github-for-events-plugin/10733
+    * merged fix from https://github.com/pikim/grav-plugin-events/pull/1
+    * merged fix from https://github.com/pikim/grav-plugin-events/pull/3
+
 # v1.1.1
 ## 10/05/2019
 1. [](#improved)
