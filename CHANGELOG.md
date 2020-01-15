@@ -1,3 +1,8 @@
+# v1.1.3
+## 01/15/2019
+1. [](#improved)
+    * cleaned up settings, made more dates and times formatable, removed some obsolete code
+
 # v1.1.2
 ## 01/14/2019
 1. [](#improved)
