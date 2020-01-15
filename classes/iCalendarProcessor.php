@@ -68,7 +68,7 @@ class iCalendarProcessor
     public function process()
     {
         // if path to icalendar folder isn't set, set it to a default
-        if( ! key_exists('icalendar_folder', $this->config) ) {
+        if ( ! key_exists('icalendar_folder', $this->config) ) {
             $this->config['icalendar_folder'] = "/ical";
         }
 
@@ -76,17 +76,17 @@ class iCalendarProcessor
         $ical_path = $this->loc . '/user/pages' . $this->config['icalendar_folder'];
 
         // clear/delete folder first if it exists
-        if( is_dir($ical_path) ) {
+        if ( is_dir($ical_path) ) {
             $this->rmdir_recursive($ical_path);
         }
 
         // recreate desired folder
-        if( ! is_dir($ical_path) ) {
+        if ( ! is_dir($ical_path) ) {
             mkdir($ical_path, 0755, true);
         }
 
         // if icalendars isn't set, set it to a default
-        if( ! key_exists('icalendars', $this->config) ) {
+        if ( ! key_exists('icalendars', $this->config) ) {
             $this->config['icalendars'] = "";
         }
 
@@ -130,11 +130,11 @@ class iCalendarProcessor
      */
     private function rmdir_recursive( $dir )
     {
-        foreach(scandir($dir) as $file) {
-            if ('.' === $file || '..' === $file)
+        foreach ( scandir($dir) as $file ) {
+            if ( '.' === $file || '..' === $file )
                 continue;
 
-            if (is_dir("$dir/$file")) {
+            if ( is_dir("$dir/$file") ) {
                 $this->rmdir_recursive("$dir/$file");
             }
             else {
@@ -167,7 +167,7 @@ class iCalendarProcessor
         $location = $event->location;
         $description = $event->description;
         $last_modified = strtotime($event->last_modified);
-        if (isset($event->recurrence_id)) {
+        if ( isset($event->recurrence_id) ) {
             $recurrence_id = strtotime($event->recurrence_id);
         }
         $start = strtotime($event->dtstart);
@@ -175,13 +175,13 @@ class iCalendarProcessor
 
         // split if element exists
         $categories = array();
-        if( isset($event->categories) ) {
+        if ( isset($event->categories) ) {
             $categories = explode(',', $event->categories);
         }
 
         // split if element exists
         $rrule = array();
-        if( isset($event->rrule) ) {
+        if ( isset($event->rrule) ) {
             $rrule = explode(';', $event->rrule);
         }
 
@@ -203,7 +203,7 @@ class iCalendarProcessor
         $path = $ical_path . '/' . $year . '/' . $moda . '_' . $slug;
 
         // create desired folders
-        if( ! is_dir($path) ) {
+        if ( ! is_dir($path) ) {
             mkdir($path, 0755, true);
         }
 
@@ -211,7 +211,7 @@ class iCalendarProcessor
         $file = $path . $file_name;
 
         // if a file with this name already exists
-        if( is_file($file) ) {
+        if ( is_file($file) ) {
             $file_time = filemtime($file);
 
             // get uid of existing file
@@ -220,20 +220,20 @@ class iCalendarProcessor
             $file_uid = str_replace("uid: '", "", $file_uid);
             $file_uid = rtrim($file_uid, "'".PHP_EOL);
 
-            if( $file_time === $last_modified
-             && $file_uid === $uid ) {
+            if ( $file_time === $last_modified
+              && $file_uid === $uid ) {
                 // leave if file exists and hasn't changed
                 return;
             }
 
             // handle events with the same slug => two events have the same title
-//             if( $file_uid !== $uid ) {
+//             if ( $file_uid !== $uid ) {
                 // create token and append it to the slug
                 $token = substr(md5($uid . date('d-m-Y H:i', $start)), 0, 6);
                 $path = str_replace($slug, $slug . '-' . $token, $path);
 
                 // create folder and new filename
-                if( ! is_dir($path) ) {
+                if ( ! is_dir($path) ) {
                     mkdir($path, 0755, true);
                 }
 
@@ -245,7 +245,7 @@ class iCalendarProcessor
         $files[$start . '__' . $uid] = $file;
 
         // handle recurrences
-//        if( isset($recurrence_id) ) {
+//        if ( isset($recurrence_id) ) {
 //        }
 
         // double ' to make it work as title
@@ -256,7 +256,7 @@ class iCalendarProcessor
         $content .= "uid: '{$uid}'".PHP_EOL;
         $content .= "title: '{$title}'".PHP_EOL;
 
-        if( is_array($categories) ) {
+        if ( is_array($categories) ) {
             $content .= "taxonomy:".PHP_EOL;
             $content .= "    category:".PHP_EOL;
             foreach ( $categories as $category ) {
@@ -268,11 +268,11 @@ class iCalendarProcessor
         $content .= "    start: '" . date('d-m-Y H:i', $start) . "'".PHP_EOL;
         $content .= "    end: '" . date('d-m-Y H:i', $end) . "'".PHP_EOL;
 
-/*        if( is_array($rrule) ) {
+/*        if ( is_array($rrule) ) {
             foreach ( $rrule as $rule ) {
                 $rule = explode('=', $rule);
 
-                switch( $rule[0] ) {
+                switch ( $rule[0] ) {
                     case "FREQ":
                         $freq = "    freq: " . strtolower($rule[1]) .PHP_EOL;
                         break;
@@ -288,7 +288,7 @@ class iCalendarProcessor
                         $repeat = "    repeat: {$days}".PHP_EOL;
 
                         // daily does not work with repeat so delete it
-                        if( strpos($freq, "daily") !== false ) {
+                        if ( strpos($freq, "daily") !== false ) {
                             $freq = "";
                         }
                         break;
@@ -330,7 +330,7 @@ class iCalendarProcessor
             $content .= $until;
         }*/
 
-        if( isset($location) && $location !== "" ) {
+        if ( isset($location) && $location !== "" ) {
             $content .= "    location: '{$location}'".PHP_EOL;
         }
 

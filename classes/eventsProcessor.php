@@ -227,7 +227,7 @@ class EventsProcessor
 
 			// add categories to $eventCategories
 			if ( isset( $newTaxonomy['category'] ) ) {
-				foreach ($newTaxonomy['category'] as $category) {
+				foreach ( $newTaxonomy['category'] as $category ) {
 					if ( ! in_array($category, $this->eventCategories) ) {
 						array_push($this->eventCategories, $category);
 					}
@@ -285,7 +285,7 @@ class EventsProcessor
 						$s_diff = ( $carbonRules[$rule]-$s_dow );
 						$e_diff = ( $carbonRules[$rule]-$e_dow );
 
-						if ($s_diff != 0) {
+						if ( $s_diff != 0 ) {
 							$dates['start'] = $header->_event['start']->copy()->addDays($s_diff);
 							$dates['end'] = $header->_event['end']->copy()->addDays($e_diff);
 
@@ -334,14 +334,14 @@ class EventsProcessor
 				/**
 				 * Calculate the New Dates based on the Count and Freq
 				 */
-				for( $i=1; $i < $count; $i++ )
+				for ( $i=1; $i < $count; $i++ )
 				{
 					// get the new dates
 					$dates = $this->calculateNewDates( $freq, $i, $start, $end );
 					$header = $page->header();
 
 					// access the saved original for repeating MTWRFSU events
-					if (isset($header->_event['page'])) {
+					if ( isset($header->_event['page']) ) {
 						$page = $header->_event['page'];
 					}
 
@@ -386,7 +386,7 @@ class EventsProcessor
 			$date = Carbon::parse( $header->date );
 			foreach ( $exceptions as $exception ) {
 				$exception = Carbon::parse( $exception['date'] );
-				if( $exception->isSameDay($dates['start']) ) {
+				if ( $exception->isSameDay($dates['start']) ) {
 					return;
 				}
 			}
@@ -463,7 +463,7 @@ class EventsProcessor
 		/**
 		 * Calculate the iteration count depending on frequency set
 		 */
-		switch($freq) {
+		switch ( $freq ) {
 			case 'daily':
 				$count = $until->diffInDays($start);
 				break;
@@ -501,7 +501,7 @@ class EventsProcessor
 	private function calculateNewDates( $freq, $i, \Carbon\Carbon $start, \Carbon\Carbon $end )
 	{
 		// update the start and end dates of the event frontmatter
-		switch($freq) {
+		switch ( $freq ) {
 			case 'daily':
 				$newStart = $start->copy()->addDays($i);
 				$newEnd = $end->copy()->addDays($i);
@@ -618,5 +618,4 @@ class EventsProcessor
 
 		return $rm;
 	}
-
 }
