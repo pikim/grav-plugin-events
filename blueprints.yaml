@@ -122,14 +122,10 @@ form:
               validate:
                 min: 0
                 max: 20
-            calendar.month:
+            calendar.header:
               type: text
-              label: Month Display
-              default: F
-            calendar.year:
-              type: text
-              label: Year Display
-              default: Y
+              label: Header
+              default: F Y
             calendar.anchor_title:
               type: text
               label: Anchor Title
@@ -143,40 +139,25 @@ form:
               label: Details Time of Day
               default: g:ia
 
-            events:
-              type: section
-              title: Events
-              underline: true
-            events.enable_categories:
-              type: toggle
-              label: Enable Event Categories
-              highlight: 1
-              default: 0
-              options:
-                1: Enabled
-                0: Disabled
-              validate:
-                type: bool
-
             event_item:
               type: section
               title: Event Item
               underline: true
+            event_item.date:
+              type: text
+              label: Event Date
+              default: l, F j, Y
             event_item.day:
               type: text
-              label: Date Box Day
+              label: Events Date Box Day
               default: d
             event_item.month:
               type: text
-              label: Date Box Month
+              label: Events Date Box Month
               default: M
-            event_item.start_time:
+            event_item.time:
               type: text
-              label: Date Box Start Time
-              default: g:ia
-            event_item.end_time:
-              type: text
-              label: Date Box End Time
+              label: Events Date Box Time
               default: g:ia
 
             event_meta:
@@ -192,10 +173,20 @@ form:
               type: section
               title: Event Sidebar
               underline: true
+            event_sidebar.enable_categories:
+              type: toggle
+              label: Enable Event Categories
+              highlight: 1
+              default: 0
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool
             event_sidebar.header:
               type: text
               label: Header
-              default: l, F d
+              default: l, F j
             event_sidebar.time:
               type: text
               label: Time

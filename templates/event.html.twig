@@ -7,8 +7,6 @@
 		{% include 'partials/breadcrumbs.html.twig' %}
 	{% endif %}
 
-	{{ page.content|raw }}
-
 <div class="event-container">
 	<section class="event-listing">
 	{% include 'partials/event_item.html.twig' with { 'event': page.parent, 'truncate': false, 'single': true } %}

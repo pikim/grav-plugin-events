@@ -21,7 +21,7 @@
 %}
 
 <aside class="events-sidebar">
-{% if config.plugins.events.events.enable_categories %}
+{% if config.plugins.events.event_sidebar.enable_categories %}
     <h3 class="events-title">{{ "PLUGIN_EVENTS.EVENTS.BY_CATEGORY"|t }}</h3>
     <ul class="event-tags">
     {% for category in eventCategories %}

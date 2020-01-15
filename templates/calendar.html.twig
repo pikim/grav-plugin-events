@@ -16,10 +16,10 @@
 {% set nextMonthUrl = page.url ~ '/year:' ~ calendar.next.date|date('Y') ~ '/month:' ~ calendar.next.date|date('m') %}
 {% set currMonthUrl = page.url ~ '/year:' ~ now|date('Y') ~ '/month:' ~ now|date('m') %}
 
-{% set prevYearTitle = calendar.prevYear|dateTranslate('F') ~ calendar.prevYear|date(' Y') %}
-{% set nextYearTitle = calendar.nextYear|dateTranslate('F') ~ calendar.nextYear|date(' Y') %}
-{% set prevMonthTitle = calendar.prev.date|dateTranslate('F') ~ calendar.prev.date|date(' Y') %}
-{% set nextMonthTitle = calendar.next.date|dateTranslate('F') ~ calendar.next.date|date(' Y') %}
+{% set prevYearTitle = calendar.prevYear|dateTranslate(config.plugins.events.calendar.header) %}
+{% set nextYearTitle = calendar.nextYear|dateTranslate(config.plugins.events.calendar.header) %}
+{% set prevMonthTitle = calendar.prev.date|dateTranslate(config.plugins.events.calendar.header) %}
+{% set nextMonthTitle = calendar.next.date|dateTranslate(config.plugins.events.calendar.header) %}
 
 	<section class="calendar-table">
 		<table class="calendar">
@@ -33,7 +33,7 @@
 					</th>
 					<th colspan="3" class="calendar-title">
 						<a href="{{ currMonthUrl }}" title="{{ 'PLUGIN_EVENTS.CALENDAR.TODAY'|t }}">
-						{{ calendar.date|dateTranslate('F') ~ calendar.date|date(' Y') }}
+						{{ calendar.date|dateTranslate(config.plugins.events.calendar.header) }}
 						</a>
 					</th>
 					<th class="calendar-buttons">
@@ -43,18 +43,6 @@
 						<a href="{{ nextYearUrl }}" class="calendar-button" title="{{ nextYearTitle }}">&raquo;</a>
 					</th>
 				</tr>
-<!--				<tr class="calendar-controls">
-					<th class="calendar-buttons" colspan="4">
-						<a href="{{ prevMonthUrl }}" class="calendar-button" title="{{ prevMonthTitle }}">&lsaquo;</a>
-						{{ calendar.date|dateTranslate('F') }}
-						<a href="{{ nextMonthUrl }}" class="calendar-button" title="{{ nextMonthTitle }}">&rsaquo;</a>
-					</th>
-					<th class="calendar-buttons" colspan="3">
-						<a href="{{ prevYearUrl }}" class="calendar-button" title="{{ prevYearTitle }}">&laquo;</a>
-						{{ calendar.date|date(' Y') }}
-						<a href="{{ nextYearUrl }}" class="calendar-button" title="{{ nextYearTitle }}">&raquo;</a>
-					</th>
-				</tr>-->
 				<tr class="calendar-headings">
 				{% set fdowOffset = config.plugins.events.calendar.first_dow %}
 				{% set dayChar = config.plugins.events.calendar.day_char %}

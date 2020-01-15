@@ -269,7 +269,7 @@ $event-border-radius:					4px !default;
                 .event-left-column {
                     @include span-columns(2);
 
-                    .event-date {
+                    .event-datetime {
                         color: #555;
                         display: block;
                         margin: 0.5rem 1rem 0 0;

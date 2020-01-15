@@ -291,14 +291,14 @@ html {
     margin-right: 0;
 }
 
-.events-container .events-listing .event-article .event .event-left-column .event-date {
+.events-container .events-listing .event-article .event .event-left-column .event-datetime {
     color: #555;
     display: block;
     margin: 0.5rem 1rem 0 0;
     text-align: right;
 }
 
-.events-container .events-listing .event-article .event .event-left-column .event-date .event-day {
+.events-container .events-listing .event-article .event .event-left-column .event-datetime .event-day {
     display: block;
     font-size: 1.75rem;
     font-weight: bold;
@@ -306,7 +306,7 @@ html {
     margin: 0;
 }
 
-.events-container .events-listing .event-article .event .event-left-column .event-date .event-month {
+.events-container .events-listing .event-article .event .event-left-column .event-datetime .event-month {
     display: block;
     font-size: 1rem;
     font-weight: bold;
@@ -315,14 +315,14 @@ html {
     text-transform: uppercase;
 }
 
-.events-container .events-listing .event-article .event .event-left-column .event-date .event-time {
+.events-container .events-listing .event-article .event .event-left-column .event-datetime .event-time {
     display: block;
     font-size: 0.95rem;
     line-height: 1;
     margin-top: 0.75rem;
 }
 
-.events-container .events-listing .event-article .event .event-left-column .event-date .event-year {
+.events-container .events-listing .event-article .event .event-left-column .event-datetime .event-year {
     display: none;
 }
 

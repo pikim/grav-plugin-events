@@ -8,24 +8,21 @@
 
     <section class="event">
         <div class="event-left-column">
-            <time class="event-date" datetime="{{ page.date|date("c") }}">
+            <time class="event-datetime" datetime="{{ page.date|date("c") }}">
         {% if single == true %}{# individual content page #}
-            <span class="event-day">{{ page.header.event.start|dateTranslate(config.plugins.events.event_item.day) }}.</span>
-            <span class="event-month">{{ page.header.event.start|dateTranslate('m') }}</span>
-            <span class="event-year">{{ page.header.event.start|date("Y") }},</span>
+            <span class="event-date">{{ page.header.event.start|dateTranslate(config.plugins.events.event_item.date) }},</span>
             <span class="event-time">
-                {{ page.header.event.start|dateTranslate(config.plugins.events.event_item.start_time) }}
+                {{ page.header.event.start|dateTranslate(config.plugins.events.event_item.time) }}
                 {% if page.header.event.end %}
-                    &ndash;{{ page.header.event.end|dateTranslate(config.plugins.events.event_item.end_time) }}
+                    &ndash; {{ page.header.event.end|dateTranslate(config.plugins.events.event_item.time) }}
                 {% endif %}
             </span>
 
         {% else %}{# main listing page #}
             <span class="event-day">{{ page.header.event.start|dateTranslate(config.plugins.events.event_item.day) }}</span>
-            <span class="event-month">{{ page.header.event.start|dateTranslate('M') }}</span>
-            <!--<span class="event-month">{{ page.header.event.start|dateTranslate(config.plugins.events.event_item.month) }}</span>-->
+            <span class="event-month">{{ page.header.event.start|dateTranslate(config.plugins.events.event_item.month) }}</span>
             <span class="event-time">
-                {{ page.header.event.start|dateTranslate(config.plugins.events.event_item.start_time) }}&ndash;{{ page.header.event.end|dateTranslate(config.plugins.events.event_item.end_time) }}
+                {{ page.header.event.start|dateTranslate(config.plugins.events.event_item.time) }}&ndash;{{ page.header.event.end|dateTranslate(config.plugins.events.event_item.time) }}
             </span>
             <span class="event-year">{{ page.header.event.start|date("Y") }}</span>
         {% endif %}
@@ -45,7 +42,7 @@
             </div>
         {% endif %}
 
-        {% if page.taxonomy.category and config.plugins.events.events.enable_categories %}
+        {% if page.taxonomy.category and config.plugins.events.event_sidebar.enable_categories %}
             <div class="event-categories">
                 <span class="event-tags">
                 {% for category in page.taxonomy.category %}
