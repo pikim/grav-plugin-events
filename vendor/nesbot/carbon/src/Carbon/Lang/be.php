@@ -8,9 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-\Symfony\Component\Translation\PluralizationRules::set(function ($number) {
-    return ((1 == $number % 10) && (11 != $number % 100)) ? 0 : ((($number % 10 >= 2) && ($number % 10 <= 4) && (($number % 100 < 10) || ($number % 100 >= 20))) ? 1 : 2);
-}, 'be');
+// @codeCoverageIgnoreStart
+if (class_exists('Symfony\\Component\\Translation\\PluralizationRules')) {
+    \Symfony\Component\Translation\PluralizationRules::set(function ($number) {
+        return ((1 == $number % 10) && (11 != $number % 100)) ? 0 : ((($number % 10 >= 2) && ($number % 10 <= 4) && (($number % 100 < 10) || ($number % 100 >= 20))) ? 1 : 2);
+    }, 'be');
+}
+// @codeCoverageIgnoreEnd
 
 /*
  * Authors:
@@ -88,6 +92,9 @@ return [
     'from_now' => 'праз :time',
     'after' => ':time пасля',
     'before' => ':time да',
+    'diff_now' => 'цяпер',
+    'diff_yesterday' => 'учора',
+    'diff_tomorrow' => 'заўтра',
     'formats' => [
         'LT' => 'HH:mm',
         'LTS' => 'HH:mm:ss',

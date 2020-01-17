@@ -1,3 +1,8 @@
+# v1.1.4
+## 01/xx/2019
+1. [](#improved)
+    * updated dependencies
+
 # v1.1.3
 ## 01/15/2019
 1. [](#improved)
