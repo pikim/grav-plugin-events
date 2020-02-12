@@ -103,7 +103,7 @@ class DateTranslationExtension extends \Twig_Extension
 			switch ($t) {
 				case 'D':
 					// A textual representation of a day, three letters: Mon through Sun
-					$dateString .= substr($this->translateDay($dateFunction), 0, 3);
+					$dateString .= mb_substr($this->translateDay($dateFunction), 0, 3, "UTF-8");
 					break;
 				case 'l':
 					// A full textual representation of the day of the week: Sunday through Saturday
@@ -111,7 +111,7 @@ class DateTranslationExtension extends \Twig_Extension
 					break;
 				case 'M':
 					// A short textual representation of a month, three letters: Jan through Dec
-					$dateString .= substr($this->translateMonth($dateFunction), 0, 3);
+					$dateString .= mb_substr($this->translateMonth($dateFunction), 0, 3, "UTF-8");
 					break;
 				case 'F':
 					// A full textual representation of a month, such as January or March: January through December
