@@ -307,21 +307,28 @@ class EventsPlugin extends Plugin
 	 */
 	public function onAdminSave(Event $event)
 	{
+		$config = (array) $this->config->get('plugins.events');
+
 		// get the ojbect being saved
 		$obj = $event['object'];
 
 		// check to see if the object is a `Page` with template `event`
-		if ($obj instanceof Page && $obj->template() == 'event' ) {
+		if ( $obj instanceof Page && $obj->template() == 'event' ) {
 
 			// get the header
 			$header = $obj->header();
 
 			// check for location information
 			if ( isset( $header->event['location'] ) && ! isset( $header->event['coordinates'] ) ) {
+				// leave if geocoding is disabled
+				if ( ! $config['enable_geocoding'] ) {
+					return;
+				}
+
 				$location = $header->event['location'];
 
 				// build a url
-				$url = "http://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($location);
+				$url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($location) . "&key=" . $config['api_key'];
 
 				// fetch the results
 				$ch = curl_init();

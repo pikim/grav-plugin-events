@@ -97,6 +97,26 @@ form:
                 styleActiveLine: true
               default: ""
 
+            misc_section:
+              type: section
+              title: Miscellaneous
+              underline: true
+            enable_geocoding:
+              type: toggle
+              label: Enable address geocoding
+              highlight: 1
+              default: 0
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool
+            api_key:
+              type: text
+              label: Google Maps API key
+              help: API key for address translation. Google for 'maps api key' to learn how to get one.
+              default: "none"
+
         formatting:
           type: tab
           title: Date Formatting
