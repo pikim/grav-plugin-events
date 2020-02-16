@@ -27,9 +27,6 @@
     $('.calendar-table').on 'click', 'a.calendar-control', (event) ->
       event.preventDefault()
 
-      tbl_height = $('table.calendar').height();
-      $('.calendar-table').css('height', tbl_height + 'px');
-
       href = $(this).attr('href')
       $.get href, (data) ->
         $calendar = $('table.calendar', data)
