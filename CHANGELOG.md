@@ -1,15 +1,21 @@
 # v1.1.4
-## 01/xx/2019
+## 02/16/2020
 1. [](#improved)
     * updated dependencies
+    * some minor layout changes
+3. [](#bugfix)
+    * fixed date translation issue (https://github.com/pikim/grav-plugin-events/issues/5)
+    * fixed geocoding issue (https://github.com/pikim/grav-plugin-events/issues/4)
+    * fixed an issue with the calendar table height, table is now fully shown
+    * fixed years in changelog
 
 # v1.1.3
-## 01/15/2019
+## 01/15/2020
 1. [](#improved)
     * cleaned up settings, made more dates and times formatable, removed some obsolete code
 
 # v1.1.2
-## 01/14/2019
+## 01/14/2020
 1. [](#improved)
     * merged code from https://github.com/ChrisGitIt/grav-plugin-events/commit/b1296cfd066b40b55a7fe18d831732526946b0bc and https://github.com/ChrisGitIt/grav-plugin-events/commit/63cef2dc3690229651c8cf458dcc6a2af6320357
     * merged code from https://github.com/bmrankin/grav-plugin-events/commit/ea778ebaf9dc5b81dedcbcd4fa65bc32d2adcd17
