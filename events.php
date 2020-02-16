@@ -78,7 +78,7 @@ class EventsPlugin extends Plugin
 	 * Current Carbon DateTime
 	 *
 	 * @since  1.0.0 Initial Release
-	 * @var object Carbon DateTime
+	 * @var    object Carbon DateTime
 	 */
 	protected $now;
 
@@ -89,7 +89,7 @@ class EventsPlugin extends Plugin
 	 * reoccuring events into Grav Pages with updated dates, route, and path.
 	 *
 	 * @since  1.0.0 Initial Release
-	 * @var object Events
+	 * @var    object Events
 	 */
 	protected $events;
 
@@ -99,7 +99,7 @@ class EventsPlugin extends Plugin
 	 * Provides data to be used in the `calendar.html.twig` template.
 	 *
 	 * @since  1.0.0 Initial Release
-	 * @var object Calendar
+	 * @var    object Calendar
 	 */
 	protected $calendar;
 
@@ -128,7 +128,7 @@ class EventsPlugin extends Plugin
 	 * we need into the system.
 	 *
 	 * @since  1.0.0 Initial Release
-	 * @return  void
+	 * @return void
 	 */
 	public function onPluginsInitialized()
 	{
@@ -193,7 +193,7 @@ class EventsPlugin extends Plugin
 	 * and does not add new physical pages to the filesystem.
 	 *
 	 * @since  1.0.0 Initial Release
-	 * @return  void
+	 * @return void
 	 */
 	public function onPagesInitialized()
 	{
@@ -204,7 +204,7 @@ class EventsPlugin extends Plugin
 	/**
 	 * Association with page templates
 	 *
-	 * @param	 Event Event
+	 * @param  Event $event
 	 * @since  1.0.15 Major Refactor
 	 * @return void
 	 */
@@ -232,7 +232,7 @@ class EventsPlugin extends Plugin
 	 * variables.
 	 *
 	 * @since  1.0.0 Initial Release
-	 * @return  void
+	 * @return void
 	 */
 	public function onTwigSiteVariables()
 	{
@@ -293,7 +293,6 @@ class EventsPlugin extends Plugin
 		// styles
 		$css = 'plugin://events/assets/events.min.css';
 		$assets->addCss($css);
-
 	}
 
 	/**
@@ -302,66 +301,66 @@ class EventsPlugin extends Plugin
 	 * This hook fires a reverse geocoding hook for the location field
 	 * on single events.
 	 *
-	 * @param  Event  $event
+	 * @param  Event $event
 	 * @since  1.0.15 Location Field Update
 	 * @return void
 	 */
 	public function onAdminSave(Event $event)
 	{
 		// get the ojbect being saved
-	$obj = $event['object'];
+		$obj = $event['object'];
 
-	// check to see if the object is a `Page` with template `event`
-	if ($obj instanceof Page && $obj->template() == 'event' ) {
+		// check to see if the object is a `Page` with template `event`
+		if ($obj instanceof Page && $obj->template() == 'event' ) {
 
-		// get the header
-		$header = $obj->header();
+			// get the header
+			$header = $obj->header();
 
-		// check for location information
-		if ( isset( $header->event['location'] ) && ! isset( $header->event['coordinates'] ) ) {
-			$location = $header->event['location'];
+			// check for location information
+			if ( isset( $header->event['location'] ) && ! isset( $header->event['coordinates'] ) ) {
+				$location = $header->event['location'];
 
-			// build a url
-			$url = "http://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($location);
+				// build a url
+				$url = "http://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($location);
 
-			// fetch the results
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			$geoloc = json_decode(curl_exec($ch), true);
+				// fetch the results
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				$geoloc = json_decode(curl_exec($ch), true);
 
-			foreach ( $geoloc['results'][0]['address_components'] as $address_component ) {
-				if($address_component['types'][0] === 'country' && $address_component['types'][1] === 'political') {
-					$header->event['country'] = $address_component['long_name'];
+				foreach ( $geoloc['results'][0]['address_components'] as $address_component ) {
+					if($address_component['types'][0] === 'country' && $address_component['types'][1] === 'political') {
+						$header->event['country'] = $address_component['long_name'];
+					}
+
+					if($address_component['types'][0] === 'locality' && $address_component['types'][1] === 'political') {
+						$header->event['city'] = $address_component['long_name'];
+					}
+
+					if($address_component['types'][0] === 'postal_code') {
+						$header->event['zip'] = $address_component['long_name'];
+					}
 				}
 
-				if($address_component['types'][0] === 'locality' && $address_component['types'][1] === 'political') {
-					$header->event['city'] = $address_component['long_name'];
-				}
+				// build the coord string
+				$lat = $geoloc['results'][0]['geometry']['location']['lat'];
+				$lng = $geoloc['results'][0]['geometry']['location']['lng'];
+				$coords = $lat . ", " . $lng;
 
-				if($address_component['types'][0] === 'postal_code') {
-					$header->event['zip'] = $address_component['long_name'];
-				}
+				// set the header info
+				$header->event['coordinates'] = $coords;
+				$obj->header($header);
 			}
-
-			// build the coord string
-			$lat = $geoloc['results'][0]['geometry']['location']['lat'];
-			$lng = $geoloc['results'][0]['geometry']['location']['lng'];
-			$coords = $lat . ", " . $lng;
-
-			// set the header info
-			$header->event['coordinates'] = $coords;
-			$obj->header($header);
 		}
 	}
-  }
 
 	/**
 	 * Process iCalendar Files
 	 *
 	 * This hook fires the processing of the iCalendar file(s).
 	 *
-	 * @param  Event  $event
+	 * @param  Event $event
 	 * @since  1.0.15 Location Field Update
 	 * @return void
 	 */
