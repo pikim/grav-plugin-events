@@ -1,15 +1,15 @@
 <?php
-/**                          
- *     __                         __              
- *    / /_  _________ _____  ____/ /_____________ 
+/**
+ *     __                         __
+ *    / /_  _________ _____  ____/ /_____________
  *   / __ \/ ___/ __ `/ __ \/ __  / ___/ ___/ __ \
  *  / /_/ / /  / /_/ / / / / /_/ / /  / /__/ /_/ /
- * /_.___/_/   \__,_/_/ /_/\__,_/_/   \___/\____/ 
- *                                                              
- * Designed + Developed 
+ * /_.___/_/   \__,_/_/ /_/\__,_/_/   \___/\____/
+ *
+ * Designed + Developed
  * by Kaleb Heitzman
  * https://brandr.co
- * 
+ *
  * (c) 2016
  */
 namespace Events;
@@ -56,7 +56,7 @@ class EventsProcessor
 
 	/**
 	 * @var 	array Event Categories
-	 * @since  	1.0.16 
+	 * @since  	1.0.16
 	 */
 	protected $eventCategories;
 
@@ -317,11 +317,9 @@ class EventsProcessor
 	private function processReoccuringEvents( $collection )
 	{
 		foreach ( $collection as $page ) {
-
 			$header = $page->header();
 
 			if ( isset( $header->event['freq'] ) && isset( $header->event['until'] ) ) {
-
 				// get some params to calculate
 				$freq  = $header->event['freq'];
 				$until = Carbon::parse($header->event['until']);
@@ -334,8 +332,7 @@ class EventsProcessor
 				/**
 				 * Calculate the New Dates based on the Count and Freq
 				 */
-				for ( $i=1; $i < $count; $i++ )
-				{
+				for ( $i=1; $i<$count; $i++ ) {
 					// get the new dates
 					$dates = $this->calculateNewDates( $freq, $i, $start, $end );
 					$header = $page->header();
@@ -372,7 +369,12 @@ class EventsProcessor
 	 * @since  1.0.1 Initial Release
 	 * @return object        Grav Page
 	 */
-	private function clonePage( \Grav\Common\Page\Page $page, $dates, $rule = null ) {
+	private function clonePage( \Grav\Common\Page\Page $page, $dates, $rule = null )
+	{
+		// something went wrong in calculateNewDates, exit function
+		if ( is_null($dates['start']) || is_null($dates['end']) ) {
+			return;
+		}
 
 		// clone the page
 		$clone = clone $page;
@@ -479,6 +481,10 @@ class EventsProcessor
 			case 'yearly':
 				$count = $until->diffInYears($start);
 				break;
+
+			default:
+				$count = 1;
+				break;
 		}
 
 		return $count;
@@ -545,7 +551,12 @@ class EventsProcessor
 				$newStart = $start->copy()->addYears($i);
 				$newEnd = $end->copy()->addYears($i);
 				break;
-		}
+
+			default:
+				$newStart = null;
+				$newEnd = null;
+				break;
+}
 
 		$newDates['start'] = $newStart;
 		$newDates['end'] = $newEnd;
