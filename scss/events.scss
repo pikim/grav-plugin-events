@@ -447,11 +447,11 @@ $event-locationpin-dot-color:                   #50596c;
             margin-top: 0.1rem;
 
             time {
-                @include span-columns(3 of 13);
+                @include span-columns(2);
             }
 
             a {
-                @include span-columns(10 of 13);
+                @include span-columns(10);
             }
 
             @include location-pin(currentColor)
