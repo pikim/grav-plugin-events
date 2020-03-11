@@ -55,7 +55,34 @@ $event-button-hover-border:				2px solid $event-button-color !default;
 $event-button-border-radius:			4px !default;
 $event-button-padding:					0.5rem 2rem;
 $event-border-radius:					4px !default;
+$event-locationpin-color:                       #898d94;
+$event-locationpin-dot-color:                   #50596c;
 
+@mixin location-pin($pin-color: $event-locationpin-color) {
+    span.location-pin {
+        width: .8em;
+        height: .8em;
+        border-radius: 50% 50% 50% 0;
+        background-color: $pin-color;
+        display: inline-block;
+        transform: rotate(-45deg);
+        margin: .2em .05em 0;
+
+        &:after {
+            content: '';
+            width: .374em;
+            height: .374em;
+            margin: .214em 0 0 .214em;
+            background: $event-locationpin-dot-color;
+            position: absolute;
+            border-radius: 50%;
+        }
+    }
+
+    a span.location-pin {
+        opacity: .75;
+    }
+}
 
 /* html5 .calendar-hide */
 .calendar-hide {
@@ -215,6 +242,7 @@ $event-border-radius:					4px !default;
                         .event-item-title {
                             font-weight: bold;
                             margin: 0;
+                            @include location-pin(currentColor)
                         }
 
                         .event-item-summary {
@@ -312,6 +340,11 @@ $event-border-radius:					4px !default;
                         margin: 0.3rem 0rem;
                     }
 
+                    .event-location {
+                        margin: -.5rem 0 0.3rem ;
+                        @include location-pin
+                    }
+
                     .event-summary {
                         * {
                             display: inline;
@@ -352,6 +385,11 @@ $event-border-radius:					4px !default;
 
                     .event-title {
                         margin-top: 1rem;
+                    }
+
+                    .event-location {
+                        margin-top: -.5rem;
+                        @include location-pin
                     }
 
                     .event-categories {
@@ -409,12 +447,14 @@ $event-border-radius:					4px !default;
             margin-top: 0.1rem;
 
             time {
-                @include span-columns(2);
+                @include span-columns(3 of 13);
             }
 
             a {
-                @include span-columns(10);
+                @include span-columns(10 of 13);
             }
+
+            @include location-pin(currentColor)
         }
     }
 }

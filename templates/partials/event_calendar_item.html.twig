@@ -5,7 +5,11 @@
 </div>
 <div class="event-item-right-column">
 	<p class="event-item-title">
+		{% if (config.plugins.events.event_meta.display_location) and (event.header.event.location is not empty) %}
+		<a href="{{ event.url }}" class="p-name u-url" title="{{ event.header.event.location }}">{{ event.title }}<span class="location-pin"></span></a>
+		{% else %}
 		<a href="{{ event.url }}" class="p-name u-url">{{ event.title }}</a>
+		{% endif %}
 	</p>
 	<div class="event-item-summary">{{ event.summary(50) }}</div>
 </div>

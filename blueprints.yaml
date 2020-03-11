@@ -188,6 +188,16 @@ form:
               type: text
               label: Until
               default: F j, Y
+            event_meta.display_location:
+              type: toggle
+              label: Display Event Location
+              highlight: 1
+              default: 0
+              options:
+                1: Enabled
+                0: Disabled
+              validate:
+                type: bool
 
             event_sidebar:
               type: section
