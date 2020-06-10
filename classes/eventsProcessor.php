@@ -193,7 +193,7 @@ class EventsProcessor
 
       //setup event status
       if( isset($event['status']) ) {
-				$carbonEvent['status'] = Carbon::parse( $event['status'] );
+				$carbonEvent['status'] = $event['status'];
         $header->event['status'] = $carbonEvent['status'];
       }
        
