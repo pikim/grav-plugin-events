@@ -193,8 +193,7 @@ class EventsProcessor
 
       //setup event status
       if( isset($event['status']) ) {
-				$carbonEvent['status'] = $event['status'];
-        $header->event['status'] = $carbonEvent['status'];
+        $header->event['status'] = $event['status'];
       }
        
 			// setup grav date
