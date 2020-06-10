@@ -191,6 +191,12 @@ class EventsProcessor
 				$header->event['until'] = Carbon::parse( $event['start'] )->addMonths( $grav['config']->get('plugins.events.display_months_out') )->format('m/d/Y g:ia');
 			}
 
+      //setup event status
+      if( isset($event['status']) ) {
+				$carbonEvent['status'] = Carbon::parse( $event['status'] );
+        $header->event['status'] = $carbonEvent['status'];
+      }
+       
 			// setup grav date
 			$header->date = $header->event['start'];
 			$page->date($header->date);
