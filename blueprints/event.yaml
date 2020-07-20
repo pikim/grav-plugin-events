@@ -12,6 +12,21 @@ form:
           type: tab
           title: Event
           fields:
+            header.event.statussection:
+              type: section
+              underline: true
+              title: Status
+            header.event.status:
+              label: Status
+              type: select
+              options:
+                "": "None"
+                "scheduled": "scheduled"
+                "postponed": "postponed"
+                "canceled": "canceled"
+              title: Status
+              help: Possible values are scheduled, postponed, canceled
+              
             header.event.dt:
               type: section
               title: Date & Time
