@@ -12,22 +12,7 @@ form:
           type: tab
           title: Event
           fields:
-            header.event.statussection:
-              type: section
-              underline: true
-              title: Status
-            header.event.status:
-              label: Status
-              type: select
-              options:
-                "": "None"
-                "scheduled": "scheduled"
-                "postponed": "postponed"
-                "canceled": "canceled"
-              title: Status
-              help: Possible values are scheduled, postponed, canceled
-              
-            header.event.dt:
+            header.event.dt-section:
               type: section
               title: Date & Time
               underline: true
@@ -75,11 +60,21 @@ form:
                 .date:
                   type: date
                   label: Date
-            header.event.facebook_link:
-              type: text
-              label: Facebook Link
-              help: Paste link to Facebook event here
-            header.event.lct:
+            header.event.status-section:
+              type: section
+              underline: true
+              title: Status
+            header.event.status:
+              label: Status
+              type: select
+              options:
+                "": "None"
+                "scheduled": "scheduled"
+                "postponed": "postponed"
+                "cancelled": "cancelled"
+              title: Status
+              help: Possible values are scheduled, postponed, cancelled
+            header.event.location-section:
               type: section
               title: Location
               underline: true
@@ -98,3 +93,11 @@ form:
               type: hidden
             header.event.country:
               type: hidden
+            header.event.miscellaneous-section:
+              type: section
+              underline: true
+              title: Miscellaneous
+            header.event.facebook_link:
+              type: text
+              label: Facebook Link
+              help: Paste link to Facebook event here
