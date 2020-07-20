@@ -33,11 +33,17 @@
         <div class="event-right-column">
         {% if single == true %} {# individual content page #}
             <h2 class="event-title">{{ page.title }}</h2>
+            {% if (config.plugins.events.event_meta.display_location) and (page.header.event.location is not empty) %}
+            <h3 class="event-location"><span class="location-pin"></span>{{ page.header.event.location }}</h3>
+            {% endif %}
             <div class="event-content">{{ page.content }}</div>
             {% include 'partials/event_meta.html.twig' with { 'page': page } %}
 
         {% else %} {# main listing page #}
             <h2 class="event-title"><a href="{{ page.url }}">{{ page.title }}</a></h2>
+            {% if (config.plugins.events.event_meta.display_location) and (page.header.event.location is not empty) %}
+            <h3 class="event-location"><span class="location-pin"></span>{{ page.header.event.location }}</h3>
+            {% endif %}
             <div class="event-summary">{{ page.summary(300) }}
                 <span class="read-more"><a href="{{ page.url }}">{{ "PLUGIN_EVENTS.EVENTS.READ_MORE"|t }}</a></span>
             </div>
