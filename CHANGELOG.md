@@ -1,3 +1,14 @@
+# v1.1.5
+## 07/20/2020
+1. [](#new)
+    * merged code from https://github.com/pikim/grav-plugin-events/pull/12
+    * merged code from https://github.com/pikim/grav-plugin-events/pull/16
+2. [](#improved)
+    * some reordering
+3. [](#bugfix)
+    * fixed https://github.com/pikim/grav-plugin-events/issues/8 by adding default cases to switch statements
+    * merged code from https://github.com/pikim/grav-plugin-events/pull/11
+
 # v1.1.4
 ## 02/16/2020
 1. [](#improved)

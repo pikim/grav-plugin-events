@@ -73,7 +73,7 @@ form:
                 "postponed": "postponed"
                 "cancelled": "cancelled"
               title: Status
-              help: Possible values are scheduled, postponed, cancelled
+              help: Possible values are scheduled, postponed, cancelled.
             header.event.location-section:
               type: section
               title: Location
