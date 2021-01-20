@@ -16,6 +16,10 @@ form:
               type: section
               title: Date & Time
               underline: true
+            header.event.doors_open:
+              type: datetime
+              label: PLUGIN_EVENTS.EVENTS.DOORS_OPEN
+              help: Use the date selector to enter a doors open date and time for this event.
             header.event.start:
               type: datetime
               label: Start
