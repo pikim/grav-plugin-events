@@ -78,6 +78,25 @@ form:
                 "cancelled": "cancelled"
               title: Status
               help: Possible values are scheduled, postponed, cancelled.
+            header.event.ticket-section:
+              type: section
+              underline: true
+              title: Ticket
+            header.event.ticket_show:
+              label: Show
+              type: select
+              options:
+                "hidden": "Hidden"
+                "free": "Free"
+                "price": "Price"
+              title: Show events as free, price or just without information
+            header.event.ticket_price:
+              type: text
+              label: Price
+            header.event.ticket_link:
+              type: text
+              label: Ticket Link
+              help: Paste link to Ticketsystem here
             header.event.location-section:
               type: section
               title: Location
@@ -97,11 +116,3 @@ form:
               type: hidden
             header.event.country:
               type: hidden
-            header.event.miscellaneous-section:
-              type: section
-              underline: true
-              title: Miscellaneous
-            header.event.facebook_link:
-              type: text
-              label: Facebook Link
-              help: Paste link to Facebook event here
