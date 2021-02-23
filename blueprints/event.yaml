@@ -12,6 +12,20 @@ form:
           type: tab
           title: Event
           fields:
+            header.event.status-section:
+              type: section
+              title: Status
+              underline: true
+            header.event.status:
+              label: Status
+              type: select
+              options:
+                "": "None"
+                "scheduled": "scheduled"
+                "postponed": "postponed"
+                "cancelled": "cancelled"
+              title: Status
+              help: Possible values are scheduled, postponed, cancelled.
             header.event.dt-section:
               type: section
               title: Date & Time
@@ -60,20 +74,6 @@ form:
                 .date:
                   type: date
                   label: Date
-            header.event.status-section:
-              type: section
-              underline: true
-              title: Status
-            header.event.status:
-              label: Status
-              type: select
-              options:
-                "": "None"
-                "scheduled": "scheduled"
-                "postponed": "postponed"
-                "cancelled": "cancelled"
-              title: Status
-              help: Possible values are scheduled, postponed, cancelled.
             header.event.location-section:
               type: section
               title: Location
@@ -95,8 +95,8 @@ form:
               type: hidden
             header.event.miscellaneous-section:
               type: section
-              underline: true
               title: Miscellaneous
+              underline: true
             header.event.facebook_link:
               type: text
               label: Facebook Link
