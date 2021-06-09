@@ -71,6 +71,7 @@ form:
             header.event.status:
               label: Status
               type: select
+              default: "scheduled"
               options:
                 "": "None"
                 "scheduled": "scheduled"
@@ -93,6 +94,7 @@ form:
             header.event.ticket_price:
               type: text
               label: Price
+              placeholder: "9.00 $"
             header.event.ticket_link:
               type: text
               label: Ticket Link
