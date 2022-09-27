@@ -81,6 +81,11 @@ form:
               placeholder_key: Name
               placeholder_value: URL
               required: true
+            header.event.topic:
+              type: array
+              label: Topic
+              required: true
+              value_only: true
             header.event.exceptions-section:
               type: section
               title: Exceptions
