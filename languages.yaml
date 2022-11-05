@@ -10,6 +10,7 @@ en:
       NO_EVENTS_TITLE: No events
       NO_EVENTS_CONTENT: There are no upcoming events under the **%s category.**
       READ_MORE: Read More
+      DOORS_OPEN: Doors open
 fr:
   PLUGIN_EVENTS:
     CALENDAR:
@@ -22,6 +23,7 @@ fr:
       NO_EVENTS_TITLE: Aucunes événementsts
       NO_EVENTS_CONTENT: Il n'y a aucun événement à venir dans la catégorie **%s**
       READ_MORE: En savoir plus
+      DOORS_OPEN: Doors open
 de:
   PLUGIN_EVENTS:
     CALENDAR:
@@ -34,3 +36,4 @@ de:
       NO_EVENTS_TITLE: Keine Termine
       NO_EVENTS_CONTENT: Es stehen keine Termine in der Kategorie **%s an.**
       READ_MORE: Mehr
+      DOORS_OPEN: Einlass

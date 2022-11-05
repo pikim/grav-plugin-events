@@ -102,8 +102,8 @@ class DateTranslationExtension extends \Twig_Extension
 		foreach ($tokens as $t) {
 			switch ($t) {
 				case 'D':
-					// A textual representation of a day, three letters: Mon through Sun
-					$dateString .= mb_substr($this->translateDay($dateFunction), 0, 3, "UTF-8");
+					// A textual representation of a day, two letters: Mo through Su
+					$dateString .= mb_substr($this->translateDay($dateFunction), 0, 2, "UTF-8");
 					break;
 				case 'l':
 					// A full textual representation of the day of the week: Sunday through Saturday

@@ -30,6 +30,10 @@ form:
               type: section
               title: Date & Time
               underline: true
+            header.event.doors_open:
+              type: datetime
+              label: PLUGIN_EVENTS.EVENTS.DOORS_OPEN
+              help: Use the date selector to enter a doors open date and time for this event.
             header.event.start:
               type: datetime
               label: Start
@@ -74,7 +78,42 @@ form:
                 .date:
                   type: date
                   label: Date
-            header.event.location-section:
+            header.event.status-section:
+              type: section
+              underline: true
+              title: Status
+            header.event.status:
+              label: Status
+              type: select
+              default: "scheduled"
+              options:
+                "": "None"
+                "scheduled": "scheduled"
+                "postponed": "postponed"
+                "cancelled": "cancelled"
+              title: Status
+              help: Possible values are scheduled, postponed, cancelled.
+            header.event.ticket-section:
+              type: section
+              underline: true
+              title: Ticket
+            header.event.ticket_show:
+              label: Show
+              type: select
+              options:
+                "hidden": "Hidden"
+                "free": "Free"
+                "price": "Price"
+              title: Show events as free, price or just without information
+            header.event.ticket_price:
+              type: text
+              label: Price
+              placeholder: "9.00 $"
+            header.event.ticket_link:
+              type: text
+              label: Ticket Link
+              help: Paste link to Ticketsystem here
+           header.event.location-section:
               type: section
               title: Location
               underline: true
@@ -93,11 +132,3 @@ form:
               type: hidden
             header.event.country:
               type: hidden
-            header.event.miscellaneous-section:
-              type: section
-              title: Miscellaneous
-              underline: true
-            header.event.facebook_link:
-              type: text
-              label: Facebook Link
-              help: Paste link to Facebook event here
