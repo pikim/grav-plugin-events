@@ -37,3 +37,16 @@ de:
       NO_EVENTS_CONTENT: Es stehen keine Termine in der Kategorie **%s an.**
       READ_MORE: Mehr
       DOORS_OPEN: Einlass
+it:
+  PLUGIN_EVENTS:
+    CALENDAR:
+      TODAY: Oggi
+      NO_EVENTS: Oggi non sono pianificati eventi.
+      VIEW_ALL_EVENTS: Visualizza tutti gli eventi.
+    EVENTS:
+      UPCOMING_EVENTS: Prossimi eventi
+      BY_CATEGORY: Categorie degli eventi
+      NO_EVENTS_TITLE: Nessun evento
+      NO_EVENTS_CONTENT: Non ci sono eventi previsti nella categoria **%s**.
+      READ_MORE: "Mostra di più"
+      DOORS_OPEN: Doors open
