@@ -16,13 +16,13 @@ fr:
     CALENDAR:
       TODAY: "Aujourd'hui"
       NO_EVENTS: "Aucun événement n'est prévu pour aujourd'hui."
-      VIEW_ALL_EVENTS: View all events.
+      VIEW_ALL_EVENTS: Voir tous les événements.
     EVENTS:
-      UPCOMING_EVENTS: Upcoming Events
-      BY_CATEGORY: Event Categories
-      NO_EVENTS_TITLE: No events
-      NO_EVENTS_CONTENT: There are no upcoming events under the **%s category.**
-      READ_MORE: Read More
+      UPCOMING_EVENTS: Évènements à venir
+      BY_CATEGORY: Catégories d'événements
+      NO_EVENTS_TITLE: Aucunes événementsts
+      NO_EVENTS_CONTENT: Il n'y a aucun événement à venir dans la catégorie **%s**
+      READ_MORE: En savoir plus
       DOORS_OPEN: Doors open
 de:
   PLUGIN_EVENTS:

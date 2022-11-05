@@ -12,6 +12,20 @@ form:
           type: tab
           title: Event
           fields:
+            header.event.status-section:
+              type: section
+              title: Status
+              underline: true
+            header.event.status:
+              label: Status
+              type: select
+              options:
+                "": "None"
+                "scheduled": "scheduled"
+                "postponed": "postponed"
+                "cancelled": "cancelled"
+              title: Status
+              help: Possible values are scheduled, postponed, cancelled.
             header.event.dt-section:
               type: section
               title: Date & Time
@@ -99,7 +113,7 @@ form:
               type: text
               label: Ticket Link
               help: Paste link to Ticketsystem here
-            header.event.location-section:
+           header.event.location-section:
               type: section
               title: Location
               underline: true
