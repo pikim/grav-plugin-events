@@ -14,7 +14,7 @@
             <span class="event-time">
                 {% set end = "" %}
                 {% if page.header.event.end %}
-                    {% set end = "&ndash;" ~ page.header.event.end|dateTranslate(config.plugins.events.event_item.time) %}
+                    {% set end = " - " ~ page.header.event.end|dateTranslate(config.plugins.events.event_item.time) %}
                 {% endif %}
                 {{ page.header.event.start|dateTranslate(config.plugins.events.event_item.time) ~ end }}
             </span>
@@ -23,7 +23,7 @@
             <span class="event-day">{{ page.header.event.start|dateTranslate(config.plugins.events.event_item.day) }}</span>
             <span class="event-month">{{ page.header.event.start|dateTranslate(config.plugins.events.event_item.month) }}</span>
             <span class="event-time">
-                {{ page.header.event.start|dateTranslate(config.plugins.events.event_item.time) }}&ndash;{{ page.header.event.end|dateTranslate(config.plugins.events.event_item.time) }}
+                {{ page.header.event.start|dateTranslate(config.plugins.events.event_item.time) }}{{ " - " }}{{ page.header.event.end|dateTranslate(config.plugins.events.event_item.time) }}
             </span>
             <span class="event-year">{{ page.header.event.start|date("Y") }}</span>
         {% endif %}
@@ -36,7 +36,7 @@
             {% if (config.plugins.events.event_meta.display_location) and (page.header.event.location is not empty) %}
             <h3 class="event-location"><span class="location-pin"></span>{{ page.header.event.location }}</h3>
             {% endif %}
-            <div class="event-content">{{ page.content }}</div>
+            <div class="event-content">{{ page.content|raw }}</div>
             {% include 'partials/event_meta.html.twig' with { 'page': page } %}
 
         {% else %} {# main listing page #}
@@ -44,7 +44,7 @@
             {% if (config.plugins.events.event_meta.display_location) and (page.header.event.location is not empty) %}
             <h3 class="event-location"><span class="location-pin"></span>{{ page.header.event.location }}</h3>
             {% endif %}
-            <div class="event-summary">{{ page.summary(300) }}
+            <div class="event-summary">{{ page.summary(300)|raw }}
                 <span class="read-more"><a href="{{ page.url }}">{{ "PLUGIN_EVENTS.EVENTS.READ_MORE"|t }}</a></span>
             </div>
         {% endif %}
