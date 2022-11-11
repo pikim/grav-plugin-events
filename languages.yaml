@@ -14,8 +14,8 @@ en:
 fr:
   PLUGIN_EVENTS:
     CALENDAR:
-      TODAY: "Aujourd'hui"
-      NO_EVENTS: "Aucun événement n'est prévu pour aujourd'hui."
+      TODAY: Aujourd'hui
+      NO_EVENTS: Aucun événement n'est prévu pour aujourd'hui.
       VIEW_ALL_EVENTS: Voir tous les événements.
     EVENTS:
       UPCOMING_EVENTS: Évènements à venir
@@ -34,7 +34,7 @@ de:
       UPCOMING_EVENTS: Anstehende Termine
       BY_CATEGORY: Termin-Kategorien
       NO_EVENTS_TITLE: Keine Termine
-      NO_EVENTS_CONTENT: Es stehen keine Termine in der Kategorie **%s an.**
+      NO_EVENTS_CONTENT: Es stehen keine Termine in der **Kategorie %s** an.
       READ_MORE: Mehr
       DOORS_OPEN: Einlass
 it:
@@ -48,5 +48,5 @@ it:
       BY_CATEGORY: Categorie degli eventi
       NO_EVENTS_TITLE: Nessun evento
       NO_EVENTS_CONTENT: Non ci sono eventi previsti nella categoria **%s**.
-      READ_MORE: "Mostra di più"
+      READ_MORE: Mostra di più
       DOORS_OPEN: Doors open
