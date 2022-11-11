@@ -91,7 +91,7 @@ class iCalendarProcessor
         }
 
         // get the single iCalendar file(s) as array
-        $ical_files = explode("\r\n", $this->config['icalendars']);
+        $ical_files = explode("\n", $this->config['icalendars']);
 
         // open and parse iCalendar file(s)
         $ical = new ICal(
@@ -109,7 +109,7 @@ class iCalendarProcessor
 
         // get events sorted by date
         $events = $ical->sortEventsWithOrder($ical->events());
-//dump($events);
+
         // create an array to hold the filepaths
         // this helps to handle recurrences while creating the pages
         $files = array();
@@ -247,6 +247,9 @@ class iCalendarProcessor
         // handle recurrences
 //        if ( isset($recurrence_id) ) {
 //        }
+
+        // write new page:
+        // https://discourse.getgrav.org/t/creating-pages-dynamically-from-plugin/20223/3
 
         // double ' to make it work as title
         $title = str_replace("'", "''", $summary);
