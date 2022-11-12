@@ -137,7 +137,6 @@ class EventsPlugin extends Plugin
 
 			$this->enable([
 				'onAdminSave' => ['onAdminSave', 0],
-				'onAdminAfterSave' => ['onAdminAfterSave', 0],
 			]);
 
 			return;
@@ -309,12 +308,12 @@ class EventsPlugin extends Plugin
 	{
 		$config = (array) $this->config->get('plugins.events');
 
-		// get the ojbect being saved
+		// get the object being saved
 		$obj = $event['object'];
 
 		// check to see if the object is a `Page` with template `event`
-		if ( $obj instanceof Page && $obj->template() == 'event' ) {
-
+		if ( $obj instanceof Page && $obj->template() == 'event' )
+		{
 			// get the header
 			$header = $obj->header();
 
@@ -360,23 +359,19 @@ class EventsPlugin extends Plugin
 				$obj->header($header);
 			}
 		}
-	}
+		else // the saved object was not a page, so it was likely the plugin settings
+		{
+			$update_mode = $event['object']["icalendar_update"];
 
-	/**
-	 * Process iCalendar Files
-	 *
-	 * This hook fires the processing of the iCalendar file(s).
-	 *
-	 * @param  Event $event
-	 * @since  1.0.15 Location Field Update
-	 * @return void
-	 */
-	public function onAdminAfterSave(Event $event)
-	{
-		$icalendar = new \Events\iCalendarProcessor();
+			if($update_mode != 0) {
+				// process iCalendar file(s)
+				$icalendar = new \Events\iCalendarProcessor();
+				$icalendar->process($update_mode-1);
 
-		// process iCalendar file(s)
-		$icalendar->process();
+				// reset flag
+				$event['object']["icalendar_update"] = 0;
+			}
+		}
 	}
 
 	/**

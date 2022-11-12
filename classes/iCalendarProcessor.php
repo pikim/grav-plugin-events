@@ -58,14 +58,17 @@ class iCalendarProcessor
     /**
      * Process iCalendar file(s)
      *
-     * Deletes the output folder if it already exists, parses the given ics
-     * file(s), sorts them and creates the output folder with the parsed
-     * event(s).
+     * Parses the given ics file(s), sorts them and creates the output folder(s)
+     * with the parsed event(s).
+     *
+     * @param[in] mode, 0 to add new events only;
+     *                  1 to recreate all events after
+     *                  deleting the whole folder first
      *
      * @since  1.1.0  Initial Release
      * @return void
      */
-    public function process()
+    public function process( $mode )
     {
         // if path to icalendar folder isn't set, set it to a default
         if ( ! key_exists('icalendar_folder', $this->config) ) {
@@ -75,8 +78,8 @@ class iCalendarProcessor
         // generate path
         $ical_path = $this->loc . '/user/pages' . $this->config['icalendar_folder'];
 
-        // clear/delete folder first if it exists
-        if ( is_dir($ical_path) ) {
+        // eventually clear/delete the folder first
+        if ( is_dir($ical_path) && $mode != 0 ) {
             $this->rmdir_recursive($ical_path);
         }
 
@@ -348,5 +351,6 @@ class iCalendarProcessor
 
         // set modification time
         touch($file, $last_modified);
+        touch($path, $last_modified);
     }
 }

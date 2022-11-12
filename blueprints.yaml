@@ -84,8 +84,20 @@ form:
             icalendar_folder:
               type: text
               label: Virtual folder for iCalendar events (DO NOT USE FOR OWN CONTENT!)
-              help: Folder where the events are being stored. Will be completely deleted and recreated when settings are saved.
+              help: Folder where the events are being stored. Will be (partially) deleted and recreated when events shall be updated.
               default: "/ical"
+            icalendar_update:
+              type: toggle
+              label: "Update virtual folder. Will be automatically reset after saving."
+              help: "'All' updates all events. 'New' creates events that don't exist, yet. 'None' saves the admin settings only."
+              highlight: 1
+              default: 0
+              options:
+                2: All
+                1: New
+                0: None
+              validate:
+                type: int
             icalendars:
               type: editor
               label: iCalendar files
