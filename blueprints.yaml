@@ -154,6 +154,14 @@ form:
               validate:
                 min: 0
                 max: 20
+            calendar.month_char:
+              type: number
+              label: Month name length
+              help: Show only the first n characters of the month name (0 to show full name).
+              default: 0
+              validate:
+                min: 0
+                max: 20
             calendar.header:
               type: text
               label: Header

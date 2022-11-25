@@ -4,12 +4,12 @@ namespace Grav\Plugin;
 use Grav\Common\Grav;
 
 /**
- * DateTranslationExtension 
+ * DateTranslationExtension
  *
  * DateTranslationExtension adds a filter and a function `dateTranslate` to
  * twig templating. The extension is based on the already existing `date`
  * function and filter`.
- * 
+ *
  * In twig `dateTranslate` is used similar to `date` function and filter,
  * only the result differs in that textual months and days in a date are
  * translated using the *translate array function* on `GRAV.DAYS_OF_THE_WEEK`
@@ -36,6 +36,16 @@ use Grav\Common\Grav;
  */
 class DateTranslationExtension extends \Twig_Extension
 {
+    protected $day_char;
+    protected $mon_char;
+
+	public function __construct()
+    {
+		$grav = Grav::instance();
+		$this->day_char = $grav['config']->get("plugins.events.calendar.day_char");
+		$this->mon_char = $grav['config']->get("plugins.events.calendar.month_char");
+    }
+
 	/**
 	 * Returns this extensions name
 	 */
@@ -79,15 +89,15 @@ class DateTranslationExtension extends \Twig_Extension
 	 * the fragments individually to segments of the date. Text parts
 	 * are also translated into the target language as specified in the
 	 * page's frontmatter or system settings and passed by twig.
-	 * 
+	 *
 	 * The implementation makes use of the *translate array function*
 	 * `ta` with GRAV.DAYS_OF_THE_WEEK and GRAV.MONTHS_OF_THE_YEAR.
-	 * 
+	 *
 	 * @param env The twig environment as required by
 	 * 	`twig_date_format_filter`
 	 * @param date The date time-stamp to format
 	 * @param datePattern The date format pattern
-	 * 
+	 *
 	 * @return The translated date string
 	 */
 	public function dateTranslate(\Twig_Environment $env, $date, $datePattern)
@@ -103,7 +113,7 @@ class DateTranslationExtension extends \Twig_Extension
 			switch ($t) {
 				case 'D':
 					// A textual representation of a day, two letters: Mo through Su
-					$dateString .= mb_substr($this->translateDay($dateFunction), 0, 2, "UTF-8");
+					$dateString .= mb_substr($this->translateDay($dateFunction), 0, $this->day_char, "UTF-8");
 					break;
 				case 'l':
 					// A full textual representation of the day of the week: Sunday through Saturday
@@ -111,7 +121,7 @@ class DateTranslationExtension extends \Twig_Extension
 					break;
 				case 'M':
 					// A short textual representation of a month, three letters: Jan through Dec
-					$dateString .= mb_substr($this->translateMonth($dateFunction), 0, 3, "UTF-8");
+					$dateString .= mb_substr($this->translateMonth($dateFunction), 0, $this->mon_char, "UTF-8");
 					break;
 				case 'F':
 					// A full textual representation of a month, such as January or March: January through December
