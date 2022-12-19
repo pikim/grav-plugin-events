@@ -7,7 +7,7 @@
     </header>
 
     <section class="event">
-        <div class="event-left-column">
+        <div class="event-left-column"> {# date and time #}
             <time class="event-datetime" datetime="{{ page.date|date("c") }}">
         {% if single == true %} {# individual content page #}
             <span class="event-date">{{ page.header.event.start|dateTranslate(config.plugins.events.event_item.date) }},</span>
@@ -30,7 +30,7 @@
             </time>
         </div>
 
-        <div class="event-right-column">
+        <div class="event-right-column"> {# date and time #}
         {% if single == true %} {# individual content page #}
             <h2 class="event-title">{{ page.title }}</h2>
             {% if (config.plugins.events.event_meta.display_location) and (page.header.event.location is not empty) %}
@@ -61,3 +61,4 @@
         </div>
     </section>
 </article>
+<article class="event-separator"></article>
