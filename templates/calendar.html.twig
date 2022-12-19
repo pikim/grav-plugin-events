@@ -9,7 +9,6 @@
 
 	{{ page.content|raw }}
 
-<div class="calendar-container clear-user-agent-styles">
 {% set prevYearUrl = page.url ~ '/year:' ~ calendar.prevYear|date('Y') ~ '/month:' ~ calendar.prevYear|date('m') %}
 {% set nextYearUrl = page.url ~ '/year:' ~ calendar.nextYear|date('Y') ~ '/month:' ~ calendar.nextYear|date('m') %}
 {% set prevMonthUrl = page.url ~ '/year:' ~ calendar.prev.date|date('Y') ~ '/month:' ~ calendar.prev.date|date('m') %}
@@ -21,6 +20,7 @@
 {% set prevMonthTitle = calendar.prev.date|dateTranslate(config.plugins.events.calendar.header) %}
 {% set nextMonthTitle = calendar.next.date|dateTranslate(config.plugins.events.calendar.header) %}
 
+<div class="calendar-container clear-user-agent-styles">
 	<section class="calendar-table">
 		<table class="calendar">
 			<thead class="calendar-head">
@@ -118,7 +118,7 @@
 		{% set month = "now"|date("n") %}
 		{% set year = "now"|date("Y") %}
 			<h4 class="calendar-day">{{ "now"|dateTranslate(config.plugins.events.calendar.details.title) }}</h4>
-			<ul>
+			<ul class="calendar-day-events">
 			{% if calendar.events[year][month][day] == null %}
 				<li>{{ "PLUGIN_EVENTS.CALENDAR.NO_EVENTS"|t }}</li>
 			{% else %}
@@ -137,6 +137,5 @@
 			<a href="{{ base_url_absolute ~ config.plugins.events.events_subpage }}">{{ "PLUGIN_EVENTS.CALENDAR.VIEW_ALL_EVENTS"|t }}</a>
 		</p>
 	</section>
-
 </div><!--.calendar-container-->
 {% endblock %}
