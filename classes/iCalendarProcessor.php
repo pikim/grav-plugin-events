@@ -261,6 +261,7 @@ class iCalendarProcessor
         $content  = "---".PHP_EOL;
         $content .= "uid: '{$uid}'".PHP_EOL;
         $content .= "title: '{$title}'".PHP_EOL;
+        $content .= "subtitle: '" . date('d-m-Y H:i', $start) . "'".PHP_EOL;
 
         if ( is_array($categories) ) {
             $content .= "taxonomy:".PHP_EOL;
