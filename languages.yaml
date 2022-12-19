@@ -9,7 +9,8 @@ en:
       BY_CATEGORY: Event Categories
       NO_EVENTS_TITLE: No events
       NO_EVENTS_CONTENT: There are no upcoming events under the **%s category.**
-      READ_MORE: Read More
+      MORE_INFORMATION: More information
+      NO_MORE_INFORMATION: No more information available
       DOORS_OPEN: Doors open
 fr:
   PLUGIN_EVENTS:
@@ -22,7 +23,7 @@ fr:
       BY_CATEGORY: Catégories d'événements
       NO_EVENTS_TITLE: Aucunes événementsts
       NO_EVENTS_CONTENT: Il n'y a aucun événement à venir dans la catégorie **%s**
-      READ_MORE: En savoir plus
+      MORE_INFORMATION: En savoir plus
       DOORS_OPEN: Doors open
 de:
   PLUGIN_EVENTS:
@@ -35,7 +36,8 @@ de:
       BY_CATEGORY: Termin-Kategorien
       NO_EVENTS_TITLE: Keine Termine
       NO_EVENTS_CONTENT: Es stehen keine Termine in der **Kategorie %s** an.
-      READ_MORE: Mehr
+      MORE_INFORMATION: Weitere Informationen
+      NO_MORE_INFORMATION: Keine weiteren Informationen verfügbar
       DOORS_OPEN: Einlass
 it:
   PLUGIN_EVENTS:
@@ -48,5 +50,5 @@ it:
       BY_CATEGORY: Categorie degli eventi
       NO_EVENTS_TITLE: Nessun evento
       NO_EVENTS_CONTENT: Non ci sono eventi previsti nella categoria **%s**.
-      READ_MORE: Mostra di più
+      MORE_INFORMATION: Mostra di più
       DOORS_OPEN: Doors open
