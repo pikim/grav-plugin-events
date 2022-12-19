@@ -11,5 +11,9 @@
 		<a href="{{ event.url }}" class="p-name u-url">{{ event.title }}</a>
 		{% endif %}
 	</p>
-	<div class="event-item-summary">{{ event.summary(50) }}</div>
+	{% set summary = event.summary(50)|slice(3, 50) %}
+	{% if not summary %}
+	{% set summary = '&nbsp;' %}
+	{% endif %}
+	<p class="event-item-summary">{{ summary }}</p>
 </div>
