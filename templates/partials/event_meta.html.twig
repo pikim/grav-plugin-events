@@ -1,3 +1,4 @@
+{% if page.header.event.freq is defined or page.header.event.repeat is defined or page.header.event.until is defined %}
 <p class="event-meta {{ event_class }}">
 {% if page.header.event.freq is defined %}
     <span>Repeats {{ page.header.event.freq|capitalize }}</span>
@@ -11,3 +12,4 @@
     <span>until {{ page.header.event.until|dateTranslate(config.plugins.events.event_meta.until) }}</span>
 {% endif %}
 </p>
+{% endif %}
