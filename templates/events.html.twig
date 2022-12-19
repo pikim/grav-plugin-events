@@ -15,7 +15,7 @@
 	<section class="events-listing">
 	{% if collection|length != 0 %}
 		{% for event in collection %}
-			{% include 'partials/event_item.html.twig' with { 'page': event, 'truncate': true, 'single': false } %}
+			{% include 'partials/event_item.html.twig' with { 'page': event, 'single': false } %}
 		{% endfor %}
 	{% else %}
 		<h3>{{ "PLUGIN_EVENTS.EVENTS.NO_EVENTS_TITLE"|t }}</h3>
