@@ -446,6 +446,12 @@ $event-separator-border-bottom:         1px solid #efefef;;
             padding: 0;
             padding-bottom: 1rem;
 
+            .event-header {
+                img {
+                    width: 100%;
+                }
+            }
+
             .event {
                 .event-right-column {
                     display: flex;
