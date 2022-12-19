@@ -12,16 +12,30 @@
  * (c) 2016
  */
 
-// import bourbon & friends
-@import "bourbon/bourbon";
-@import "neat/neat";
-
 
 // Sizes
 $mobile-size: 480px;
 $tablet-size: 768px;
 $desktop-size: 1124px;
 $largedesktop-size: 1824px;
+
+// Margins and Widths
+$common-margin-right: 2.35%;
+
+$calendar-table-width: 55%;
+$calendar-details-width: 100% - $common-margin-right - $calendar-table-width;
+
+$calendar-event-item-left-column-width: 25%;
+$calendar-event-item-right-column-width: 100% - $common-margin-right - $calendar-event-item-left-column-width;
+
+$events-event-left-column-width: 15%;
+$events-event-right-column-width: 100% - $common-margin-right - $events-event-left-column-width;
+
+$event-listing-width: 55%;
+$event-sidebar-width: 100% - $common-margin-right - $event-listing-width;
+
+$events-sidebar-list-item-time-width: 15%;
+$events-sidebar-list-item-a-width: 100% - $common-margin-right - $events-sidebar-list-item-time-width;
 
 // Bourbon Neat Breakpoints
 $mobile: new-breakpoint(min-width $mobile-size 4);
@@ -55,8 +69,10 @@ $event-button-hover-border:				2px solid $event-button-color !default;
 $event-button-border-radius:			4px !default;
 $event-button-padding:					0.5rem 2rem;
 $event-border-radius:					4px !default;
-$event-locationpin-color:                       #898d94;
-$event-locationpin-dot-color:                   #50596c;
+$event-locationpin-color:               #898d94;
+$event-locationpin-dot-color:           #50596c;
+$event-separator-border-bottom:         1px solid #efefef;;
+
 
 @mixin location-pin($pin-color: $event-locationpin-color) {
     span.location-pin {
@@ -92,15 +108,19 @@ $event-locationpin-dot-color:                   #50596c;
 
 /* html5 .calendar-container element for calendar.html.twig */
 .calendar-container {
-    @include outer-container();
+    display: inline-block;
+    width: 100%;
 
     a {
         transition: 0.2s;
     }
 
     .calendar-table {
-        @include media($tablet) {
-            @include span-columns(7);
+        @media screen and (min-width: $tablet-size) {
+            float: left;
+            display: block;
+            margin-right: $common-margin-right;
+            width: $calendar-table-width;
         }
 
         table {
@@ -199,21 +219,31 @@ $event-locationpin-dot-color:                   #50596c;
     }
 
     .calendar-details {
-        @include media($tablet) {
-            @include span-columns(5);
+        @media screen and (min-width: $tablet-size) {
+            float: left;
+            display: block;
+/*           margin-right: $common-margin-right;*/
+            width: $calendar-details-width;
         }
 
         .calendar-day-details {
-            ul {
+            .calendar-day {
+                margin: 0;
+            }
+
+            ul.calendar-day-events {
                 list-style: none;
                 padding: 0;
 
-                li {
-                    @include outer-container();
-                    margin-bottom: 0.5rem;
+                li.calendar-event {
+                    padding-top: 0.5em;
+                    clear: both;
 
                     .event-item-left-column {
-                        @include span-columns(3);
+                        float: left;
+                        display: block;
+                        margin-right: $common-margin-right;
+                        width: $calendar-event-item-left-column-width;
                         position: relative;
 
                         a {
@@ -237,7 +267,10 @@ $event-locationpin-dot-color:                   #50596c;
                     }
 
                     .event-item-right-column {
-                        @include span-columns(9);
+                        float: left;
+                        display: block;
+/*                        margin-right: $common-margin-right;*/
+                        width: $calendar-event-item-right-column-width;
 
                         .event-item-title {
                             font-weight: bold;
@@ -246,9 +279,7 @@ $event-locationpin-dot-color:                   #50596c;
                         }
 
                         .event-item-summary {
-                            p {
-                                margin: 0.25rem 0;
-                            }
+                            margin: 0.25rem 0;
                         }
                     }
                 }
@@ -269,6 +300,7 @@ $event-locationpin-dot-color:                   #50596c;
 
         p.events-view-all {
             font-style: italic;
+            clear: both;
         }
     }
 }
@@ -276,26 +308,44 @@ $event-locationpin-dot-color:                   #50596c;
 
 /* html5 .events-container element for events.html.twig */
 .events-container {
-    @include outer-container();
+    display: inline-block;
+    width: 100%;
 
     .events-listing {
         padding-bottom: 2rem;
 
+        .event-separator {
+            border-bottom: $event-separator-border-bottom;
+            padding-top: 1.5rem;
+            clear: both;
+
+            &:last-child {
+                border: 0;
+                padding: 0;
+            }
+        }
+
         .event-article {
-            border-bottom: 1px solid #efefef;
             margin-bottom: 0;
             padding: 1rem 0;
 
+            &:first-child {
+                padding: 0;
+            }
+
             .event-header {
-                @include row();
+                display: block;
                 position: relative;
             }
 
             .event {
-                @include row();
+                display: block;
 
                 .event-left-column {
-                    @include span-columns(2);
+                    float: left;
+                    display: block;
+                    margin-right: $common-margin-right;
+                    width: $events-event-left-column-width;
 
                     .event-datetime {
                         color: #555;
@@ -334,7 +384,10 @@ $event-locationpin-dot-color:                   #50596c;
                 }
 
                 .event-right-column {
-                    @include span-columns(10);
+                    float: left;
+                    display: block;
+/*                    margin-right: $common-margin-right;*/
+                    width: $events-event-right-column-width;
 
                     .event-title {
                         margin: 0.3rem 0rem;
@@ -349,6 +402,10 @@ $event-locationpin-dot-color:                   #50596c;
                         * {
                             display: inline;
                         }
+                    }
+
+                    .event-read-more {
+/*                        margin-left: $common-margin-right * 2;*/
                     }
 
                     .event-categories {
@@ -367,13 +424,24 @@ $event-locationpin-dot-color:                   #50596c;
 
 /* html5 .event-container element for event.html.twig */
 .event-container {
-    @include outer-container();
+    display: inline-block;
+    width: 100%;
 
     .event-listing {
-        @include span-columns(7);
+        float: left;
+        display: block;
+        margin-right: $common-margin-right;
+        width: $event-listing-width;
+
+        .event-separator {
+            border-bottom: $event-separator-border-bottom;
+
+            &:last-child {
+                border: 0;
+            }
+        }
 
         .event-article {
-            border-bottom: 1px solid #efefef;
             margin-bottom: 0;
             padding: 0;
             padding-bottom: 1rem;
@@ -402,7 +470,10 @@ $event-locationpin-dot-color:                   #50596c;
     }
 
     .events-sidebar {
-        @include span-columns(5);
+        float: left;
+        display: block;
+/*        margin-right: $common-margin-right;*/
+        width: $event-sidebar-width;
 
         .event-tags {
             list-style: none;
@@ -432,8 +503,6 @@ $event-locationpin-dot-color:                   #50596c;
         .event-day {
             font-size: 1.2rem;
             font-weight: bold;
-            padding-top: 1rem;
-            padding-bottom: 0.1rem;
             display: block;
             clear: both;
 
@@ -442,16 +511,35 @@ $event-locationpin-dot-color:                   #50596c;
             }
         }
 
+        .event-item-separator {
+            border-bottom: $event-separator-border-bottom;
+            margin-bottom: 1rem;
+            padding-top: 1rem;
+            clear: both;
+
+            &:first-child {
+                border: 0;
+                padding: 0;
+            }
+        }
+
         .event-item {
             display: block;
             margin-top: 0.1rem;
+            clear: both;
 
             time {
-                @include span-columns(2);
+                float: left;
+                display: block;
+                margin-right: $common-margin-right;
+                width: $events-sidebar-list-item-time-width;
             }
 
             a {
-                @include span-columns(10);
+                float: left;
+                display: block;
+/*                margin-right: $common-margin-right;*/
+/*                width: $events-sidebar-list-item-a-width;*/
             }
 
             @include location-pin(currentColor)
