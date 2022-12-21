@@ -1,3 +1,18 @@
+# v1.1.6
+## 12/21/2022
+1. [](#new)
+    * french and italian translation
+    * support open doors
+    * support tickets
+    * allow length adjustment of day and month names
+    * button for ical recreation selection
+2. [](#improved)
+    * removed bourbon and neat
+    * some minor things and reorderings
+3. [](#bugfix)
+    * |raw filter
+    * line endings
+
 # v1.1.5
 ## 07/20/2020
 1. [](#new)
