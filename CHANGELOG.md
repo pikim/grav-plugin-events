@@ -1,3 +1,8 @@
+# v1.1.7
+## 12/26/2022
+1. [](#bugfix)
+    * fix day/month name length selection
+
 # v1.1.6
 ## 12/21/2022
 1. [](#new)
