@@ -44,6 +44,9 @@ class DateTranslationExtension extends \Twig_Extension
 		$grav = Grav::instance();
 		$this->day_char = $grav['config']->get("plugins.events.calendar.day_char");
 		$this->mon_char = $grav['config']->get("plugins.events.calendar.month_char");
+
+		if ($this->day_char == 0) { $this->day_char = $grav['config']->get("plugins.events.calendar.day_char.max"); }
+		if ($this->mon_char == 0) { $this->mon_char = $grav['config']->get("plugins.events.calendar.month_char.max"); }
     }
 
 	/**
