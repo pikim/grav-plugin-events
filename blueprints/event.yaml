@@ -7,7 +7,7 @@ form:
   fields:
     tabs:
       fields:
-    
+
         event:
           type: tab
           title: Event
@@ -19,6 +19,7 @@ form:
             header.event.status:
               label: Status
               type: select
+              default: ""
               options:
                 "": "None"
                 "scheduled": "scheduled"
@@ -49,7 +50,7 @@ form:
             header.event.repeat:
               type: text
               label: Repeat
-              help: Using MTWRFSU to specify what days of the week this event repeats. For example, MWF. 
+              help: Using MTWRFSU to specify what days of the week this event repeats. For example, MWF.
               placeholder: MTWRFSU
             header.event.freq:
               type: select
@@ -78,21 +79,6 @@ form:
                 .date:
                   type: date
                   label: Date
-            header.event.status-section:
-              type: section
-              underline: true
-              title: Status
-            header.event.status:
-              label: Status
-              type: select
-              default: "scheduled"
-              options:
-                "": "None"
-                "scheduled": "scheduled"
-                "postponed": "postponed"
-                "cancelled": "cancelled"
-              title: Status
-              help: Possible values are scheduled, postponed, cancelled.
             header.event.ticket-section:
               type: section
               underline: true
@@ -113,14 +99,14 @@ form:
               type: text
               label: Ticket Link
               help: Paste link to Ticketsystem here
-           header.event.location-section:
+            header.event.location-section:
               type: section
               title: Location
               underline: true
             header.event.location:
               type: text
               label: Location
-              help: Where is this event located? If you enter an address it will be geocoded below. 
+              help: Where is this event located? If you enter an address it will be geocoded below.
             header.event.coordinates:
               type: text
               label: Coordinates
