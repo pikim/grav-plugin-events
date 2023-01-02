@@ -13,7 +13,7 @@
 {% set nextYearUrl = page.url ~ '/year:' ~ calendar.nextYear|date('Y') ~ '/month:' ~ calendar.nextYear|date('m') %}
 {% set prevMonthUrl = page.url ~ '/year:' ~ calendar.prev.date|date('Y') ~ '/month:' ~ calendar.prev.date|date('m') %}
 {% set nextMonthUrl = page.url ~ '/year:' ~ calendar.next.date|date('Y') ~ '/month:' ~ calendar.next.date|date('m') %}
-{% set currMonthUrl = page.url ~ '/year:' ~ now|date('Y') ~ '/month:' ~ now|date('m') %}
+{% set currMonthUrl = page.url %}
 
 {% set prevYearTitle = calendar.prevYear|dateTranslate(config.plugins.events.calendar.header) %}
 {% set nextYearTitle = calendar.nextYear|dateTranslate(config.plugins.events.calendar.header) %}
@@ -59,8 +59,8 @@
 				<tr class="calendar-line">
 				{% set startDow = (calendar.date|date('w') +6-fdowOffset) % 7 %}
 				{% set dow = startDow %}
-                                {% set month = "now"|date("F") %}
-                                {% set year = "now"|date("Y") %}
+				{% set month = "now"|date("F") %}
+				{% set year = "now"|date("Y") %}
 				{% for day in range(1,calendar.daysInMonth) %}
 					{% if loop.first and startDow != 0 %}
 						<td colspan="{{ startDow }}"></td>
