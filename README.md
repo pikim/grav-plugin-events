@@ -136,7 +136,7 @@ A collection of weekend events with a _dateRange_ using the [DateTools Plugin.](
         <li>
             <a href="{{ event.url }}">{{ event.title }}</a>
             <time class="dt-start" datetime="{{ event.header.event.start|date('c') }}">
-              {{ event.header.event.start|dateTranslate('F j, Y') }}
+              {{ event.header.event.start|td(null, 'F j, Y') }}
             </time>
         </li>
     {% endfor %}

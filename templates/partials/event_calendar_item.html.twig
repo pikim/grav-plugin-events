@@ -1,6 +1,6 @@
 <div class="event-item-left-column">
 	<a href="{{ event.url }}" class="event-item-image-box" style="background-image: url({{ event.media.images|first.cropResize(400,400).url() }})">
-		<time class="event-item-time dt-start" datetime="{{ event.header.event.start|date("c") }}">{{ event.header.event.start|dateTranslate(config.plugins.events.calendar.details.time) }}</time>
+		<time class="event-item-time dt-start" datetime="{{ event.header.event.start|date("c") }}">{{ event.header.event.start|td(null, config.plugins.events.calendar.details.time) }}</time>
 	</a>
 </div>
 <div class="event-item-right-column">

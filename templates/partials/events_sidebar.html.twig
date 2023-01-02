@@ -39,11 +39,11 @@
         {% if date_header != current_header %}
         <li class="event-item-separator"></li>
         <li class="event-day">
-            <span>{{ event.header.event.start|dateTranslate(config.plugins.events.event_sidebar.header) }}</span>
+            <span>{{ event.header.event.start|td(null, config.plugins.events.event_sidebar.header) }}</span>
         </li>
         {% endif %}
         <li class="event-item">
-            <time datetime="{{ event.header.event.start|date("c") }}">{{ event.header.event.start|dateTranslate(config.plugins.events.event_sidebar.time)}}</time>
+            <time datetime="{{ event.header.event.start|date("c") }}">{{ event.header.event.start|td(null, config.plugins.events.event_sidebar.time)}}</time>
         {% if (config.plugins.events.event_meta.display_location) and (event.header.event.location is not empty) %}
             <a href="{{ event.url }}" class="u-url p-name" title="{{ event.header.event.location }}">{{ event.title }}<span class="location-pin"></span></a>
         {% else %}
