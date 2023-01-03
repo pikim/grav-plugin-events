@@ -1,3 +1,10 @@
+# v1.1.8
+## 01/03/2023
+1. [](#bugfix)
+    * fix event blueprint
+2. [](#improved)
+    * shorten todays URL in calendar header
+
 # v1.1.7
 ## 12/26/2022
 1. [](#bugfix)
