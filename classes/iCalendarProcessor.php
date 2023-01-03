@@ -263,7 +263,7 @@ class iCalendarProcessor
         $content .= "title: '{$title}'".PHP_EOL;
 //        $content .= "subtitle: '" . date('d-m-Y H:i', $start) . "'".PHP_EOL;
 
-        if ( is_array($categories) ) {
+        if ( is_array($categories) && count($categories) > 0 ) {
             $content .= "taxonomy:".PHP_EOL;
             $content .= "    category:".PHP_EOL;
             foreach ( $categories as $category ) {
