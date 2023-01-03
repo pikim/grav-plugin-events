@@ -162,13 +162,34 @@ class iCalendarProcessor
      */
     private function create_page( $ical_path, $event, &$files )
     {
-        $file_name = '/event.md';
+        $slug = strtolower($event->summary_array[1]);
+
+        $description = array();
+        $file_names = array();
+        $location = array();
+        $summary = array();
+
+        for ( $i = 0; $i < count($event->summary_array); $i += 2 ) {
+            $info = $event->summary_array[$i];
+
+            if ( $info != null ) {
+                $lang = $info["LANGUAGE"];
+                $file_names[$lang] = '/event.' . $lang . '.md';
+                $description[$lang] = $event->description_array[$i+1];
+                $location[$lang] = $event->location_array[$i+1];
+                $summary[$lang] = $event->summary_array[$i+1];
+            }
+            else {
+                $lang = "";
+                $file_names[$lang] = '/event.md';
+                $description[$lang] = $event->description;
+                $location[$lang] = $event->location;
+                $summary[$lang] = $event->summary;
+            }
+        }
 
         // get the event information
         $uid = $event->uid;
-        $summary = $event->summary;
-        $location = $event->location;
-        $description = $event->description;
         $last_modified = strtotime($event->last_modified);
         if ( isset($event->recurrence_id) ) {
             $recurrence_id = strtotime($event->recurrence_id);
@@ -191,7 +212,6 @@ class iCalendarProcessor
         // create path to destination folder
         $year = date('Y', $start);
         $moda = date('md', $start); // recurrences don't work atm, prefix the path with month & day
-        $slug = strtolower($summary);
 
         // remove special characters from slug
         $search = array(" ", "&amp;", "ä", "ö", "ü", "ß");
@@ -210,152 +230,154 @@ class iCalendarProcessor
             mkdir($path, 0755, true);
         }
 
-        // append file name to path
-        $file = $path . $file_name;
+        foreach ($file_names as $lang => $file_name) {
+            // append file name to path
+            $file = $path . $file_name;
 
-        // if a file with this name already exists
-        if ( is_file($file) ) {
-            $file_time = filemtime($file);
+            // if a file with this name already exists
+            if ( is_file($file) ) {
+                $file_time = filemtime($file);
 
-            // get uid of existing file
-            $lines = file($file);
-            $file_uid = $lines[1];
-            $file_uid = str_replace("uid: '", "", $file_uid);
-            $file_uid = rtrim($file_uid, "'".PHP_EOL);
+                // get uid of existing file
+                $lines = file($file);
+                $file_uid = $lines[1];
+                $file_uid = str_replace("uid: '", "", $file_uid);
+                $file_uid = rtrim($file_uid, "'".PHP_EOL);
 
-            if ( $file_time === $last_modified
-              && $file_uid === $uid ) {
-                // leave if file exists and hasn't changed
-                return;
-            }
-
-            // handle events with the same slug => two events have the same title
-//             if ( $file_uid !== $uid ) {
-                // create token and append it to the slug
-                $token = substr(md5($uid . date('d-m-Y H:i', $start)), 0, 6);
-                $path = str_replace($slug, $slug . '-' . $token, $path);
-
-                // create folder and new filename
-                if ( ! is_dir($path) ) {
-                    mkdir($path, 0755, true);
+                if ( $file_time === $last_modified
+                && $file_uid === $uid ) {
+                    // leave if file exists and hasn't changed
+                    return;
                 }
 
-                $file = $path . $file_name;
-//             }
-        }
+                // handle events with the same slug => two events have the same title
+    //             if ( $file_uid !== $uid ) {
+                    // create token and append it to the slug
+                    $token = substr(md5($uid . date('d-m-Y H:i', $start)), 0, 6);
+                    $path = str_replace($slug, $slug . '-' . $token, $path);
 
-        // append file to the list of files
-        $files[$start . '__' . $uid] = $file;
+                    // create folder and new filename
+                    if ( ! is_dir($path) ) {
+                        mkdir($path, 0755, true);
+                    }
 
-        // handle recurrences
-//        if ( isset($recurrence_id) ) {
-//        }
-
-        // write new page:
-        // https://discourse.getgrav.org/t/creating-pages-dynamically-from-plugin/20223/3
-
-        // double ' to make it work as title
-        $title = str_replace("'", "''", $summary);
-
-        // prepare file content
-        $content  = "---".PHP_EOL;
-        $content .= "uid: '{$uid}'".PHP_EOL;
-        $content .= "title: '{$title}'".PHP_EOL;
-//        $content .= "subtitle: '" . date('d-m-Y H:i', $start) . "'".PHP_EOL;
-
-        if ( is_array($categories) && count($categories) > 0 ) {
-            $content .= "taxonomy:".PHP_EOL;
-            $content .= "    category:".PHP_EOL;
-            foreach ( $categories as $category ) {
-                $content .= "        - {$category}".PHP_EOL;
+                    $file = $path . $file_name;
+    //             }
             }
-        }
 
-        $content .= "event:".PHP_EOL;
-        $content .= "    start: '" . date('d-m-Y H:i', $start) . "'".PHP_EOL;
-        $content .= "    end: '" . date('d-m-Y H:i', $end) . "'".PHP_EOL;
+            // append file to the list of files
+            $files[$start . '__' . $uid] = $file;
 
-/*        if ( is_array($rrule) ) {
-            $freq = "";
-            $repeat = "";
-            $until = "";
+            // handle recurrences
+    //        if ( isset($recurrence_id) ) {
+    //        }
 
-            foreach ( $rrule as $rule ) {
-                $rule = explode('=', $rule);
+            // write new page:
+            // https://discourse.getgrav.org/t/creating-pages-dynamically-from-plugin/20223/3
 
-                switch ( $rule[0] ) {
-                    case "FREQ":
-                        $freq = "    freq: " . strtolower($rule[1]) .PHP_EOL;
-                        break;
+            // double ' to make it work as title
+            $title = str_replace("'", "''", $summary[$lang]);
 
-                    case "BYDAY":
-                        // replace iCal days with plugin days
-                        $search = array("MO", "TU", "WE", "TH", "FR", "SA", "SU");
-                        $replace = array("M", "T", "W", "R", "F", "S", "U");
-                        $days = str_replace($search, $replace, $rule[1]);
+            // prepare file content
+            $content  = "---".PHP_EOL;
+            $content .= "uid: '{$uid}'".PHP_EOL;
+            $content .= "title: '{$title}'".PHP_EOL;
+    //        $content .= "subtitle: '" . date('d-m-Y H:i', $start) . "'".PHP_EOL;
 
-                        // remove commas
-                        $days = str_replace(',', '', $days);
-                        $repeat = "    repeat: {$days}".PHP_EOL;
-
-                        // daily does not work with repeat so delete it
-                        if ( strpos($freq, "daily") !== false ) {
-                            $freq = "";
-                        }
-                        break;
-/*
-                    // currently unsupported iCal rrules
-                    case "BYWEEKNO":
-                        break;
-
-                    case "BYMONTH":
-                        break;
-
-                    case "BYMONTHDAY":
-                        break;
-
-                    case "BYYEARDAY":
-                        break;
-
-                    case "BYSETPOS":
-                        break;
-
-                    case "COUNT":
-                        break;
-
-                    case "INTERVAL":
-                        break;
-
-                    case "WKST":
-                        break;
-* /
-                    case "UNTIL":
-                        $time = strtotime($rule[1]);
-                        $until = "    until: '" . date('d-m-Y', $time) . "'".PHP_EOL;
-                        break;
+            if ( is_array($categories) && count($categories) > 0 ) {
+                $content .= "taxonomy:".PHP_EOL;
+                $content .= "    category:".PHP_EOL;
+                foreach ( $categories as $category ) {
+                    $content .= "        - {$category}".PHP_EOL;
                 }
             }
 
-            $content .= $repeat;
-            $content .= $freq;
-            $content .= $until;
-        }*/
+            $content .= "event:".PHP_EOL;
+            $content .= "    start: '" . date('d-m-Y H:i', $start) . "'".PHP_EOL;
+            $content .= "    end: '" . date('d-m-Y H:i', $end) . "'".PHP_EOL;
 
-        if ( isset($location) && $location !== "" ) {
-            $content .= "    location: '{$location}'".PHP_EOL;
+    /*        if ( is_array($rrule) ) {
+                $freq = "";
+                $repeat = "";
+                $until = "";
+
+                foreach ( $rrule as $rule ) {
+                    $rule = explode('=', $rule);
+
+                    switch ( $rule[0] ) {
+                        case "FREQ":
+                            $freq = "    freq: " . strtolower($rule[1]) .PHP_EOL;
+                            break;
+
+                        case "BYDAY":
+                            // replace iCal days with plugin days
+                            $search = array("MO", "TU", "WE", "TH", "FR", "SA", "SU");
+                            $replace = array("M", "T", "W", "R", "F", "S", "U");
+                            $days = str_replace($search, $replace, $rule[1]);
+
+                            // remove commas
+                            $days = str_replace(',', '', $days);
+                            $repeat = "    repeat: {$days}".PHP_EOL;
+
+                            // daily does not work with repeat so delete it
+                            if ( strpos($freq, "daily") !== false ) {
+                                $freq = "";
+                            }
+                            break;
+    /*
+                        // currently unsupported iCal rrules
+                        case "BYWEEKNO":
+                            break;
+
+                        case "BYMONTH":
+                            break;
+
+                        case "BYMONTHDAY":
+                            break;
+
+                        case "BYYEARDAY":
+                            break;
+
+                        case "BYSETPOS":
+                            break;
+
+                        case "COUNT":
+                            break;
+
+                        case "INTERVAL":
+                            break;
+
+                        case "WKST":
+                            break;
+    * /
+                        case "UNTIL":
+                            $time = strtotime($rule[1]);
+                            $until = "    until: '" . date('d-m-Y', $time) . "'".PHP_EOL;
+                            break;
+                    }
+                }
+
+                $content .= $repeat;
+                $content .= $freq;
+                $content .= $until;
+            }*/
+
+            if ( isset($location[$lang]) && $location[$lang] !== "" ) {
+                $content .= "    location: '{$location[$lang]}'".PHP_EOL;
+            }
+
+            $content .= "---".PHP_EOL;
+            $content .= "".PHP_EOL;
+            $content .= "{$description[$lang]}".PHP_EOL;
+
+            // write content to file
+            $fp = fopen($file, 'w');
+            fwrite($fp, $content);
+            fclose($fp);
+
+            // set modification time
+            touch($file, $last_modified);
+            touch($path, $last_modified);
         }
-
-        $content .= "---".PHP_EOL;
-        $content .= "".PHP_EOL;
-        $content .= "{$description}".PHP_EOL;
-
-        // write content to file
-        $fp = fopen($file, 'w');
-        fwrite($fp, $content);
-        fclose($fp);
-
-        // set modification time
-        touch($file, $last_modified);
-        touch($path, $last_modified);
     }
 }
