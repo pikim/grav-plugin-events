@@ -39,7 +39,7 @@ Currently, the following taxonomies are created and available for building page 
 
 **Events** can also handle multi-language *.ics files. At the moment it supports `summary`, `description` and `location` in different languages. See example definitions at https://icalendar.org/iCalendar-RFC-5545/3-2-10-language.html. Although it would technically work, it's not recommended to use locales (en-GB, de-DE, etc.), but only languages (en, de, etc.).
 
-The path to *.ics file(s) must be specified in the admin interface under `iCalendar files`. The path(s) may be relative (local) or absolute (local or remote). A line must not contain more than one path.
+The path to *.ics file(s) must be specified in the admin interface under `iCalendar files`. The path(s) may be relative (local) or absolute (local or remote). A line must not contain more than one path. The exact location doesn't matter, so you can choose any accessible directory.
 
 ![Example paths](ics-files.png "Example paths")
 
