@@ -37,6 +37,12 @@ Currently, the following taxonomies are created and available for building page 
 
 **Events** supports the import of events from one or more *.ics file(s). On saving the settings in the admin panel it will create a user defined folder for the events. This folder will contain a subfolder for each year with a subfolder and an event.md file for each event.
 
+**Events** can also handle multi-language *.ics files. At the moment it supports `summary`, `description` and `location` in different languages. See example definitions at https://icalendar.org/iCalendar-RFC-5545/3-2-10-language.html. Although it would technically work, it's not recommended to use locales (en-GB, de-DE, etc.), but only languages (en, de, etc.).
+
+The path to *.ics file(s) must be specified in the admin interface under `iCalendar files`. The path(s) may be relative (local) or absolute (local or remote). A line must not contain more than one path.
+
+![Example paths](ics-files.png "Example paths")
+
 ### How it works
 
 **Events** parses all of your markdown files for `event:` frontmatter and then automagically assigns taxonomies to your events based on whether they repeat through the week and through what intervals. This lets you build powerful collections based on the `event_freq:` and `event_repeat:` intervals. This lets you create custom displays. For example, if you want to build a list of all events that happen on Mondays you can filter on `'@taxonomy.event_repeat':['M']` or pull out your Weekly events by filtering on `'@taxonomy.event_freq':'weekly'`.
