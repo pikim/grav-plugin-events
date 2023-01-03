@@ -276,6 +276,10 @@ class iCalendarProcessor
         $content .= "    end: '" . date('d-m-Y H:i', $end) . "'".PHP_EOL;
 
 /*        if ( is_array($rrule) ) {
+            $freq = "";
+            $repeat = "";
+            $until = "";
+
             foreach ( $rrule as $rule ) {
                 $rule = explode('=', $rule);
 
