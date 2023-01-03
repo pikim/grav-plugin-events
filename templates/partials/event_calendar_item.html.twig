@@ -15,5 +15,5 @@
 	{% if not summary %}
 	{% set summary = '&nbsp;' %}
 	{% endif %}
-	<p class="event-item-summary">{{ summary }}</p>
+	<p class="event-item-summary">{{ summary|raw }}</p>
 </div>
