@@ -359,6 +359,9 @@ class EventsPlugin extends Plugin
 				$obj->header($header);
 			}
 		}
+		// check to see if the object is a `Page` with template `events`
+		elseif ( $obj instanceof Page && $obj->template() == 'event' ) {
+		}
 		else // the saved object was not a page, so it was likely the plugin settings
 		{
 			$update_mode = $event['object']["icalendar_update"];
