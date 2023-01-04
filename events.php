@@ -360,7 +360,7 @@ class EventsPlugin extends Plugin
 			}
 		}
 		// check to see if the object is a `Page` with template `events`
-		elseif ( $obj instanceof Page && $obj->template() == 'event' ) {
+		elseif ( $obj instanceof Page && $obj->template() == 'events' ) {
 		}
 		else // the saved object was not a page, so it was likely the plugin settings
 		{
