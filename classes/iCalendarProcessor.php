@@ -162,6 +162,7 @@ class iCalendarProcessor
      */
     private function create_page( $ical_path, $event, &$files )
     {
+        // we expect that summary is never empty
         $slug = strtolower($event->summary_array[1]);
 
         $description = array();
@@ -169,23 +170,57 @@ class iCalendarProcessor
         $location = array();
         $summary = array();
 
-        for ( $i = 0; $i < count($event->summary_array); $i += 2 ) {
-            $info = $event->summary_array[$i];
+        // handle (multi-language) summary
+        if ( isset($event->summary_array) ) {
+            for ( $i = 0; $i < count($event->summary_array); $i += 2 ) {
+                $info = $event->summary_array[$i];
 
-            if ( $info != null ) {
-                $lang = $info["LANGUAGE"];
-                $file_names[$lang] = '/event.' . $lang . '.md';
-                $description[$lang] = $event->description_array[$i+1];
-                $location[$lang] = $event->location_array[$i+1];
-                $summary[$lang] = $event->summary_array[$i+1];
+                if ( $info != null && array_key_exists("LANGUAGE", $info)) {
+                    $lang = $info["LANGUAGE"];
+                    $file_names[$lang] = '/event.' . $lang . '.md';
+                    $summary[$lang] = $event->summary_array[$i+1];
+                }
+                else {
+                    $summary[""] = $event->summary;
+                }
             }
-            else {
-                $lang = "";
-                $file_names[$lang] = '/event.md';
-                $description[$lang] = $event->description;
-                $location[$lang] = $event->location;
-                $summary[$lang] = $event->summary;
+        }
+
+        // handle (multi-language) description
+        if ( isset($event->description_array) ) {
+            for ( $i = 0; $i < count($event->description_array); $i += 2 ) {
+                $info = $event->description_array[$i];
+
+                if ( $info != null && array_key_exists("LANGUAGE", $info)) {
+                    $lang = $info["LANGUAGE"];
+                    $file_names[$lang] = '/event.' . $lang . '.md';
+                    $description[$lang] = $event->description_array[$i+1];
+                }
+                else {
+                    $description[""] = $event->description;
+                }
             }
+        }
+
+        // handle (multi-language) location
+        if ( isset($event->location_array) ) {
+            for ( $i = 0; $i < count($event->location_array); $i += 2 ) {
+                $info = $event->location_array[$i];
+
+                if ( $info != null && array_key_exists("LANGUAGE", $info)) {
+                    $lang = $info["LANGUAGE"];
+                    $file_names[$lang] = '/event.' . $lang . '.md';
+                    $location[$lang] = $event->location_array[$i+1];
+                }
+                else {
+                    $location[""] = $event->location;
+                }
+            }
+        }
+
+        // eventually set default file_name
+        if ( count($file_names) == 0 ) {
+            $file_names[""] = '/event.md';
         }
 
         // get the event information
@@ -244,14 +279,13 @@ class iCalendarProcessor
                 $file_uid = str_replace("uid: '", "", $file_uid);
                 $file_uid = rtrim($file_uid, "'".PHP_EOL);
 
-                if ( $file_time === $last_modified
-                && $file_uid === $uid ) {
+                if ( $file_time === $last_modified && $file_uid === $uid ) {
                     // leave if file exists and hasn't changed
                     return;
                 }
 
                 // handle events with the same slug => two events have the same title
-    //             if ( $file_uid !== $uid ) {
+//                if ( $file_uid !== $uid ) {
                     // create token and append it to the slug
                     $token = substr(md5($uid . date('d-m-Y H:i', $start)), 0, 6);
                     $path = str_replace($slug, $slug . '-' . $token, $path);
@@ -262,27 +296,35 @@ class iCalendarProcessor
                     }
 
                     $file = $path . $file_name;
-    //             }
+//                }
             }
 
             // append file to the list of files
             $files[$start . '__' . $uid] = $file;
 
             // handle recurrences
-    //        if ( isset($recurrence_id) ) {
-    //        }
+//            if ( isset($recurrence_id) ) {
+//            }
 
             // write new page:
             // https://discourse.getgrav.org/t/creating-pages-dynamically-from-plugin/20223/3
 
+            // prepare summary
+            if ( array_key_exists($lang, $summary) ) {
+                $summ = $summary[$lang];
+            }
+            elseif ( array_key_exists("", $summary) ) {
+                $summ = $summary[""];
+            }
+
             // double ' to make it work as title
-            $title = str_replace("'", "''", $summary[$lang]);
+            $title = str_replace("'", "''", $summ);
 
             // prepare file content
             $content  = "---".PHP_EOL;
             $content .= "uid: '{$uid}'".PHP_EOL;
             $content .= "title: '{$title}'".PHP_EOL;
-    //        $content .= "subtitle: '" . date('d-m-Y H:i', $start) . "'".PHP_EOL;
+//            $content .= "subtitle: '" . date('d-m-Y H:i', $start) . "'".PHP_EOL;
 
             if ( is_array($categories) && count($categories) > 0 ) {
                 $content .= "taxonomy:".PHP_EOL;
@@ -296,7 +338,7 @@ class iCalendarProcessor
             $content .= "    start: '" . date('d-m-Y H:i', $start) . "'".PHP_EOL;
             $content .= "    end: '" . date('d-m-Y H:i', $end) . "'".PHP_EOL;
 
-    /*        if ( is_array($rrule) ) {
+/*            if ( is_array($rrule) ) {
                 $freq = "";
                 $repeat = "";
                 $until = "";
@@ -324,7 +366,7 @@ class iCalendarProcessor
                                 $freq = "";
                             }
                             break;
-    /*
+/*
                         // currently unsupported iCal rrules
                         case "BYWEEKNO":
                             break;
@@ -349,7 +391,7 @@ class iCalendarProcessor
 
                         case "WKST":
                             break;
-    * /
+* /
                         case "UNTIL":
                             $time = strtotime($rule[1]);
                             $until = "    until: '" . date('d-m-Y', $time) . "'".PHP_EOL;
@@ -360,15 +402,40 @@ class iCalendarProcessor
                 $content .= $repeat;
                 $content .= $freq;
                 $content .= $until;
-            }*/
+            }
+*/
+            // prepare location
+            if ( array_key_exists($lang, $location) ) {
+                $loca = $location[$lang];
+            }
+            elseif ( array_key_exists("", $location) ) {
+                $loca = $location[""];
+            }
+            else {
+                $loca = null;
+            }
 
-            if ( isset($location[$lang]) && $location[$lang] !== "" ) {
-                $content .= "    location: '{$location[$lang]}'".PHP_EOL;
+            if ( isset($loca) ) {
+                $content .= "    location: '{$loca}'".PHP_EOL;
             }
 
             $content .= "---".PHP_EOL;
             $content .= "".PHP_EOL;
-            $content .= "{$description[$lang]}".PHP_EOL;
+
+            // prepare description
+            if ( array_key_exists($lang, $description) ) {
+                $desc = $description[$lang];
+            }
+            elseif ( array_key_exists("", $description) ) {
+                $desc = $description[""];
+            }
+            else {
+                $desc = null;
+            }
+
+            if ( isset($desc) ) {
+                $content .= "{$desc}".PHP_EOL;
+            }
 
             // write content to file
             $fp = fopen($file, 'w');
