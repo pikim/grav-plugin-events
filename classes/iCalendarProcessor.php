@@ -227,9 +227,16 @@ class iCalendarProcessor
         $uid = $event->uid;
 
         // get timezone of start date/time
+        $tz = null; // add failure tolerance
         if ( isset($event->dtstart_array[0]["TZID"]) ) {
             $tz = $event->dtstart_array[0]["TZID"];
         }
+/*        // more sophisticated than simple $tz = null;
+        elseif ( isset($event->dtstart_array[0]["VALUE"]) ) {
+            if ( $event->dtstart_array[0]["VALUE"] == "DATE" ) {
+                $tz = null;
+            }
+        }*/
 
         // get dates/times and eventually correct the timezone
         if ( substr($event->last_modified, -1) == "Z" ) {
