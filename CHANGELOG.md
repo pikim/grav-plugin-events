@@ -1,3 +1,18 @@
+# v1.1.x
+## 01/03/2023
+1. [](#new)
+    * add support for multi-language ics files (summary, descrition & location)
+    * add admin option to select repeating/recurring iCal event handling
+    * use translate-date plugin for date translation
+2. [](#bugfix)
+    * some minor fixes
+3. [](#improved)
+    * revise repeating and recurring events handling for virtual events
+	* revise iCal date/time parsing and timezone handling
+    * some more translations
+    * some more documentation
+    * some other minor improvements
+
 # v1.1.8
 ## 01/03/2023
 1. [](#bugfix)
