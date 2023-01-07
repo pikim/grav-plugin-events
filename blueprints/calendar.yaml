@@ -7,10 +7,10 @@ form:
   fields:
     tabs:
       fields:
-    
-        contact:
+
+        calendar:
           type: tab
-          title: Events
+          title: Calendar
           fields:
             header.content.items.@taxonomy.type:
               type: text
@@ -47,7 +47,7 @@ form:
               type: toggle
               highlight: 1
               default: 0
-              options: 
+              options:
                 1: Enabled
                 0: Disabled
               validate:

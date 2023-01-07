@@ -24,7 +24,7 @@ fr:
       NO_EVENTS_TITLE: Aucunes événementsts
       NO_EVENTS_CONTENT: Il n'y a aucun événement à venir dans la catégorie **%s**
       MORE_INFORMATION: En savoir plus
-      DOORS_OPEN: Doors open
+
 de:
   PLUGIN_EVENTS:
     CALENDAR:
@@ -51,4 +51,3 @@ it:
       NO_EVENTS_TITLE: Nessun evento
       NO_EVENTS_CONTENT: Non ci sono eventi previsti nella categoria **%s**.
       MORE_INFORMATION: Mostra di più
-      DOORS_OPEN: Doors open

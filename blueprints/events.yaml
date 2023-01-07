@@ -8,7 +8,7 @@ form:
     tabs:
       fields:
 
-        contact:
+        events:
           type: tab
           title: Events
           fields:
