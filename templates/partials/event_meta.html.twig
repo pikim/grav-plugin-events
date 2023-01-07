@@ -9,7 +9,7 @@
 {% endif %}
 
 {% if page.header.event.until is defined %}
-    <span>until {{ page.header.event.until|dateTranslate(config.plugins.events.event_meta.until) }}</span>
+    <span>until {{ page.header.event.until|td(null, config.plugins.events.event_meta.until) }}</span>
 {% endif %}
 </p>
 {% endif %}

@@ -10,20 +10,20 @@
         <div class="event-left-column"> {# date and time #}
             <time class="event-datetime" datetime="{{ page.date|date("c") }}">
         {% if single == true %} {# individual content page #}
-            <span class="event-date">{{ page.header.event.start|dateTranslate(config.plugins.events.event_item.date) }},</span>
+            <span class="event-date">{{ page.header.event.start|td(null, config.plugins.events.event_item.date) }},</span>
             <span class="event-time">
                 {% set end = "" %}
                 {% if page.header.event.end %}
-                    {% set end = " - " ~ page.header.event.end|dateTranslate(config.plugins.events.event_item.time) %}
+                    {% set end = " - " ~ page.header.event.end|td(null, config.plugins.events.event_item.time) %}
                 {% endif %}
-                {{ page.header.event.start|dateTranslate(config.plugins.events.event_item.time) ~ end }}
+                {{ page.header.event.start|td(null, config.plugins.events.event_item.time) ~ end }}
             </span>
 
         {% else %} {# main listing page #}
-            <span class="event-day">{{ page.header.event.start|dateTranslate(config.plugins.events.event_item.day) }}</span>
-            <span class="event-month">{{ page.header.event.start|dateTranslate(config.plugins.events.event_item.month) }}</span>
+            <span class="event-day">{{ page.header.event.start|td(null, config.plugins.events.event_item.day) }}</span>
+            <span class="event-month">{{ page.header.event.start|td(null, config.plugins.events.event_item.month) }}</span>
             <span class="event-time">
-                {{ page.header.event.start|dateTranslate(config.plugins.events.event_item.time) }}{{ " - " }}{{ page.header.event.end|dateTranslate(config.plugins.events.event_item.time) }}
+                {{ page.header.event.start|td(null, config.plugins.events.event_item.time) }}{{ " - " }}{{ page.header.event.end|td(null, config.plugins.events.event_item.time) }}
             </span>
             <span class="event-year">{{ page.header.event.start|date("Y") }}</span>
         {% endif %}
