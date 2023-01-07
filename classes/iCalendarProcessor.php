@@ -106,7 +106,7 @@ class iCalendarProcessor
                 'disableCharacterReplacement' => false, // Default value
                 'filterDaysAfter'             => null,  // Default value
                 'filterDaysBefore'            => null,  // Default value
-                'skipRecurrence'              => false, // Default value
+                'skipRecurrence'              => $this->config['icalendar_recurrence'],
             )
         );
 
@@ -363,7 +363,7 @@ class iCalendarProcessor
             $content .= "    start: '" . $start->format('d-m-Y H:i') . "'".PHP_EOL;
             $content .= "    end: '" . $end->format('d-m-Y H:i') . "'".PHP_EOL;
 
-/*            if ( is_array($rrule) ) {
+            if ( $this->config['icalendar_recurrence'] && is_array($rrule) ) {
                 $freq = "";
                 $repeat = "";
                 $until = "";
@@ -385,11 +385,6 @@ class iCalendarProcessor
                             // remove commas
                             $days = str_replace(',', '', $days);
                             $repeat = "    repeat: {$days}".PHP_EOL;
-
-                            // daily does not work with repeat so delete it
-                            if ( strpos($freq, "daily") !== false ) {
-                                $freq = "";
-                            }
                             break;
 /*
                         // currently unsupported iCal rrules
@@ -416,19 +411,20 @@ class iCalendarProcessor
 
                         case "WKST":
                             break;
-* /
+*/
                         case "UNTIL":
-                            $time = strtotime($rule[1]);
-                            $until = "    until: '" . date('d-m-Y', $time) . "'".PHP_EOL;
+                            $time = Carbon::parse($rule[1]);
+                            $time->setTimezone($tz);
+                            $until = "    until: '" . $time->format('d-m-Y H:i') . "'".PHP_EOL;
                             break;
                     }
                 }
 
-                $content .= $repeat;
                 $content .= $freq;
+                $content .= $repeat;
                 $content .= $until;
             }
-*/
+
             // prepare location
             if ( array_key_exists($lang, $location) ) {
                 $loca = $location[$lang];

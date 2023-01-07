@@ -108,6 +108,17 @@ form:
                 lineNumbers: true
                 styleActiveLine: true
               default: ""
+            icalendar_recurrence:
+              type: toggle
+              label: Recurrence handling
+              help: "'file' creates a dedicated event folder/file for each repeating/recurring event instance (on disk). 'virtual' creates one event folder/file and repeating/recurring events virtually (in RAM)."
+              highlight: 0
+              default: 0
+              options:
+                0: file
+                1: virtual
+              validate:
+                type: bool
 
             misc_section:
               type: section
