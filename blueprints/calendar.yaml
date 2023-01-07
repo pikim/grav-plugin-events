@@ -21,9 +21,16 @@ form:
               label: Repeats On
               placeholder: "[M,T,W,R,F,S,U]"
             header.content.items.@taxonomy.event_freq:
-              type: text
+              type: select
               label: Frequency
-              placeholder: weekly
+              help: How often should this event repeat?
+              default: none
+              options:
+                'none': PLUGIN_EVENTS.EVENTS.FREQ_NONE
+                'daily': PLUGIN_EVENTS.EVENTS.FREQ_DAILY
+                'weekly': PLUGIN_EVENTS.EVENTS.FREQ_WEEKLY
+                'monthly': PLUGIN_EVENTS.EVENTS.FREQ_MONTHLY
+                'yearly': PLUGIN_EVENTS.EVENTS.FREQ_YEARLY
             header.content.dateRange.start:
               type: date
               label: Start Date

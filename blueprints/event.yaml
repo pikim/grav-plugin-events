@@ -56,12 +56,13 @@ form:
               type: select
               label: Frequency
               help: How often should this event repeat?
+              default: none
               options:
-                '': "None"
-                'daily': 'Daily'
-                'weekly': 'Weekly'
-                'monthly': 'Monthly'
-                'yearly': 'Yearly'
+                'none': PLUGIN_EVENTS.EVENTS.FREQ_NONE
+                'daily': PLUGIN_EVENTS.EVENTS.FREQ_DAILY
+                'weekly': PLUGIN_EVENTS.EVENTS.FREQ_WEEKLY
+                'monthly': PLUGIN_EVENTS.EVENTS.FREQ_MONTHLY
+                'yearly': PLUGIN_EVENTS.EVENTS.FREQ_YEARLY
             header.event.until:
               type: datetime
               label: Until

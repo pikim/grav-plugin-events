@@ -12,6 +12,16 @@ en:
       MORE_INFORMATION: More information
       NO_MORE_INFORMATION: No more information available
       DOORS_OPEN: Doors open
+      FREQ_NONE: none
+      FREQ_DAILY: daily
+      FREQ_WEEKLY: weekly
+      FREQ_MONTHLY: monthly
+      FREQ_YEARLY: yearly
+    META:
+      REPEATS: Repeats
+      ON: on
+      UNTIL: until
+
 fr:
   PLUGIN_EVENTS:
     CALENDAR:
@@ -39,6 +49,16 @@ de:
       MORE_INFORMATION: Weitere Informationen
       NO_MORE_INFORMATION: Keine weiteren Informationen verfügbar
       DOORS_OPEN: Einlass
+      FREQ_NONE: keine Wiederholung
+      FREQ_DAILY: täglich
+      FREQ_WEEKLY: wöchentlich
+      FREQ_MONTHLY: monatlich
+      FREQ_YEARLY: jährlich
+    META:
+      REPEATS: Wiederholt sich
+      ON: am
+      UNTIL: bis
+
 it:
   PLUGIN_EVENTS:
     CALENDAR:
