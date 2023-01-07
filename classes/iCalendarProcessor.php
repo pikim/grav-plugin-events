@@ -101,7 +101,7 @@ class iCalendarProcessor
             $ical_files,
             array(
                 'defaultSpan'                 => 2,     // Default value
-                'defaultTimeZone'             => 'UTC',
+//                'defaultTimeZone'             => 'Europe/Berlin',
                 'defaultWeekStart'            => 'MO',  // Default value
                 'disableCharacterReplacement' => false, // Default value
                 'filterDaysAfter'             => null,  // Default value
@@ -225,12 +225,37 @@ class iCalendarProcessor
 
         // get the event information
         $uid = $event->uid;
-        $last_modified = strtotime($event->last_modified);
-        if ( isset($event->recurrence_id) ) {
-            $recurrence_id = strtotime($event->recurrence_id);
+
+        // get timezone of start date/time
+        if ( isset($event->dtstart_array[0]["TZID"]) ) {
+            $tz = $event->dtstart_array[0]["TZID"];
         }
-        $start = strtotime($event->dtstart);
-        $end = strtotime($event->dtend);
+
+        // get dates/times and eventually correct the timezone
+        if ( substr($event->last_modified, -1) == "Z" ) {
+            $last_modified = Carbon::parse($event->last_modified, "UTC");
+        }
+        else {
+            $last_modified = Carbon::parse($event->last_modified, $tz);
+        }
+
+        if ( substr($event->dtstart, -1) == "Z" ) {
+            $start = Carbon::parse($event->dtstart, "UTC");
+        }
+        else {
+            $start = Carbon::parse($event->dtstart, $tz);
+        }
+
+        if ( substr($event->dtend, -1) == "Z" ) {
+            $end = Carbon::parse($event->dtend, "UTC");
+        }
+        else {
+            $end = Carbon::parse($event->dtend, $tz);
+        }
+
+        if ( isset($event->recurrence_id) ) {
+            $recurrence_id = Carbon::parse($event->recurrence_id);
+        }
 
         // split if element exists
         $categories = array();
@@ -245,8 +270,8 @@ class iCalendarProcessor
         }
 
         // create path to destination folder
-        $year = date('Y', $start);
-        $moda = date('md', $start); // recurrences don't work atm, prefix the path with month & day
+        $year = $start->format('Y');
+        $moda = $start->format('md'); // recurrences don't work atm, prefix the path with month & day
 
         // remove special characters from slug
         $search = array(" ", "&amp;", "ä", "ö", "ü", "ß");
@@ -287,7 +312,7 @@ class iCalendarProcessor
                 // handle events with the same slug => two events have the same title
 //                if ( $file_uid !== $uid ) {
                     // create token and append it to the slug
-                    $token = substr(md5($uid . date('d-m-Y H:i', $start)), 0, 6);
+                    $token = substr(md5($uid . $start->format('d-m-Y H:i')), 0, 6);
                     $path = str_replace($slug, $slug . '-' . $token, $path);
 
                     // create folder and new filename
@@ -324,7 +349,7 @@ class iCalendarProcessor
             $content  = "---".PHP_EOL;
             $content .= "uid: '{$uid}'".PHP_EOL;
             $content .= "title: '{$title}'".PHP_EOL;
-//            $content .= "subtitle: '" . date('d-m-Y H:i', $start) . "'".PHP_EOL;
+//            $content .= "subtitle: '" . $start->format('d-m-Y H:i') . "'".PHP_EOL;
 
             if ( is_array($categories) && count($categories) > 0 ) {
                 $content .= "taxonomy:".PHP_EOL;
@@ -335,8 +360,8 @@ class iCalendarProcessor
             }
 
             $content .= "event:".PHP_EOL;
-            $content .= "    start: '" . date('d-m-Y H:i', $start) . "'".PHP_EOL;
-            $content .= "    end: '" . date('d-m-Y H:i', $end) . "'".PHP_EOL;
+            $content .= "    start: '" . $start->format('d-m-Y H:i') . "'".PHP_EOL;
+            $content .= "    end: '" . $end->format('d-m-Y H:i') . "'".PHP_EOL;
 
 /*            if ( is_array($rrule) ) {
                 $freq = "";
@@ -443,8 +468,8 @@ class iCalendarProcessor
             fclose($fp);
 
             // set modification time
-            touch($file, $last_modified);
-            touch($path, $last_modified);
+            touch($file, $last_modified->unix());
+            touch($path, $last_modified->unix());
         }
     }
 }
