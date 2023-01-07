@@ -138,7 +138,7 @@ form:
               type: text
               label: Google Maps API key
               help: API key for address translation. Google for 'maps api key' to learn how to get one.
-              default: "none"
+              default: none
 
         formatting:
           type: tab
