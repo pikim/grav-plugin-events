@@ -45,10 +45,6 @@
 				</tr>
 				<tr class="calendar-headings">
 				{% set fdowOffset = config.plugins.events.calendar.first_dow %}
-				{% set dayChar = config.plugins.events.calendar.day_char %}
-				{% if dayChar == 0 %}
-					{% set dayChar = 1000 %}
-				{% endif %}
 				{% for day in range(0,6) %}
 					<th class="calendar-heading">{{ 'PLUGIN_TRANSLATE_DATE.D'|ta((fdowOffset+day) % 7) }}</th>
 				{% endfor %}
