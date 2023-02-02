@@ -13,7 +13,7 @@
 	</p>
 	{% set summary = event.summary(50)|slice(3, 50) %}
 	{% if not summary %}
-	{% set summary = '&nbsp;' %}
+	{% set summary = ' ' %}
 	{% endif %}
-	<p class="event-item-summary">{{ summary|raw }}</p>
+	<p class="event-item-summary">{{ summary }}</p>
 </div>
