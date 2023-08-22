@@ -524,6 +524,9 @@ class EventsProcessor
 		/**
 		 * Calculate the iteration count depending on frequency set
 		 */
+		
+		$count = 0;
+		
 		switch ( $freq ) {
 			case 'daily':
 				$count = $until->diffInDays($start);
