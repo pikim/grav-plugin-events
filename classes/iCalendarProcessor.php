@@ -93,6 +93,11 @@ class iCalendarProcessor
             $this->config['icalendars'] = "";
         }
 
+        // if icalendar_recurrence isn't set, set it to a default
+        if ( ! key_exists('icalendar_recurrence', $this->config) ) {
+            $this->config['icalendar_recurrence'] = 0;
+        }
+
         // get the single iCalendar file(s) as array
         $ical_files = explode("\n", $this->config['icalendars']);
 
