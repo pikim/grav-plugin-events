@@ -67,6 +67,26 @@ form:
               type: datetime
               label: Until
               help: How long should this event repeat? (3 months automatically if Repeat or Frequency are set)
+            header.event.author-section:
+              type: section
+              title: Authors & Organizers
+              underline: true
+            header.event.authors:
+              type: array
+              label: Enter author name or event category to dispaly as subtitle.
+              required: true
+              value_only: true
+            header.event.organizers:
+              type: array
+              label: Organizers
+              placeholder_key: Name
+              placeholder_value: URL
+              required: true
+            header.event.topic:
+              type: array
+              label: Topic
+              required: true
+              value_only: true
             header.event.exceptions-section:
               type: section
               title: Exceptions
