@@ -23,6 +23,9 @@
  * - Sebastian Thierer
  * - Claudson Martins (claudsonm)
  */
+
+use Carbon\CarbonInterface;
+
 return [
     'year' => ':count ano|:count anos',
     'a_year' => 'um ano|:count anos',
@@ -45,13 +48,23 @@ return [
     'second' => ':count segundo|:count segundos',
     'a_second' => 'alguns segundos|:count segundos',
     's' => ':counts',
+    'millisecond' => ':count milissegundo|:count milissegundos',
+    'a_millisecond' => 'um milissegundo|:count milissegundos',
+    'ms' => ':countms',
+    'microsecond' => ':count microssegundo|:count microssegundos',
+    'a_microsecond' => 'um microssegundo|:count microssegundos',
+    'µs' => ':countµs',
     'ago' => 'há :time',
     'from_now' => 'em :time',
     'after' => ':time depois',
     'before' => ':time antes',
     'diff_now' => 'agora',
+    'diff_today' => 'Hoje',
+    'diff_today_regexp' => 'Hoje(?:\\s+às)?',
     'diff_yesterday' => 'ontem',
+    'diff_yesterday_regexp' => 'Ontem(?:\\s+às)?',
     'diff_tomorrow' => 'amanhã',
+    'diff_tomorrow_regexp' => 'Amanhã(?:\\s+às)?',
     'diff_before_yesterday' => 'anteontem',
     'diff_after_tomorrow' => 'depois de amanhã',
     'period_recurrences' => 'uma vez|:count vezes',
@@ -71,7 +84,7 @@ return [
         'nextDay' => '[Amanhã às] LT',
         'nextWeek' => 'dddd [às] LT',
         'lastDay' => '[Ontem às] LT',
-        'lastWeek' => function (\Carbon\CarbonInterface $date) {
+        'lastWeek' => function (CarbonInterface $date) {
             switch ($date->dayOfWeek) {
                 case 0:
                 case 6:
@@ -91,4 +104,13 @@ return [
     'first_day_of_week' => 1,
     'day_of_first_week_of_year' => 4,
     'list' => [', ', ' e '],
+    'ordinal_words' => [
+        'of' => 'de',
+        'first' => 'primeira',
+        'second' => 'segunda',
+        'third' => 'terceira',
+        'fourth' => 'quarta',
+        'fifth' => 'quinta',
+        'last' => 'última',
+    ],
 ];

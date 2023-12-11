@@ -21,6 +21,9 @@
  * - Xavi
  * - qcardona
  */
+
+use Carbon\CarbonInterface;
+
 return [
     'year' => ':count any|:count anys',
     'a_year' => 'un any|:count anys',
@@ -48,8 +51,12 @@ return [
     'after' => ':time després',
     'before' => ':time abans',
     'diff_now' => 'ara mateix',
+    'diff_today' => 'avui',
+    'diff_today_regexp' => 'avui(?:\\s+a)?(?:\\s+les)?',
     'diff_yesterday' => 'ahir',
+    'diff_yesterday_regexp' => 'ahir(?:\\s+a)?(?:\\s+les)?',
     'diff_tomorrow' => 'demà',
+    'diff_tomorrow_regexp' => 'demà(?:\\s+a)?(?:\\s+les)?',
     'diff_before_yesterday' => 'abans d\'ahir',
     'diff_after_tomorrow' => 'demà passat',
     'period_recurrences' => ':count cop|:count cops',
@@ -65,19 +72,19 @@ return [
         'LLLL' => 'dddd D MMMM [de] YYYY [a les] H:mm',
     ],
     'calendar' => [
-        'sameDay' => function (\Carbon\CarbonInterface $current) {
+        'sameDay' => function (CarbonInterface $current) {
             return '[avui a '.($current->hour !== 1 ? 'les' : 'la').'] LT';
         },
-        'nextDay' => function (\Carbon\CarbonInterface $current) {
+        'nextDay' => function (CarbonInterface $current) {
             return '[demà a '.($current->hour !== 1 ? 'les' : 'la').'] LT';
         },
-        'nextWeek' => function (\Carbon\CarbonInterface $current) {
+        'nextWeek' => function (CarbonInterface $current) {
             return 'dddd [a '.($current->hour !== 1 ? 'les' : 'la').'] LT';
         },
-        'lastDay' => function (\Carbon\CarbonInterface $current) {
+        'lastDay' => function (CarbonInterface $current) {
             return '[ahir a '.($current->hour !== 1 ? 'les' : 'la').'] LT';
         },
-        'lastWeek' => function (\Carbon\CarbonInterface $current) {
+        'lastWeek' => function (CarbonInterface $current) {
             return '[el] dddd [passat a '.($current->hour !== 1 ? 'les' : 'la').'] LT';
         },
         'sameElse' => 'L',
@@ -97,8 +104,9 @@ return [
     },
     'months' => ['de gener', 'de febrer', 'de març', 'd\'abril', 'de maig', 'de juny', 'de juliol', 'd\'agost', 'de setembre', 'd\'octubre', 'de novembre', 'de desembre'],
     'months_standalone' => ['gener', 'febrer', 'març', 'abril', 'maig', 'juny', 'juliol', 'agost', 'setembre', 'octubre', 'novembre', 'desembre'],
-    'months_short' => ['gen.', 'febr.', 'març', 'abr.', 'maig', 'juny', 'jul.', 'ag.', 'set.', 'oct.', 'nov.', 'des.'],
-    'months_regexp' => '/D[oD]?[\s,]+MMMM?/',
+    'months_short' => ['de gen.', 'de febr.', 'de març', 'd\'abr.', 'de maig', 'de juny', 'de jul.', 'd\'ag.', 'de set.', 'd\'oct.', 'de nov.', 'de des.'],
+    'months_short_standalone' => ['gen.', 'febr.', 'març', 'abr.', 'maig', 'juny', 'jul.', 'ag.', 'set.', 'oct.', 'nov.', 'des.'],
+    'months_regexp' => '/(D[oD]?[\s,]+MMMM?|L{2,4}|l{2,4})/',
     'weekdays' => ['diumenge', 'dilluns', 'dimarts', 'dimecres', 'dijous', 'divendres', 'dissabte'],
     'weekdays_short' => ['dg.', 'dl.', 'dt.', 'dc.', 'dj.', 'dv.', 'ds.'],
     'weekdays_min' => ['dg', 'dl', 'dt', 'dc', 'dj', 'dv', 'ds'],
@@ -106,5 +114,4 @@ return [
     'day_of_first_week_of_year' => 4,
     'list' => [', ', ' i '],
     'meridiem' => ['a. m.', 'p. m.'],
-    'months_short_standalone' => ['gen.', 'febr.', 'març', 'abr.', 'maig', 'juny', 'jul.', 'ag.', 'set.', 'oct.', 'nov.', 'des.'],
 ];

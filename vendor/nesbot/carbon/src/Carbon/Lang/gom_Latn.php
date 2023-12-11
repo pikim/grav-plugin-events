@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 return [
     'year' => ':count voros|:count vorsam',
     'y' => ':countv',
@@ -24,6 +25,9 @@ return [
     'second' => ':count second',
     's' => ':counts',
 
+    'diff_today' => 'Aiz',
+    'diff_yesterday' => 'Kal',
+    'diff_tomorrow' => 'Faleam',
     'formats' => [
         'LT' => 'A h:mm [vazta]',
         'LTS' => 'A h:mm:ss [vazta]',

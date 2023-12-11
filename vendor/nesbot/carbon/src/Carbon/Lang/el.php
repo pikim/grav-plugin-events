@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-/**
+/*
  * Authors:
  * - Alessandro Di Felice
  * - François B
@@ -19,6 +19,9 @@
  * - yiannisdesp
  * - Ilias Kasmeridis (iliaskasm)
  */
+
+use Carbon\CarbonInterface;
+
 return [
     'year' => ':count χρόνος|:count χρόνια',
     'a_year' => 'ένας χρόνος|:count χρόνια',
@@ -41,13 +44,17 @@ return [
     'second' => ':count δευτερόλεπτο|:count δευτερόλεπτα',
     'a_second' => 'λίγα δευτερόλεπτα|:count δευτερόλεπτα',
     's' => ':count δευ.',
-    'ago' => ':time πριν',
+    'ago' => 'πριν :time',
     'from_now' => 'σε :time',
     'after' => ':time μετά',
     'before' => ':time πριν',
     'diff_now' => 'τώρα',
+    'diff_today' => 'Σήμερα',
+    'diff_today_regexp' => 'Σήμερα(?:\\s+{})?',
     'diff_yesterday' => 'χθες',
+    'diff_yesterday_regexp' => 'Χθες(?:\\s+{})?',
     'diff_tomorrow' => 'αύριο',
+    'diff_tomorrow_regexp' => 'Αύριο(?:\\s+{})?',
     'formats' => [
         'LT' => 'h:mm A',
         'LTS' => 'h:mm:ss A',
@@ -61,7 +68,7 @@ return [
         'nextDay' => '[Αύριο {}] LT',
         'nextWeek' => 'dddd [{}] LT',
         'lastDay' => '[Χθες {}] LT',
-        'lastWeek' => function (\Carbon\CarbonInterface $current) {
+        'lastWeek' => function (CarbonInterface $current) {
             switch ($current->dayOfWeek) {
                 case 6:
                     return '[το προηγούμενο] dddd [{}] LT';
@@ -75,7 +82,7 @@ return [
     'meridiem' => ['ΠΜ', 'ΜΜ', 'πμ', 'μμ'],
     'months' => ['Ιανουαρίου', 'Φεβρουαρίου', 'Μαρτίου', 'Απριλίου', 'Μαΐου', 'Ιουνίου', 'Ιουλίου', 'Αυγούστου', 'Σεπτεμβρίου', 'Οκτωβρίου', 'Νοεμβρίου', 'Δεκεμβρίου'],
     'months_standalone' => ['Ιανουάριος', 'Φεβρουάριος', 'Μάρτιος', 'Απρίλιος', 'Μάιος', 'Ιούνιος', 'Ιούλιος', 'Αύγουστος', 'Σεπτέμβριος', 'Οκτώβριος', 'Νοέμβριος', 'Δεκέμβριος'],
-    'months_regexp' => '/D[oD]?[\s,]+MMMM/',
+    'months_regexp' => '/(D[oD]?[\s,]+MMMM|L{2,4}|l{2,4})/',
     'months_short' => ['Ιαν', 'Φεβ', 'Μαρ', 'Απρ', 'Μαϊ', 'Ιουν', 'Ιουλ', 'Αυγ', 'Σεπ', 'Οκτ', 'Νοε', 'Δεκ'],
     'weekdays' => ['Κυριακή', 'Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέμπτη', 'Παρασκευή', 'Σάββατο'],
     'weekdays_short' => ['Κυρ', 'Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 'Σαβ'],

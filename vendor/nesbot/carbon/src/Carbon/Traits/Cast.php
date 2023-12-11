@@ -1,9 +1,18 @@
 <?php
 
+/**
+ * This file is part of the Carbon package.
+ *
+ * (c) Brian Nesbitt <brian@nesbot.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Carbon\Traits;
 
+use Carbon\Exceptions\InvalidCastException;
 use DateTimeInterface;
-use InvalidArgumentException;
 
 /**
  * Trait Cast.
@@ -26,7 +35,7 @@ trait Cast
                 return new $className($this->rawFormat('Y-m-d H:i:s.u'), $this->getTimezone());
             }
 
-            throw new InvalidArgumentException("$className has not the instance() method needed to cast the date.");
+            throw new InvalidCastException("$className has not the instance() method needed to cast the date.");
         }
 
         return $className::instance($this);

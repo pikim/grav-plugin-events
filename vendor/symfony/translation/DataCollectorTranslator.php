@@ -21,24 +21,20 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class DataCollectorTranslator implements TranslatorInterface, TranslatorBagInterface, LocaleAwareInterface, WarmableInterface
 {
-    const MESSAGE_DEFINED = 0;
-    const MESSAGE_MISSING = 1;
-    const MESSAGE_EQUALS_FALLBACK = 2;
+    public const MESSAGE_DEFINED = 0;
+    public const MESSAGE_MISSING = 1;
+    public const MESSAGE_EQUALS_FALLBACK = 2;
 
-    /**
-     * @var TranslatorInterface|TranslatorBagInterface
-     */
     private $translator;
-
     private $messages = [];
 
     /**
-     * @param TranslatorInterface $translator The translator must implement TranslatorBagInterface
+     * @param TranslatorInterface&TranslatorBagInterface&LocaleAwareInterface $translator
      */
     public function __construct(TranslatorInterface $translator)
     {
         if (!$translator instanceof TranslatorBagInterface || !$translator instanceof LocaleAwareInterface) {
-            throw new InvalidArgumentException(sprintf('The Translator "%s" must implement TranslatorInterface, TranslatorBagInterface and LocaleAwareInterface.', \get_class($translator)));
+            throw new InvalidArgumentException(sprintf('The Translator "%s" must implement TranslatorInterface, TranslatorBagInterface and LocaleAwareInterface.', get_debug_type($translator)));
         }
 
         $this->translator = $translator;
@@ -82,17 +78,29 @@ class DataCollectorTranslator implements TranslatorInterface, TranslatorBagInter
     /**
      * {@inheritdoc}
      */
+    public function getCatalogues(): array
+    {
+        return $this->translator->getCatalogues();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return string[]
+     */
     public function warmUp(string $cacheDir)
     {
         if ($this->translator instanceof WarmableInterface) {
-            $this->translator->warmUp($cacheDir);
+            return (array) $this->translator->warmUp($cacheDir);
         }
+
+        return [];
     }
 
     /**
      * Gets the fallback locales.
      *
-     * @return array The fallback locales
+     * @return array
      */
     public function getFallbackLocales()
     {

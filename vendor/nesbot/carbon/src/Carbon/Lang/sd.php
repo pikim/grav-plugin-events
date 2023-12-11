@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 $months = [
     'جنوري',
     'فيبروري',
@@ -50,6 +51,7 @@ return [
     'ago' => ':time اڳ',
     'from_now' => ':time پوء',
     'diff_yesterday' => 'ڪالهه',
+    'diff_today' => 'اڄ',
     'diff_tomorrow' => 'سڀاڻي',
     'formats' => [
         'LT' => 'HH:mm',

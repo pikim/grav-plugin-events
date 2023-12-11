@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-/**
+/*
  * Authors:
  * - Dieter Sting
  * - François B
@@ -20,6 +20,7 @@
  * - JD Isaacks
  * - Sebastian Thierer
  * - Fastfuel
+ * - Pete Scopes (pdscopes)
  */
 return [
     'year' => ':count an|:count ans',
@@ -43,13 +44,23 @@ return [
     'second' => ':count seconde|:count secondes',
     'a_second' => 'quelques secondes|:count secondes',
     's' => ':count s',
+    'millisecond' => ':count milliseconde|:count millisecondes',
+    'a_millisecond' => 'une milliseconde|:count millisecondes',
+    'ms' => ':countms',
+    'microsecond' => ':count microseconde|:count microsecondes',
+    'a_microsecond' => 'une microseconde|:count microsecondes',
+    'µs' => ':countµs',
     'ago' => 'il y a :time',
     'from_now' => 'dans :time',
     'after' => ':time après',
     'before' => ':time avant',
-    'diff_now' => 'à l\'instant',
+    'diff_now' => "à l'instant",
+    'diff_today' => "aujourd'hui",
+    'diff_today_regexp' => "aujourd'hui(?:\s+à)?",
     'diff_yesterday' => 'hier',
+    'diff_yesterday_regexp' => 'hier(?:\s+à)?',
     'diff_tomorrow' => 'demain',
+    'diff_tomorrow_regexp' => 'demain(?:\s+à)?',
     'diff_before_yesterday' => 'avant-hier',
     'diff_after_tomorrow' => 'après-demain',
     'period_recurrences' => ':count fois',
@@ -79,7 +90,7 @@ return [
     'weekdays_min' => ['di', 'lu', 'ma', 'me', 'je', 've', 'sa'],
     'ordinal' => function ($number, $period) {
         switch ($period) {
-            // In french, only the first has be ordinal, other number remains cardinal
+            // In French, only the first has to be ordinal, other number remains cardinal
             // @link https://fr.wikihow.com/%C3%A9crire-la-date-en-fran%C3%A7ais
             case 'D':
                 return $number.($number === 1 ? 'er' : '');
@@ -100,4 +111,13 @@ return [
     'first_day_of_week' => 1,
     'day_of_first_week_of_year' => 4,
     'list' => [', ', ' et '],
+    'ordinal_words' => [
+        'of' => 'de',
+        'first' => 'premier',
+        'second' => 'deuxième',
+        'third' => 'troisième',
+        'fourth' => 'quatrième',
+        'fifth' => 'cinquième',
+        'last' => 'dernier',
+    ],
 ];

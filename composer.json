@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"require": {
 		"nesbot/carbon": "*",
-		"johngrogg/ics-parser": "^2.1"
+		"johngrogg/ics-parser": "*"
 	},
 	"require-dev": {
 	   "atoum/atoum": "~2.5"

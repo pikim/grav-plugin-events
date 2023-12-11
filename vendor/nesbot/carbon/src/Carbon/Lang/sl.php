@@ -27,7 +27,11 @@
  * - Glavić
  * - Anže Časar
  * - Lovro Tramšek (Lovro1107)
+ * - burut13
  */
+
+use Carbon\CarbonInterface;
+
 return [
     'year' => ':count leto|:count leti|:count leta|:count let',
     'y' => ':count leto|:count leti|:count leta|:count let',
@@ -42,11 +46,12 @@ return [
     'minute' => ':count minuta|:count minuti|:count minute|:count minut',
     'min' => ':count min.',
     'second' => ':count sekunda|:count sekundi|:count sekunde|:count sekund',
+    'a_second' => '{1}nekaj sekund|:count sekunda|:count sekundi|:count sekunde|:count sekund',
     's' => ':count s',
 
-    'year_ago' => ':count letom|:count leti|:count leti|:count leti',
-    'y_ago' => ':count letom|:count leti|:count leti|:count leti',
-    'month_ago' => ':count mesecem|:count meseci|:count meseci|:count meseci',
+    'year_ago' => ':count letom|:count letoma|:count leti|:count leti',
+    'y_ago' => ':count letom|:count letoma|:count leti|:count leti',
+    'month_ago' => ':count mesecem|:count mesecema|:count meseci|:count meseci',
     'week_ago' => ':count tednom|:count tednoma|:count tedni|:count tedni',
     'day_ago' => ':count dnem|:count dnevoma|:count dnevi|:count dnevi',
     'd_ago' => ':count dnem|:count dnevoma|:count dnevi|:count dnevi',
@@ -66,8 +71,12 @@ return [
     'before' => ':time prej',
 
     'diff_now' => 'ravnokar',
+    'diff_today' => 'danes',
+    'diff_today_regexp' => 'danes(?:\\s+ob)?',
     'diff_yesterday' => 'včeraj',
+    'diff_yesterday_regexp' => 'včeraj(?:\\s+ob)?',
     'diff_tomorrow' => 'jutri',
+    'diff_tomorrow_regexp' => 'jutri(?:\\s+ob)?',
     'diff_before_yesterday' => 'predvčerajšnjim',
     'diff_after_tomorrow' => 'pojutrišnjem',
 
@@ -90,7 +99,7 @@ return [
         'nextDay' => '[jutri ob] LT',
         'nextWeek' => 'dddd [ob] LT',
         'lastDay' => '[včeraj ob] LT',
-        'lastWeek' => function (\Carbon\CarbonInterface $date) {
+        'lastWeek' => function (CarbonInterface $date) {
             switch ($date->dayOfWeek) {
                 case 0:
                     return '[preteklo] [nedeljo] [ob] LT';
@@ -110,11 +119,11 @@ return [
         },
         'sameElse' => 'L',
     ],
-    'months' => ['Januar', 'Februar', 'Marec', 'April', 'Maj', 'Junij', 'Julij', 'Avgust', 'September', 'Oktober', 'November', 'December'],
-    'months_short' => ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Avg', 'Sep', 'Okt', 'Nov', 'Dec'],
-    'weekdays' => ['Nedelja', 'Ponedeljek', 'Torek', 'Sreda', 'Četrtek', 'Petek', 'Sobota'],
-    'weekdays_short' => ['Ned', 'Pon', 'Tor', 'Sre', 'Čet', 'Pet', 'Sob'],
-    'weekdays_min' => ['Ne', 'Po', 'To', 'Sr', 'Če', 'Pe', 'So'],
+    'months' => ['januar', 'februar', 'marec', 'april', 'maj', 'junij', 'julij', 'avgust', 'september', 'oktober', 'november', 'december'],
+    'months_short' => ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'avg', 'sep', 'okt', 'nov', 'dec'],
+    'weekdays' => ['nedelja', 'ponedeljek', 'torek', 'sreda', 'četrtek', 'petek', 'sobota'],
+    'weekdays_short' => ['ned', 'pon', 'tor', 'sre', 'čet', 'pet', 'sob'],
+    'weekdays_min' => ['ne', 'po', 'to', 'sr', 'če', 'pe', 'so'],
     'list' => [', ', ' in '],
     'meridiem' => ['dopoldan', 'popoldan'],
 ];

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-/**
+/*
  * Authors:
  * - Josh Soref
  * - Kaushik Thanki
@@ -18,7 +18,7 @@
 return [
     'year' => 'એક વર્ષ|:count વર્ષ',
     'y' => ':countવર્ષ|:countવર્ષો',
-    'month' => 'એક મહિનો|:count મહિનો',
+    'month' => 'એક મહિનો|:count મહિના',
     'm' => ':countમહિનો|:countમહિના',
     'week' => ':count અઠવાડિયું|:count અઠવાડિયા',
     'w' => ':countઅઠ.|:countઅઠ.',
@@ -35,6 +35,7 @@ return [
     'after' => ':time પછી',
     'before' => ':time પહેલા',
     'diff_now' => 'હમણાં',
+    'diff_today' => 'આજ',
     'diff_yesterday' => 'ગઇકાલે',
     'diff_tomorrow' => 'કાલે',
     'formats' => [
