@@ -1,12 +1,15 @@
-# v1.1.x
-## 01/03/2023
+# v1.1.9
+## 12/11/2023
 1. [](#new)
-    * add support for multi-language ics files (summary, descrition & location)
+    * PHP8 support (tested with PHP 8.3)
+    * add support for multi-language ics files (summary, description & location)
     * add admin option to select repeating/recurring iCal event handling
     * use translate-date plugin for date translation
+    * add some more fields
 2. [](#bugfix)
-    * some minor fixes
+    * some fixes
 3. [](#improved)
+    * update dependencies
     * revise repeating and recurring events handling for virtual events
 	* revise iCal date/time parsing and timezone handling
     * some more translations
