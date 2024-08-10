@@ -20,15 +20,13 @@ require_once __DIR__.'/classes/iCalendarProcessor.php';
 require_once __DIR__.'/classes/calendarProcessor.php';
 require_once __DIR__.'/classes/eventsProcessor.php';
 
+use Grav\Common\Flex\Types\Pages\PageObject;
+use Grav\Common\Page\Header;
 use Grav\Common\Plugin;
 use Grav\Common\Grav;
-use Grav\Common\Page\Page;
 use RocketTheme\Toolbox\Event\Event;
 
 use Carbon\Carbon;
-
-use Events\CalendarProcessor;
-use Events\EventsProcessor;
 
 /**
  * Grav Events
@@ -311,20 +309,22 @@ class EventsPlugin extends Plugin
 		// get the object being saved
 		$obj = $event['object'];
 
-		// check to see if the object is a `Page` with template `event`
-		if ( $obj instanceof Page && $obj->template() == 'event' )
+		// check to see if the object is a `PageObject` with template `event`
+		if ( $obj instanceof PageObject && $obj->template() == 'event' )
 		{
 			// get the header
+            /** @var Header $header */
 			$header = $obj->header();
+            $event = $header->event;
 
 			// check for location information
-			if ( isset( $header->event['location'] ) && ! isset( $header->event['coordinates'] ) ) {
+			if ( isset( $event['location'] ) && ! isset( $event['coordinates'] ) ) {
 				// leave if geocoding is disabled
 				if ( ! $config['enable_geocoding'] ) {
 					return;
 				}
 
-				$location = $header->event['location'];
+				$location = $event['location'];
 
 				// build a url
 				$url = "https://maps.googleapis.com/maps/api/geocode/json?address=" . urlencode($location) . "&key=" . $config['api_key'];
@@ -337,15 +337,15 @@ class EventsPlugin extends Plugin
 
 				foreach ( $geoloc['results'][0]['address_components'] as $address_component ) {
 					if($address_component['types'][0] === 'country' && $address_component['types'][1] === 'political') {
-						$header->event['country'] = $address_component['long_name'];
+						$event['country'] = $address_component['long_name'];
 					}
 
 					if($address_component['types'][0] === 'locality' && $address_component['types'][1] === 'political') {
-						$header->event['city'] = $address_component['long_name'];
+						$event['city'] = $address_component['long_name'];
 					}
 
 					if($address_component['types'][0] === 'postal_code') {
-						$header->event['zip'] = $address_component['long_name'];
+						$event['zip'] = $address_component['long_name'];
 					}
 				}
 
@@ -355,12 +355,13 @@ class EventsPlugin extends Plugin
 				$coords = $lat . ", " . $lng;
 
 				// set the header info
-				$header->event['coordinates'] = $coords;
+				$event['coordinates'] = $coords;
+                $header->event = $event;
 				$obj->header($header);
 			}
 		}
-		// check to see if the object is a `Page` with template `events`
-		elseif ( $obj instanceof Page && $obj->template() == 'events' ) {
+		// check to see if the object is a `PageObject` with template `events`
+		elseif ( $obj instanceof PageObject && $obj->template() == 'events' ) {
 		}
 		else // the saved object was not a page, so it was likely the plugin settings
 		{
