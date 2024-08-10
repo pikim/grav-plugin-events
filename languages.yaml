@@ -71,3 +71,26 @@ it:
       NO_EVENTS_TITLE: Nessun evento
       NO_EVENTS_CONTENT: Non ci sono eventi previsti nella categoria **%s**.
       MORE_INFORMATION: Mostra di più
+es:
+  PLUGIN_EVENTS:
+    CALENDAR:
+      TODAY: Hoy
+      NO_EVENTS: No hay eventos programados para hoy.
+      VIEW_ALL_EVENTS: Ver todos los eventos
+    EVENTS:
+      UPCOMING_EVENTS: Próximos eventos
+      BY_CATEGORY: Categorías de eventos
+      NO_EVENTS_TITLE: Sin eventos
+      NO_EVENTS_CONTENT: No hay eventos próximos en la categoría **%s category**.
+      MORE_INFORMATION: Más información
+      NO_MORE_INFORMATION: No hay más información disponible.
+      DOORS_OPEN: Apertura de puertas
+      FREQ_NONE: ninguna
+      FREQ_DAILY: diaria
+      FREQ_WEEKLY: semanal
+      FREQ_MONTHLY: mensual
+      FREQ_YEARLY: anual
+    META:
+      REPEATS: Se repite
+      ON: en
+      UNTIL: hasta
