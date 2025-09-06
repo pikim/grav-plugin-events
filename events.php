@@ -306,6 +306,11 @@ class EventsPlugin extends Plugin
 	{
 		$config = (array) $this->config->get('plugins.events');
 
+		// get the type of object being saved
+		if(get_class($event) != 'Grav\Common\Data\Data') return; // only want to act on Data objects
+		if(!isset($event['object']['type'])) return; // only want to act on objects with a type
+
+		
 		// get the object being saved
 		$obj = $event['object'];
 
